@@ -127,7 +127,7 @@ async function loadLatestNews() {
                             <span class="news-date">${date}</span>
                             <h3 class="news-title">${escapeHTML(news.title)}</h3>
                             <p class="news-excerpt">${escapeHTML(news.content)}</p>
-                            <a href="news.html?id=${news.id}" class="privilege-link" style="margin-top: 16px;">Batafsil ➔</a>
+                            <a href="news_detail.html?id=${news.id}" class="privilege-link" style="margin-top: 16px;">Batafsil ➔</a>
                         </div>
                     </div>
                 `;
