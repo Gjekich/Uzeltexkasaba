@@ -53,7 +53,38 @@ def populate_db():
                     title="Sanatoriyga imtiyozli yo'llanmalar",
                     description="Kasaba a'zolari va ularning oila a'zolari uchun 50% gacha imtiyozli dam olish maskanlari yo'llanmalari.",
                     icon="🏥",
-                    content="Yo'llanma olish tartibi:\n1. Arizachi kasaba uyushmasiga ariza bilan murojaat qiladi.\n2. Shifokorning 070-U shaklidagi ma'lumotnomasi taqdim etiladi.\n3. Arizalar ro'yxatga olinib, navbatga muvofiq sanatoriy yo'llanmasi taqdim etiladi.\n\nEslatma: Yo'llanmalar asosan O'zbekiston kasaba uyushmalari federatsiyasi tasarrufidagi sanatoriylar (masalan, Chinobod, Chimyon, Humson va hk.) uchun amal qiladi."
+                    content="""Yo'llanma olish tartibi va sanatoriylar ro'yxati:
+
+Kasaba a'zolari va ularning oila a'zolari uchun 50% gacha imtiyozli narxlarda Federatsiya tasarrufidagi quyidagi yetakchi sanatoriylarga yo'llanmalar beriladi:
+
+1. "ZOMIN" SANATORIYSI (Jizzax viloyati)
+- Ixtisoslashuvi: Nafas yo'llari, nevrologiya, tayanch-harakat a'zolari kasalliklari. Tog'li toza havo va iqlimiy davolash.
+
+2. "CHINOBOD" SANATORIYSI (Toshkent shahri)
+- Ixtisoslashuvi: Oshqozon-ichak trakti, jigar, o't yo'llari, ginekologiya va qandli diabet kasalliklari. Issiq mineral suv va shifobaxsh loylar.
+
+3. "TURON" SANATORIYSI (Toshkent shahri)
+- Ixtisoslashuvi: Yurak-qon tomir tizimi, asab kasalliklari, qon aylanish a'zolari kasalliklari. Balneologik muolajalar.
+
+4. "OQTOSH" SANATORIYSI (Toshkent viloyati)
+- Ixtisoslashuvi: Nafas olish a'zolarining surunkali o'ziga xos bo'lmagan kasalliklari (astma va bronxit). Tinch tog' havosi.
+
+5. "BO'STON" SANATORIYSI (Toshkent viloyati)
+- Ixtisoslashuvi: Yurak-qon tomir, nevrologik, tayanch-harakat a'zolari va ginekologik kasalliklar.
+
+6. "CHORTOQ" SANATORIYSI (Namangan viloyati)
+- Ixtisoslashuvi: Mineral suvlar yordamida oshqozon-ichak, tayanch-harakat, teri va asab tizimi kasalliklarini davolash.
+
+7. "CHIMYON" SANATORIYSI (Farg'ona viloyati)
+- Ixtisoslashuvi: Vodorod sulfidli suvlar va loy yordamida tayanch-harakat, yurak-qon tomir va asab tizimini sog'lomlashtirish.
+
+8. "SITORAI MOHI XOSA" SANATORIYSI (Buxoro viloyati)
+- Ixtisoslashuvi: Buyrak va siydik yo'llari kasalliklari, asab tizimi va tayanch-harakat a'zolari. Tarixiy yozgi saroy iqlimi.
+
+Imtiyozli yo'llanma olish uchun zarur hujjatlar:
+1. Korxonangiz boshlang'ich kasaba uyushmasi tashkiloti raisi nomiga ariza.
+2. Davolovchi shifokor tomonidan berilgan 070-U shaklidagi tibbiy ma'lumotnoma (yo'llanma tavsifnomasi).
+3. Kasaba uyushmasi a'zoligi tasdiqlangan guvohnoma yoki ma'lumotnoma."""
                 ),
                 Privilege(
                     title="Bir martalik moddiy yordam",
@@ -78,21 +109,21 @@ def populate_db():
             demo_legislations = [
                 Legislation(
                     title="O'zbekiston Respublikasining Mehnat Kodeksi (Yangi tahriri)",
-                    description="Xodimlar va ish beruvchilar o'rtasidagi munosabatlarni tartibga soluvchi bosh qonun hujjati.",
+                    description="Xodimlar va ish beruvchilar o'rtasidagi munosabatlarni tartibga soluvchi bosh qonun hujjati. (Lex.uz rasmiy havolasi)",
                     category="Qonun",
-                    file_url=""
+                    file_url="https://lex.uz/docs/6257288"
                 ),
                 Legislation(
                     title="O'zbekiston Respublikasining 'Kasaba uyushmalari to'g'risida'gi Qonuni",
-                    description="Kasaba uyushmalarining huquqlari, majburiyatlari va kafolatlarini belgilovchi qonun.",
+                    description="Kasaba uyushmalarining huquqlari, majburiyatlari va kafolatlarini belgilovchi qonun. (Lex.uz rasmiy havolasi)",
                     category="Qonun",
-                    file_url=""
+                    file_url="https://lex.uz/docs/4638365"
                 ),
                 Legislation(
                     title="Kasaba uyushmalari faoliyatini yanada takomillashtirish chora-tadbirlari to'g'risidagi qaror",
-                    description="Tashkiliy tuzilmani isloh qilish bo'yicha hukumat qarori.",
+                    description="Tashkiliy tuzilmani isloh qilish bo'yicha hukumat qarori. (Lex.uz rasmiy havolasi)",
                     category="Qaror",
-                    file_url=""
+                    file_url="https://lex.uz/docs/5049306"
                 ),
                 Legislation(
                     title="Elektrotexnika sanoati korxonalari tarmog'ining tarif-malaka ma'lumotnomasi",
