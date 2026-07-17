@@ -149,12 +149,31 @@ async function loadNewsList() {
             tbody.innerHTML = newsList.map(news => {
                 const firstImg = news.image_url ? news.image_url.split(',')[0] : '';
                 const imgHtml = firstImg ? `<img src="${firstImg}" style="width: 50px; height: 35px; object-fit: cover; border-radius: var(--radius-sm);">` : '—';
-                const date = new Date(news.created_at).toLocaleDateString('uz-UZ') + ' ' + new Date(news.created_at).toLocaleTimeString('uz-UZ', {hour: '2-digit', minute:'2-digit'});
+                
+                let dateStr = '—';
+                if (news.created_at) {
+                    try {
+                        const d = new Date(news.created_at);
+                        if (!isNaN(d.getTime())) {
+                            const day = String(d.getDate()).padStart(2, '0');
+                            const month = String(d.getMonth() + 1).padStart(2, '0');
+                            const year = d.getFullYear();
+                            const hours = String(d.getHours()).padStart(2, '0');
+                            const minutes = String(d.getMinutes()).padStart(2, '0');
+                            dateStr = `${day}.${month}.${year} ${hours}:${minutes}`;
+                        } else {
+                            dateStr = news.created_at.replace('T', ' ').substring(0, 16);
+                        }
+                    } catch (err) {
+                        dateStr = news.created_at.toString().substring(0, 16);
+                    }
+                }
+                
                 return `
                     <tr>
                         <td>${imgHtml}</td>
                         <td><strong>${escapeHTML(news.title)}</strong></td>
-                        <td>${date}</td>
+                        <td>${dateStr}</td>
                         <td style="text-align: right;">
                             <button onclick="editNews(${news.id})" class="admin-action-btn btn-edit" title="Tahrirlash">✏️</button>
                             <button onclick="deleteNews(${news.id})" class="admin-action-btn btn-delete" title="O'chirish">🗑️</button>
@@ -162,8 +181,11 @@ async function loadNewsList() {
                     </tr>
                 `;
             }).join('');
+        } else {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--color-danger);">Yuklashda xatolik (HTTP status error).</td></tr>';
         }
     } catch (e) {
+        console.error("loadNewsList error:", e);
         tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--color-danger);">Yuklashda xatolik.</td></tr>';
     }
 }
