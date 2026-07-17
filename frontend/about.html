@@ -187,48 +187,13 @@
         </div>
     </section>
 
-    <!-- Organizational Structure Section -->
+    <!-- Union Members/Staff Section -->
     <section class="section section-secondary">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Tarkibiy tuzilish</span>
-                <h2 class="section-title">Tashkilot tuzilmasi</h2>
-                <p class="section-subtitle">Kasaba uyushmasi boshqaruv apparati va tarkibiy tuzilmasi.</p>
-            </div>
-            
-            <div class="org-container">
-                <!-- Level 1 (President) -->
-                <div class="org-card">
-                    <h4>Eshmatov Qobiljon</h4>
-                    <p>Tarmoq kasaba uyushmasi raisi</p>
-                </div>
-                
-                <!-- Level 2 (Departments) -->
-                <div class="org-level-2">
-                    <div class="org-card">
-                        <h4>Karimov Jamshid</h4>
-                        <p>Rais o'rinbosari</p>
-                    </div>
-                    <div class="org-card" style="border-top-color: var(--color-accent);">
-                        <h4>Sodiqov Dilshod</h4>
-                        <p>Bosh huquqshunos</p>
-                    </div>
-                    <div class="org-card">
-                        <h4>Nasimova Lola</h4>
-                        <p>Moliyaviy bo'lim mudiri</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Union Members/Staff Section -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Jamoamiz</span>
-                <h2 class="section-title">Uyushma xodimlari va a'zolari</h2>
-                <p class="section-subtitle">Kasaba uyushmasi boshqaruv apparati xodimlarining to'liq ro'yxati.</p>
+                <span class="section-tag">Qo'mita A'zolari</span>
+                <h2 class="section-title">Boshlang'ich qo'mita a'zolari</h2>
+                <p class="section-subtitle">Kasaba uyushmasi boshlang'ich qo'mitasiga a'zo bo'lgan "O'zeltexsanoat" uyushmasi xodimlari.</p>
             </div>
 
             <!-- Search Bar for Staff -->
@@ -347,14 +312,12 @@
 
             grid.innerHTML = list.map(member => {
                 const emailHtml = member.email ? `<div>📧 <a href="mailto:${member.email}" style="color: var(--color-primary); font-size: 0.85rem; font-weight: 500;">${escapeHTML(member.email)}</a></div>` : '';
-                const phoneHtml = member.phone ? `<div>📞 <a href="tel:${member.phone}" style="color: var(--color-primary); font-size: 0.85rem; font-weight: 500;">${escapeHTML(member.phone)}</a></div>` : '';
                 
                 return `
-                    <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px;">
+                    <div style="background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px;">
                         <h3 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: var(--color-primary);">${escapeHTML(member.full_name)}</h3>
                         <p style="font-size: 0.75rem; font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">${escapeHTML(member.position)}</p>
                         <div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--border-color); padding-top: 12px; margin-top: auto;">
-                            ${phoneHtml}
                             ${emailHtml}
                         </div>
                     </div>
