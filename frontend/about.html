@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasaba Uyushmasi Haqida - UzeltexKasaba</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Org Chart Styling */
+        .org-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0;
+        }
+        .org-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--color-primary);
+            border-radius: var(--radius-md);
+            padding: 16px 24px;
+            text-align: center;
+            min-width: 220px;
+            box-shadow: var(--shadow-card);
+            position: relative;
+        }
+        .org-card h4 {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+        .org-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .org-level-2 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+            position: relative;
+        }
+        .org-level-2::before {
+            content: '';
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            width: 2px;
+            height: 24px;
+            background-color: var(--border-color-light);
+            transform: translateX(-50%);
+        }
+        .org-level-2::after {
+            content: '';
+            position: absolute;
+            top: -24px;
+            left: 16.6%;
+            right: 16.6%;
+            height: 2px;
+            background-color: var(--border-color-light);
+        }
+        .org-level-2 .org-card {
+            position: relative;
+        }
+        .org-level-2 .org-card::before {
+            content: '';
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            width: 2px;
+            height: 24px;
+            background-color: var(--border-color-light);
+            transform: translateX(-50%);
+        }
+
+        /* FAQ Accordion Styling */
+        .faq-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .faq-item {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .faq-question {
+            padding: 20px 24px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--color-primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-question::after {
+            content: '+';
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--color-accent);
+            transition: transform var(--transition-fast);
+        }
+        .faq-item.active .faq-question::after {
+            content: '−';
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 24px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            transition: all var(--transition-normal);
+        }
+        .faq-item.active .faq-answer {
+            max-height: 250px;
+            padding-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                ⚡ <span>UzeltexKasaba</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Bosh sahifa</a></li>
+                <li><a href="about.html" class="nav-link active">Haqimizda</a></li>
+                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
+                <li><a href="events.html" class="nav-link">Tadbirlar</a></li>
+                <li><a href="privileges.html" class="nav-link">Imtiyozlar</a></li>
+                <li><a href="legislation.html" class="nav-link">Qonunchilik</a></li>
+                <li><a href="gallery.html" class="nav-link">Galereya</a></li>
+            </ul>
+            <a href="admin.html" class="btn nav-btn">🔒 Admin Panel</a>
+        </div>
+    </header>
+
+    <!-- Page Title -->
+    <section class="section section-secondary" style="padding: 60px 0;">
+        <div class="container">
+            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;">Tashkilot Haqida</h1>
+            <p style="color: var(--text-secondary);">Kasaba uyushmasining tarixi, maqsadlari va tashkiliy tuzilmasi.</p>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="section">
+        <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
+            <div>
+                <span class="section-tag">Biz Haqimizda</span>
+                <h2 class="section-title">Kasaba uyushmasining asosiy maqsadi va vazifalari</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    Uzeltexsanoat uyushmasi tizimidagi elektrotexnika sanoati korxonalarining xodimlarini birlashtiruvchi kasaba uyushmasi nodavlat va notijorat jamoat tashkilotidir.
+                </p>
+                <p style="color: var(--text-secondary); margin-bottom: 24px;">
+                    Asosiy vazifamiz — har bir xodimning munosib ish haqi olishi, xavfsiz va qulay mehnat sharoitlarida ishlashi hamda qonuniy huquqlari buzilmasligini ta'minlashdir. Biz ish beruvchi va xodimlar o'rtasidagi munosabatlarni jamoaviy shartnomalar orqali muvozanatda saqlab kelamiz.
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background-color: var(--bg-secondary); padding: 16px; border-left: 3px solid var(--color-accent); border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);">
+                        <h4 style="color: var(--color-primary); font-family: var(--font-heading); margin-bottom: 6px;">Qonun ustuvorligi</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Mehnat Kodeksi talablariga qat'iy rioya etilishini nazorat qilish.</p>
+                    </div>
+                    <div style="background-color: var(--bg-secondary); padding: 16px; border-left: 3px solid var(--color-accent); border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);">
+                        <h4 style="color: var(--color-primary); font-family: var(--font-heading); margin-bottom: 6px;">Ijtimoiy himoya</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Kam ta'minlanganlar va muhtojlarga moddiy ko'mak berish.</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <img src="images/union_hero_bg.jpg" alt="Kasaba uyushmasi yig'ilishi" style="border-radius: var(--radius-md); box-shadow: var(--shadow-lg); border: 4px solid white;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Organizational Structure Section -->
+    <section class="section section-secondary">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Tarkibiy tuzilish</span>
+                <h2 class="section-title">Tashkilot tuzilmasi</h2>
+                <p class="section-subtitle">Kasaba uyushmasi boshqaruv apparati va tarkibiy tuzilmasi.</p>
+            </div>
+            
+            <div class="org-container">
+                <!-- Level 1 (President) -->
+                <div class="org-card">
+                    <h4>Eshmatov Qobiljon</h4>
+                    <p>Tarmoq kasaba uyushmasi raisi</p>
+                </div>
+                
+                <!-- Level 2 (Departments) -->
+                <div class="org-level-2">
+                    <div class="org-card">
+                        <h4>Karimov Jamshid</h4>
+                        <p>Rais o'rinbosari</p>
+                    </div>
+                    <div class="org-card" style="border-top-color: var(--color-accent);">
+                        <h4>Sodiqov Dilshod</h4>
+                        <p>Bosh huquqshunos</p>
+                    </div>
+                    <div class="org-card">
+                        <h4>Nasimova Lola</h4>
+                        <p>Moliyaviy bo'lim mudiri</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Savollarga javoblar</span>
+                <h2 class="section-title">Ko'p beriladigan savollar</h2>
+                <p class="section-subtitle">A'zolik shartlari va eng ko'p so'raladigan mavzular bo'yicha batafsil ma'lumotlar.</p>
+            </div>
+
+            <div class="faq-wrapper">
+                <div class="faq-item">
+                    <div class="faq-question">Kasaba uyushmasiga qanday a'zo bo'lish mumkin?</div>
+                    <div class="faq-answer">
+                        Kasaba uyushmasiga a'zo bo'lish uchun o'zingiz ishlayotgan korxonadagi boshlang'ich kasaba uyushmasi qo'mitasiga (komitetga) ariza topshirasiz. Ariza ko'rib chiqilib, tasdiqlangandan so'ng, a'zolik badallari ish haqingizdan ushlab qolinishni boshlaydi va siz barcha imtiyozlardan foydalanish huquqiga egasiz.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Sanatoriy yo'llanmasi kimlarga beriladi?</div>
+                    <div class="faq-answer">
+                        Sanatoriy va dam olish yo'llanmalari kamida 6 oydan beri kasaba uyushmasiga a'zo bo'lgan, shifokor tavsiyasiga (070-U tibbiy ma'lumotnomaga) ega bo'lgan xodimlarga navbat asosida taqdim etiladi. Yiliga bir marta imtiyozli yo'llanma olish imkoniyati mavjud.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Ish beruvchi bilan mehnat nizosi yuzaga kelsa, kasaba uyushmasi yordam beradimi?</div>
+                    <div class="faq-answer">
+                        Albatta. Kasaba uyushmasining asosiy vazifalaridan biri mehnat huquqlarini himoya qilishdir. Bosh huquqshunosimiz sizga bepul huquqiy maslahat beradi, kerak bo'lsa arizalar tayyorlaydi va sudda sizning huquqlaringizni himoya qilish uchun advokat sifatidagi vakillikni o'z zimmasiga oladi.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">A'zolik badali qancha va u qayerga sarflanadi?</div>
+                    <div class="faq-answer">
+                        A'zolik badali xodim ish haqining 1 foizini tashkil etadi. Ushbu mablag'lar xodimlarni sog'lomlashtirish yo'llanmalariga (subsidiyalar), bolalar oromgohlari xarajatlarini qoplashga, moddiy yordamlarga, turli sport va madaniy tadbirlarni tashkil etishga yo'naltiriladi.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 UzeltexKasaba. Barcha huquqlar himoyalangan.</p>
+                <p>Ishlab chiquvchi: Antigravity AI</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        // FAQ accordion toggle logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    // Check if current is active
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all
+                    faqItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Toggle current
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

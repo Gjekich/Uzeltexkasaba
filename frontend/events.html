@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tadbirlar Rejasi - UzeltexKasaba</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .event-card {
+            display: grid;
+            grid-template-columns: 140px 1fr 180px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: all var(--transition-normal);
+        }
+        .event-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-color-light);
+        }
+        .event-date-box {
+            background-color: var(--color-primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+        .event-date-day {
+            font-size: 2.2rem;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            line-height: 1;
+        }
+        .event-date-month {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+        .event-info {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            justify-content: center;
+        }
+        .event-cat {
+            display: inline-block;
+            background-color: rgba(217, 119, 6, 0.08);
+            color: var(--color-accent);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            width: fit-content;
+        }
+        .event-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        .event-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .event-meta-info {
+            display: flex;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .event-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background-color: #fafbfc;
+            border-left: 1px solid var(--border-color);
+        }
+        @media(max-width: 900px) {
+            .event-card {
+                grid-template-columns: 1fr;
+            }
+            .event-date-box {
+                flex-direction: row;
+                gap: 12px;
+                padding: 14px;
+            }
+            .event-date-day {
+                font-size: 1.5rem;
+            }
+            .event-date-month {
+                margin-top: 0;
+            }
+            .event-action {
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                ⚡ <span>UzeltexKasaba</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Bosh sahifa</a></li>
+                <li><a href="about.html" class="nav-link">Haqimizda</a></li>
+                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
+                <li><a href="events.html" class="nav-link active">Tadbirlar</a></li>
+                <li><a href="privileges.html" class="nav-link">Imtiyozlar</a></li>
+                <li><a href="legislation.html" class="nav-link">Qonunchilik</a></li>
+                <li><a href="gallery.html" class="nav-link">Galereya</a></li>
+            </ul>
+            <a href="admin.html" class="btn nav-btn">🔒 Admin Panel</a>
+        </div>
+    </header>
+
+    <!-- Page Title -->
+    <section class="section section-secondary" style="padding: 60px 0;">
+        <div class="container">
+            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;">Tadbirlar va Seminarlar Rejasi</h1>
+            <p style="color: var(--text-secondary);">Kasaba uyushmasi tomonidan o'tkaziladigan seminar, trening, sport o'yinlari va bayram tadbirlari jadvali.</p>
+        </div>
+    </section>
+
+    <!-- Events List Section -->
+    <section class="section">
+        <div class="container">
+            <div class="events-list">
+                <!-- Event 1 -->
+                <div class="event-card">
+                    <div class="event-date-box">
+                        <span class="event-date-day">24</span>
+                        <span class="event-date-month">Avgust</span>
+                    </div>
+                    <div class="event-info">
+                        <span class="event-cat">Seminar</span>
+                        <h3 class="event-title">Mehnat muhofazasi bo'yicha jamoatchi vakillarni o'qitish seminari</h3>
+                        <p class="event-desc">Sanoat korxonalarida texnika xavfsizligi qoidalariga rioya etilishi va jarohatlanishlarning oldini olishga qaratilgan amaliy o'quv kursi.</p>
+                        <div class="event-meta-info">
+                            <span>📍 Joy: Uyushma Bosh binosi, 3-qavat</span>
+                            <span>⏰ Vaqt: 10:00 - 16:00</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <button onclick="alert('Ushbu tadbirda qatnashish uchun korxonangiz kasaba qo\'mitasiga murojaat qiling.')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;">Ro'yxatdan o'tish</button>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="event-card">
+                    <div class="event-date-box" style="background-color: var(--color-accent);">
+                        <span class="event-date-day">10</span>
+                        <span class="event-date-month">Sentabr</span>
+                    </div>
+                    <div class="event-info">
+                        <span class="event-cat">Sport</span>
+                        <h3 class="event-title">Tarmoq korxonalari xodimlari o'rtasida Shaxmat turniri</h3>
+                        <p class="event-desc">An'anaviy har yili o'tkaziladigan elektrotexnika sohasi kasaba a'zolari o'rtasidagi respublika turniri boshlang'ich saralash bosqichi.</p>
+                        <div class="event-meta-info">
+                            <span>📍 Joy: Sport saroyi, Toshkent</span>
+                            <span>⏰ Vaqt: 09:00 dan boshlab</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <button onclick="alert('Ushbu tadbirda qatnashish uchun korxonangiz kasaba qo\'mitasiga murojaat qiling.')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;">Ro'yxatdan o'tish</button>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="event-card">
+                    <div class="event-date-box">
+                        <span class="event-date-day">18</span>
+                        <span class="event-date-month">Sentabr</span>
+                    </div>
+                    <div class="event-info">
+                        <span class="event-cat">Yig'ilish</span>
+                        <h3 class="event-title">Xodimlar huquqiy himoyasini kuchaytirish yuzasida tarmoq kengashi yig'ilishi</h3>
+                        <p class="event-desc">Kollektiv shartnomalar bajarilishi monitoringi va mehnat nizolarini oldindan hal qilish tizimlarini takomillashtirish masalalari tahlili.</p>
+                        <div class="event-meta-info">
+                            <span>📍 Joy: Konferensiyalar zali</span>
+                            <span>⏰ Vaqt: 14:00 - 17:00</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <button onclick="alert('Ushbu tadbirda qatnashish uchun korxonangiz kasaba qo\'mitasiga murojaat qiling.')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;">Ro'yxatdan o'tish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 UzeltexKasaba. Barcha huquqlar himoyalangan.</p>
+                <p>Ishlab chiquvchi: Antigravity AI</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
