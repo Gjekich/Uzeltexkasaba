@@ -8,7 +8,10 @@ class NewsService:
 
     @staticmethod
     def create(db: Session, news: NewsCreate) -> News:
-        db_news = News(**news.model_dump())
+        data = news.model_dump()
+        if data.get("created_at") is None:
+            data.pop("created_at", None)
+        db_news = News(**data)
         db.add(db_news)
         db.commit()
         db.refresh(db_news)
@@ -30,7 +33,10 @@ class NewsService:
         db_news = db.query(News).filter(News.id == news_id).first()
         if not db_news:
             return None
-        for key, value in news.model_dump().items():
+        data = news.model_dump()
+        if data.get("created_at") is None:
+            data.pop("created_at", None)
+        for key, value in data.items():
             setattr(db_news, key, value)
         db.commit()
         db.refresh(db_news)

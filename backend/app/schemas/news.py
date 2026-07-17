@@ -6,6 +6,7 @@ class NewsBase(BaseModel):
     title: str
     content: str
     image_url: str | None = None
+    created_at: datetime | None = None
 
 
 class NewsCreate(NewsBase):

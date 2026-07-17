@@ -114,8 +114,8 @@ async function loadLatestNews() {
                 return;
             }
             
-            grid.innerHTML = newsList.map(news => {
-                const bgImage = news.image_url ? `style="background-image: url('${news.image_url}')"` : 'style="background-color: #1f2937;"';
+                const firstImg = news.image_url ? news.image_url.split(',')[0] : '';
+                const bgImage = firstImg ? `style="background-image: url('${firstImg}')"` : 'style="background-color: #1f2937;"';
                 const date = new Date(news.created_at).toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric' });
                 
                 return `

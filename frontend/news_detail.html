@@ -51,6 +51,68 @@
             border-top: 1px solid var(--border-color);
             padding-top: 24px;
         }
+        .detail-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 24px;
+        }
+        .gallery-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            margin-bottom: 16px;
+            grid-column: 1 / -1;
+            font-weight: 700;
+        }
+        .gallery-item {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .gallery-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox.open {
+            display: flex;
+        }
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 80%;
+            object-fit: contain;
+            border-radius: var(--radius-sm);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
         @media(max-width: 768px) {
             .detail-img {
                 height: 250px;
@@ -128,7 +190,26 @@
                     document.title = `${news.title} - UzeltexKasaba`;
                     
                     const date = new Date(news.created_at).toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric' });
-                    const imgHtml = news.image_url ? `<img class="detail-img" src="${news.image_url}" alt="${escapeHTML(news.title)}">` : '';
+                    
+                    // Parse multiple images
+                    const images = news.image_url ? news.image_url.split(',').filter(x => x) : [];
+                    const featuredImg = images.length > 0 ? images[0] : '';
+                    const imgHtml = featuredImg ? `<img class="detail-img" src="${featuredImg}" alt="${escapeHTML(news.title)}">` : '';
+                    
+                    // Create gallery HTML
+                    let galleryHtml = '';
+                    if (images.length > 1) {
+                        const galleryItems = images.map((url, idx) => {
+                            return `<img class="gallery-item" src="${url}" alt="Rasm ${idx + 1}" onclick="openLightbox('${url}')">`;
+                        }).join('');
+                        
+                        galleryHtml = `
+                            <div class="detail-gallery">
+                                <h4 class="gallery-title">Rasm galereyasi (${images.length} rasm)</h4>
+                                ${galleryItems}
+                            </div>
+                        `;
+                    }
                     
                     container.innerHTML = `
                         <div class="detail-wrapper">
@@ -140,6 +221,7 @@
                                 </div>
                                 <h1 class="detail-title">${escapeHTML(news.title)}</h1>
                                 <div class="detail-body">${escapeHTML(news.content)}</div>
+                                ${galleryHtml}
                                 <div class="back-btn-container">
                                     <a href="news.html" class="btn btn-secondary">⬅️ Barcha yangiliklarga qaytish</a>
                                 </div>
@@ -155,6 +237,20 @@
             }
         }
 
+        function openLightbox(url) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            img.src = url;
+            lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }
+
         function showError(message) {
             const container = document.getElementById('detailContainer');
             container.innerHTML = `
@@ -167,5 +263,11 @@
             `;
         }
     </script>
+    
+    <!-- Lightbox for full screen image viewing -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close">&times;</button>
+        <img id="lightboxImg" class="lightbox-img" src="" alt="Kattalashtirilgan rasm">
+    </div>
 </body>
 </html>

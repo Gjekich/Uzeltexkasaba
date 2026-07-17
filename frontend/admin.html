@@ -190,14 +190,21 @@
                     <textarea id="newsContentInput" class="form-control" style="min-height: 180px;" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Rasm yuklash (Rasm manzili yoki fayl)</label>
-                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
-                        <input type="text" id="newsImageUrlInput" class="form-control" placeholder="URL manzili" style="flex: 1;">
-                        <button type="button" onclick="triggerFileInput('newsFile')" class="btn btn-secondary" style="padding: 0 16px;">📂</button>
-                    </div>
-                    <input type="file" id="newsFile" style="display: none;" onchange="handleFileUpload('newsFile', 'newsImageUrlInput')">
+                    <label class="form-label">Nashr etilgan sana (Sana va vaqt)</label>
+                    <input type="datetime-local" id="newsCreatedAtInput" class="form-control">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Saqlash</button>
+                <div class="form-group">
+                    <label class="form-label">Rasmlar (Bir nechta yuklash mumkin)</label>
+                    <input type="hidden" id="newsImageUrlInput">
+                    <div id="newsImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; margin-bottom: 12px;">
+                        <!-- Uploaded image thumbnails go here -->
+                    </div>
+                    <button type="button" onclick="triggerFileInput('newsFileMulti')" class="btn btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        📷 Rasmlarni tanlash va yuklash
+                    </button>
+                    <input type="file" id="newsFileMulti" style="display: none;" multiple onchange="handleMultiImageUpload()">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Saqlash</button>
             </form>
         </div>
     </div>

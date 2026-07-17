@@ -2,6 +2,7 @@
 
 let authToken = localStorage.getItem('admin_token') || '';
 let currentTab = 'news';
+let currentNewsImages = [];
 
 // DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -146,8 +147,9 @@ async function loadNewsList() {
             }
 
             tbody.innerHTML = newsList.map(news => {
-                const imgHtml = news.image_url ? `<img src="${news.image_url}" style="width: 50px; height: 35px; object-fit: cover; border-radius: var(--radius-sm);">` : '—';
-                const date = new Date(news.created_at).toLocaleDateString('uz-UZ');
+                const firstImg = news.image_url ? news.image_url.split(',')[0] : '';
+                const imgHtml = firstImg ? `<img src="${firstImg}" style="width: 50px; height: 35px; object-fit: cover; border-radius: var(--radius-sm);">` : '—';
+                const date = new Date(news.created_at).toLocaleDateString('uz-UZ') + ' ' + new Date(news.created_at).toLocaleTimeString('uz-UZ', {hour: '2-digit', minute:'2-digit'});
                 return `
                     <tr>
                         <td>${imgHtml}</td>
@@ -169,12 +171,73 @@ async function loadNewsList() {
 function openNewsFormModal() {
     document.getElementById('newsForm').reset();
     document.getElementById('editNewsId').value = '';
+    document.getElementById('newsImageUrlInput').value = '';
+    document.getElementById('newsCreatedAtInput').value = '';
+    currentNewsImages = [];
+    renderImagePreviews();
     document.getElementById('newsFormTitle').textContent = "Yangi maqola qo'shish";
     document.getElementById('newsFormModal').classList.add('open');
 }
 
 function closeNewsFormModal() {
     document.getElementById('newsFormModal').classList.remove('open');
+    currentNewsImages = [];
+    renderImagePreviews();
+}
+
+async function handleMultiImageUpload() {
+    const fileInput = document.getElementById('newsFileMulti');
+    if (fileInput.files.length === 0) return;
+    
+    showToast(`${fileInput.files.length} ta rasm yuklanmoqda...`, "info");
+    
+    for (let i = 0; i < fileInput.files.length; i++) {
+        const file = fileInput.files[i];
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        try {
+            const response = await fetch('/api/upload/', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+                body: formData
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                currentNewsImages.push(data.url);
+            } else {
+                showToast(`${file.name} yuklashda xatolik yuz berdi.`, "error");
+            }
+        } catch (error) {
+            console.error(error);
+            showToast("Server xatoligi.", "error");
+        }
+    }
+    
+    renderImagePreviews();
+    fileInput.value = '';
+}
+
+function renderImagePreviews() {
+    const container = document.getElementById('newsImagePreviewContainer');
+    if (!container) return;
+    
+    container.innerHTML = currentNewsImages.map((url, index) => {
+        return `
+            <div style="position: relative; width: 70px; height: 50px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); overflow: hidden; background-color: #fafafa;">
+                <img src="${url}" style="width: 100%; height: 100%; object-fit: cover;">
+                <button type="button" onclick="removeNewsImage(${index})" style="position: absolute; top: 1px; right: 1px; background: rgba(220,38,38,0.85); color: white; border: none; border-radius: 50%; width: 16px; height: 16px; font-size: 0.6rem; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; line-height: 1;">✕</button>
+            </div>
+        `;
+    }).join('');
+}
+
+function removeNewsImage(index) {
+    currentNewsImages.splice(index, 1);
+    renderImagePreviews();
 }
 
 async function submitNewsForm(e) {
@@ -182,9 +245,21 @@ async function submitNewsForm(e) {
     const id = document.getElementById('editNewsId').value;
     const title = document.getElementById('newsTitleInput').value.trim();
     const content = document.getElementById('newsContentInput').value.trim();
-    const imageUrl = document.getElementById('newsImageUrlInput').value.trim();
+    
+    // Join all images with commas
+    const imageUrl = currentNewsImages.join(',');
+    
+    // Parse custom date if selected
+    const dateVal = document.getElementById('newsCreatedAtInput').value;
+    const createdAt = dateVal ? new Date(dateVal).toISOString() : null;
 
-    const payload = { title, content, image_url: imageUrl || null };
+    const payload = { 
+        title, 
+        content, 
+        image_url: imageUrl || null,
+        created_at: createdAt
+    };
+    
     const method = id ? 'PUT' : 'POST';
     const url = id ? `/api/news/${id}` : '/api/news/';
 
@@ -219,6 +294,23 @@ async function editNews(id) {
             document.getElementById('newsTitleInput').value = news.title;
             document.getElementById('newsContentInput').value = news.content;
             document.getElementById('newsImageUrlInput').value = news.image_url || '';
+            
+            // Handle multiple images
+            currentNewsImages = news.image_url ? news.image_url.split(',').filter(x => x) : [];
+            renderImagePreviews();
+            
+            // Handle date time input
+            if (news.created_at) {
+                const dt = new Date(news.created_at);
+                const localDateTime = dt.getFullYear() + '-' + 
+                    String(dt.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(dt.getDate()).padStart(2, '0') + 'T' + 
+                    String(dt.getHours()).padStart(2, '0') + ':' + 
+                    String(dt.getMinutes()).padStart(2, '0');
+                document.getElementById('newsCreatedAtInput').value = localDateTime;
+            } else {
+                document.getElementById('newsCreatedAtInput').value = '';
+            }
             
             document.getElementById('newsFormTitle').textContent = "Maqolani tahrirlash";
             document.getElementById('newsFormModal').classList.add('open');
