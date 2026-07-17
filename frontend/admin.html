@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boshqaruv Paneli - UzeltexKasaba</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="min-height: 100vh;">
+
+    <!-- Login Container -->
+    <div id="loginCard" class="admin-login-wrapper">
+        <div class="admin-header">
+            <div class="admin-logo">🔑</div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; margin-bottom: 8px;">Tizimga kirish</h2>
+            <p style="color: var(--text-secondary); font-size: 0.85rem;">Faqat ma'murlar uchun (For Admins Only)</p>
+        </div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username" class="form-label">Foydalanuvchi nomi</label>
+                <input type="text" id="username" class="form-control" placeholder="Admin username" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Maxfiy parol</label>
+                <input type="password" id="password" class="form-control" placeholder="Parol" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Tizimga kirish</button>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="index.html" style="font-size: 0.85rem; color: var(--color-primary);">⬅️ Bosh sahifaga qaytish</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Admin Dashboard Container (Hidden initially) -->
+    <div id="adminDashboard" style="display: none; min-height: 100vh;">
+        <!-- Header -->
+        <header class="header">
+            <div class="container navbar">
+                <a href="index.html" class="logo">
+                    ⚡ <span>UzeltexKasaba</span> <span style="font-size: 0.8rem; background-color: rgba(245,158,11,0.15); color: var(--color-accent); padding: 4px 8px; border-radius: var(--radius-sm); margin-left: 8px;">ADMIN</span>
+                </a>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <span id="adminUsernameDisplay" style="font-weight: 500; font-size: 0.9rem; color: var(--text-secondary);">admin</span>
+                    <button onclick="handleLogout()" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;">🔒 Chiqish</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Layout -->
+        <div class="admin-dashboard-layout">
+            <!-- Sidebar -->
+            <aside class="admin-sidebar">
+                <ul class="admin-menu">
+                    <li class="admin-menu-item active" data-tab="news">📰 Yangiliklar</li>
+                    <li class="admin-menu-item" data-tab="privileges">🎁 Imtiyozlar</li>
+                    <li class="admin-menu-item" data-tab="legislation">⚖️ Qonunchilik</li>
+                    <li class="admin-menu-item" data-tab="applications">✉️ Murojaatlar</li>
+                </ul>
+                <div style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">
+                    UzeltexKasaba v1.0.0
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="admin-content">
+                <!-- NEWS TAB -->
+                <section id="tab-news" class="tab-section">
+                    <div class="admin-section-header">
+                        <h2 style="font-family: var(--font-heading);">Yangiliklar va Faoliyat</h2>
+                        <button onclick="openNewsFormModal()" class="btn btn-primary">➕ Yangi qo'shish</button>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Rasm</th>
+                                <th>Sarlavha</th>
+                                <th>Sana</th>
+                                <th style="width: 100px; text-align: right;">Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="newsTableBody">
+                            <!-- Dynamic Content -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- PRIVILEGES TAB -->
+                <section id="tab-privileges" class="tab-section" style="display: none;">
+                    <div class="admin-section-header">
+                        <h2 style="font-family: var(--font-heading);">Imtiyozlar va Kafolatlar</h2>
+                        <button onclick="openPrivilegeFormModal()" class="btn btn-primary">➕ Yangi qo'shish</button>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px;">Icon</th>
+                                <th>Nomi</th>
+                                <th>Tavsifi</th>
+                                <th style="width: 100px; text-align: right;">Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="privilegesTableBody">
+                            <!-- Dynamic Content -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- LEGISLATION TAB -->
+                <section id="tab-legislation" class="tab-section" style="display: none;">
+                    <div class="admin-section-header">
+                        <h2 style="font-family: var(--font-heading);">Qonunchilik va Hujjatlar</h2>
+                        <button onclick="openLegislationFormModal()" class="btn btn-primary">➕ Yangi qo'shish</button>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Kategoriya</th>
+                                <th>Hujjat nomi</th>
+                                <th>Yuklangan sana</th>
+                                <th style="width: 100px; text-align: right;">Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="legislationTableBody">
+                            <!-- Dynamic Content -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- APPLICATIONS TAB -->
+                <section id="tab-applications" class="tab-section" style="display: none;">
+                    <div class="admin-section-header">
+                        <h2 style="font-family: var(--font-heading);">Murojaatlar va Teskari aloqa</h2>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>F.I.SH.</th>
+                                <th>Telefon raqam</th>
+                                <th>Murojaat matni</th>
+                                <th>Holat</th>
+                                <th style="width: 150px; text-align: right;">Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsTableBody">
+                            <!-- Dynamic Content -->
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- NEWS FORM MODAL -->
+    <div class="modal" id="newsFormModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeNewsFormModal()">&times;</span>
+            <h3 id="newsFormTitle" style="font-family: var(--font-heading); margin-bottom: 24px;">Yangi maqola qo'shish</h3>
+            <form id="newsForm">
+                <input type="hidden" id="editNewsId">
+                <div class="form-group">
+                    <label class="form-label">Sarlavha (Title)</label>
+                    <input type="text" id="newsTitleInput" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Batafsil matni (Content)</label>
+                    <textarea id="newsContentInput" class="form-control" style="min-height: 180px;" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Rasm yuklash (Rasm manzili yoki fayl)</label>
+                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <input type="text" id="newsImageUrlInput" class="form-control" placeholder="URL manzili" style="flex: 1;">
+                        <button type="button" onclick="triggerFileInput('newsFile')" class="btn btn-secondary" style="padding: 0 16px;">📂</button>
+                    </div>
+                    <input type="file" id="newsFile" style="display: none;" onchange="handleFileUpload('newsFile', 'newsImageUrlInput')">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PRIVILEGE FORM MODAL -->
+    <div class="modal" id="privilegeFormModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closePrivilegeFormModal()">&times;</span>
+            <h3 id="privilegeFormTitle" style="font-family: var(--font-heading); margin-bottom: 24px;">Yangi imtiyoz qo'shish</h3>
+            <form id="privilegeForm">
+                <input type="hidden" id="editPrivilegeId">
+                <div class="form-group">
+                    <label class="form-label">Imtiyoz nomi (Title)</label>
+                    <input type="text" id="privilegeTitleInput" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tavsif (Description - qisqacha)</label>
+                    <input type="text" id="privilegeDescInput" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Emoji Icon (Masalan: 🏥, 💰, ⚖️)</label>
+                    <input type="text" id="privilegeIconInput" class="form-control" placeholder="Emoji" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Batafsil ma'lumot (Tartib va hujjatlar)</label>
+                    <textarea id="privilegeContentInput" class="form-control" style="min-height: 150px;"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LEGISLATION FORM MODAL -->
+    <div class="modal" id="legislationFormModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeLegislationFormModal()">&times;</span>
+            <h3 id="legislationFormTitle" style="font-family: var(--font-heading); margin-bottom: 24px;">Yangi hujjat qo'shish</h3>
+            <form id="legislationForm">
+                <input type="hidden" id="editLegislationId">
+                <div class="form-group">
+                    <label class="form-label">Hujjat sarlavhasi (Title)</label>
+                    <input type="text" id="legTitleInput" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tavsif (Description - ixtiyoriy)</label>
+                    <input type="text" id="legDescInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Kategoriya</label>
+                    <select id="legCategoryInput" class="form-control">
+                        <option value="Qonun">Qonunlar & Kodekslar</option>
+                        <option value="Qaror">Hukumat Qarorlari</option>
+                        <option value="Nizom">Ichki Nizom va Tartiblar</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Hujjat fayli (URL yoki PDF yuklash)</label>
+                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <input type="text" id="legFileUrlInput" class="form-control" placeholder="Fayl manzili" style="flex: 1;">
+                        <button type="button" onclick="triggerFileInput('legFile')" class="btn btn-secondary" style="padding: 0 16px;">📂</button>
+                    </div>
+                    <input type="file" id="legFile" style="display: none;" onchange="handleFileUpload('legFile', 'legFileUrlInput')">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

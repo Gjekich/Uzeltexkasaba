@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imtiyozlar - UzeltexKasaba</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                ⚡ <span>UzeltexKasaba</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Bosh sahifa</a></li>
+                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
+                <li><a href="privileges.html" class="nav-link active">Imtiyozlar</a></li>
+                <li><a href="legislation.html" class="nav-link">Qonunchilik</a></li>
+            </ul>
+            <a href="admin.html" class="btn nav-btn">🔒 Admin Panel</a>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="section section-secondary" style="padding: 60px 0;">
+        <div class="container">
+            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;">A'zolik Imtiyozlari va Kafolatlari</h1>
+            <p style="color: var(--text-secondary);">Kasaba uyushmasi a'zolari uchun qonunchilik va jamoa shartnomalarida belgilangan barcha imtiyozlar jamlanmasi.</p>
+        </div>
+    </section>
+
+    <!-- Privileges Grid -->
+    <section class="section">
+        <div class="container">
+            <div class="privilege-grid" id="privilegeGrid">
+                <!-- Dynamic Content -->
+                <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Imtiyozlar yuklanmoqda...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privilege Details Modal -->
+    <div class="modal" id="privilegeModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <span class="modal-close" onclick="closePrivilegeModal()">&times;</span>
+            <div id="modalContent">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 UzeltexKasaba. Barcha huquqlar himoyalangan.</p>
+                <p>Ishlab chiquvchi: Antigravity AI</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        let allPrivileges = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchPrivileges();
+        });
+
+        async function fetchPrivileges() {
+            try {
+                const response = await fetch('/api/privileges/');
+                if (response.ok) {
+                    allPrivileges = await response.json();
+                    renderPrivileges(allPrivileges);
+                } else {
+                    document.getElementById('privilegeGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Imtiyozlarni yuklab bo\'lmadi.</div>';
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById('privilegeGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Server bilan aloqa uzildi.</div>';
+            }
+        }
+
+        function renderPrivileges(list) {
+            const grid = document.getElementById('privilegeGrid');
+            if (!grid) return;
+
+            if (list.length === 0) {
+                grid.innerHTML = `
+                    <div class="privilege-card" onclick="openDemoPrivilege('sanatorium')">
+                        <div class="privilege-icon">🏥</div>
+                        <h3 class="privilege-title">Sanatoriyga imtiyozli yo'llanmalar</h3>
+                        <p class="privilege-desc">Kasaba a'zolari va ularning oila a'zolari uchun 50% gacha imtiyozli dam olish maskanlari yo'llanmalari.</p>
+                        <button class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Batafsil ma'lumot</button>
+                    </div>
+                    <div class="privilege-card" onclick="openDemoPrivilege('financial')">
+                        <div class="privilege-icon">💰</div>
+                        <h3 class="privilege-title">Bir martalik moddiy yordam</h3>
+                        <p class="privilege-desc">Bemorlik, to'y marosimi yoki og'ir ijtimoiy sharoitlar yuzaga kelganda moddiy yordam ajratish tizimi.</p>
+                        <button class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Batafsil ma'lumot</button>
+                    </div>
+                    <div class="privilege-card" onclick="openDemoPrivilege('kids')">
+                        <div class="privilege-icon">🧸</div>
+                        <h3 class="privilege-title">Bolalar oromgohlari</h3>
+                        <p class="privilege-desc">Yozgi mavsumda xodimlarning farzandlarini oromgohlarga yuborish xarajatlarini qisman qoplash.</p>
+                        <button class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Batafsil ma'lumot</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = list.map(priv => {
+                const icon = priv.icon || '🎁';
+                return `
+                    <div class="privilege-card" onclick="openPrivilegeDetails(${priv.id})">
+                        <div class="privilege-icon">${escapeHTML(icon)}</div>
+                        <h3 class="privilege-title">${escapeHTML(priv.title)}</h3>
+                        <p class="privilege-desc">${escapeHTML(priv.description)}</p>
+                        <button class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Batafsil ma'lumot</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function openPrivilegeDetails(id) {
+            const modal = document.getElementById('privilegeModal');
+            const contentDiv = document.getElementById('modalContent');
+            
+            contentDiv.innerHTML = '<div style="text-align: center; padding: 40px 0;">Yuklanmoqda...</div>';
+            modal.classList.add('open');
+
+            try {
+                const response = await fetch(`/api/privileges/${id}`);
+                if (response.ok) {
+                    const priv = await response.json();
+                    
+                    contentDiv.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                            <div class="privilege-icon" style="margin-bottom: 0; width: 50px; height: 50px; font-size: 1.5rem;">${escapeHTML(priv.icon || '🎁')}</div>
+                            <h2 style="font-family: var(--font-heading); font-size: 1.65rem; font-weight: 700; margin: 0;">${escapeHTML(priv.title)}</h2>
+                        </div>
+                        <p style="color: var(--text-primary); font-weight: 500; font-size: 1.05rem; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
+                            ${escapeHTML(priv.description)}
+                        </p>
+                        <div style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem; white-space: pre-wrap;">
+                            ${escapeHTML(priv.content || 'Ushbu imtiyoz bo\'yicha batafsil shartlar va a\'zo bo\'lish/hujjat topshirish tartibi ko\'rsatilmagan. Ma\'lumot olish uchun kasaba uyushmasi ishonch telefoniga qo\'ng\'iroq qilishingiz mumkin.')}
+                        </div>
+                    `;
+                } else {
+                    contentDiv.innerHTML = '<div style="color: var(--color-danger); text-align: center;">Imtiyoz topilmadi.</div>';
+                }
+            } catch (error) {
+                contentDiv.innerHTML = '<div style="color: var(--color-danger); text-align: center;">Server xatoligi yuz berdi.</div>';
+            }
+        }
+
+        function openDemoPrivilege(type) {
+            const modal = document.getElementById('privilegeModal');
+            const contentDiv = document.getElementById('modalContent');
+            modal.classList.add('open');
+
+            const demoData = {
+                sanatorium: {
+                    title: "Sanatoriyga imtiyozli yo'llanmalar",
+                    icon: "🏥",
+                    desc: "Kasaba a'zolari va ularning oila a'zolari uchun 50% gacha imtiyozli dam olish maskanlari yo'llanmalari.",
+                    content: "Yo'llanma olish tartibi:\n1. Arizachi kasaba uyushmasiga ariza bilan murojaat qiladi.\n2. Shifokorning 070-U shaklidagi ma'lumotnomasi taqdim etiladi.\n3. Arizalar ro'yxatga olinib, navbatga muvofiq sanatoriy yo'llanmasi taqdim etiladi.\n\nEslatma: Yo'llanmalar asosan O'zbekiston kasaba uyushmalari federatsiyasi tasarrufidagi sanatoriylar (masalan, Chinobod, Chimyon, Humson va hk.) uchun amal qiladi."
+                },
+                financial: {
+                    title: "Bir martalik moddiy yordam",
+                    icon: "💰",
+                    desc: "Bemorlik, to'y marosimi yoki og'ir ijtimoiy sharoitlar yuzaga kelganda moddiy yordam ajratish tizimi.",
+                    content: "Moddiy yordam olish shartlari:\n- Salomatlik bilan bog'liq jarrohlik yoki uzoq muddatli davolanish talab etilganda.\n- Oilada yuzaga kelgan fors-major holatlari (yong'in, tabiiy ofat) yuz berganda.\n- Birinchi marta nikohdan o'tish yoki oila a'zolaridan birining vafoti holatida.\n\nHujjatlar: Ariza, pasport nusxasi, kasallik varaqasi yoki tegishli dalolatnoma/guvohnomalar."
+                },
+                kids: {
+                    title: "Bolalar oromgohlari",
+                    icon: "🧸",
+                    desc: "Yozgi mavsumda xodimlarning farzandlarini oromgohlarga yuborish xarajatlarini qisman qoplash.",
+                    content: "Yozgi ta'tilda 7 yoshdan 14 yoshgacha bo'lgan bolalarni sog'lomlashtirish oromgohlariga yuborish tartibi:\n1. Bahor oylarida arizalar yig'iladi.\n2. Yo'llanma xarajatlarining 50-70% qismi kasaba uyushmasi budjeti hisobidan to'lanadi.\n3. Qolgan qismi ish beruvchi yoki ota-onaning o'zi tomonidan to'lanishi mumkin.\n\nTegishli hujjatlar: Ariza, tug'ilganlik haqidagi guvohnoma nusxasi, tibbiy ma'lumotnoma."
+                }
+            };
+
+            const data = demoData[type];
+            contentDiv.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                    <div class="privilege-icon" style="margin-bottom: 0; width: 50px; height: 50px; font-size: 1.5rem;">${data.icon}</div>
+                    <h2 style="font-family: var(--font-heading); font-size: 1.65rem; font-weight: 700; margin: 0;">${data.title}</h2>
+                </div>
+                <p style="color: var(--text-primary); font-weight: 500; font-size: 1.05rem; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
+                    ${data.desc}
+                </p>
+                <div style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem; white-space: pre-wrap;">
+                    ${data.content}
+                </div>
+            `;
+        }
+
+        function closePrivilegeModal() {
+            document.getElementById('privilegeModal').classList.remove('open');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yangiliklar - UzeltexKasaba</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                ⚡ <span>UzeltexKasaba</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Bosh sahifa</a></li>
+                <li><a href="news.html" class="nav-link active">Yangiliklar</a></li>
+                <li><a href="privileges.html" class="nav-link">Imtiyozlar</a></li>
+                <li><a href="legislation.html" class="nav-link">Qonunchilik</a></li>
+            </ul>
+            <a href="admin.html" class="btn nav-btn">🔒 Admin Panel</a>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="section section-secondary" style="padding: 60px 0;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <div>
+                <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;">Yangiliklar va Faoliyat</h1>
+                <p style="color: var(--text-secondary);">Kasaba uyushmasining eng so'nggi yangiliklari va amalga oshirilgan ishlari.</p>
+            </div>
+            <div style="min-width: 300px;">
+                <input type="text" id="newsSearch" class="search-input" style="width: 100%;" placeholder="Yangiliklarni qidirish...">
+            </div>
+        </div>
+    </section>
+
+    <!-- News Grid Section -->
+    <section class="section">
+        <div class="container">
+            <div class="news-grid" id="newsGrid">
+                <!-- Dynamic Content -->
+                <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Yangiliklar yuklanmoqda...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Details Modal -->
+    <div class="modal" id="newsModal">
+        <div class="modal-content" style="max-width: 800px;">
+            <span class="modal-close" onclick="closeNewsModal()">&times;</span>
+            <div id="modalContent">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 UzeltexKasaba. Barcha huquqlar himoyalangan.</p>
+                <p>Ishlab chiquvchi: Antigravity AI</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        // Page-specific JS for News
+        let allNews = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchNews();
+
+            const searchInput = document.getElementById('newsSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value.toLowerCase().trim();
+                    filterAndRenderNews(query);
+                });
+            }
+
+            // Check if there is an ID in the URL to open details immediately
+            const urlParams = new URLSearchParams(window.location.search);
+            const newsId = urlParams.get('id');
+            if (newsId) {
+                openNewsDetails(newsId);
+            }
+        });
+
+        async function fetchNews() {
+            try {
+                const response = await fetch('/api/news/');
+                if (response.ok) {
+                    allNews = await response.json();
+                    renderNews(allNews);
+                } else {
+                    document.getElementById('newsGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Yangiliklarni yuklab bo\'lmadi.</div>';
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById('newsGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Server bilan aloqa uzildi.</div>';
+            }
+        }
+
+        function renderNews(list) {
+            const grid = document.getElementById('newsGrid');
+            if (!grid) return;
+
+            if (list.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Qidiruv bo\'yicha yangiliklar topilmadi.</div>';
+                return;
+            }
+
+            grid.innerHTML = list.map(news => {
+                const bgImage = news.image_url ? `style="background-image: url('${news.image_url}')"` : 'style="background-color: #1f2937;"';
+                const date = new Date(news.created_at).toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric' });
+                
+                return `
+                    <div class="news-card">
+                        <div class="news-img" ${bgImage}>
+                            <span class="news-badge">Faoliyat</span>
+                        </div>
+                        <div class="news-body">
+                            <span class="news-date">${date}</span>
+                            <h3 class="news-title">${escapeHTML(news.title)}</h3>
+                            <p class="news-excerpt">${escapeHTML(news.content)}</p>
+                            <button onclick="openNewsDetails(${news.id})" class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Batafsil o'qish</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterAndRenderNews(query) {
+            if (!query) {
+                renderNews(allNews);
+                return;
+            }
+            const filtered = allNews.filter(n => 
+                n.title.toLowerCase().includes(query) || 
+                n.content.toLowerCase().includes(query)
+            );
+            renderNews(filtered);
+        }
+
+        async function openNewsDetails(id) {
+            const modal = document.getElementById('newsModal');
+            const contentDiv = document.getElementById('modalContent');
+            
+            contentDiv.innerHTML = '<div style="text-align: center; padding: 40px 0;">Yuklanmoqda...</div>';
+            modal.classList.add('open');
+
+            try {
+                const response = await fetch(`/api/news/${id}`);
+                if (response.ok) {
+                    const news = await response.json();
+                    const date = new Date(news.created_at).toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric' });
+                    
+                    const imgHtml = news.image_url ? `<img src="${news.image_url}" alt="News image" style="width: 100%; height: 350px; object-fit: cover; border-radius: var(--radius-md); margin-bottom: 24px;">` : '';
+                    
+                    contentDiv.innerHTML = `
+                        ${imgHtml}
+                        <span style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 8px;">${date} | Faoliyat</span>
+                        <h2 style="font-family: var(--font-heading); font-size: 1.85rem; font-weight: 700; margin-bottom: 16px; line-height: 1.3;">${escapeHTML(news.title)}</h2>
+                        <div style="color: var(--text-secondary); line-height: 1.7; font-size: 1rem; white-space: pre-wrap;">${escapeHTML(news.content)}</div>
+                    `;
+                } else {
+                    contentDiv.innerHTML = '<div style="color: var(--color-danger); text-align: center;">Yangilik topilmadi yoki o\'chirib tashlangan.</div>';
+                }
+            } catch (error) {
+                contentDiv.innerHTML = '<div style="color: var(--color-danger); text-align: center;">Server xatoligi yuz berdi.</div>';
+            }
+        }
+
+        function closeNewsModal() {
+            document.getElementById('newsModal').classList.remove('open');
+            // Remove ?id= from URL silently
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UzeltexKasaba - Kasaba Uyushmasi Ochiq Platformasi</title>
+    <meta name="description" content="O'zbekiston elektrotexnika sanoati xodimlari kasaba uyushmasi faoliyati, imtiyozlar, qonunchilik va murojaat yuborish platformasi.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                ⚡ <span>UzeltexKasaba</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link active">Bosh sahifa</a></li>
+                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
+                <li><a href="privileges.html" class="nav-link">Imtiyozlar</a></li>
+                <li><a href="legislation.html" class="nav-link">Qonunchilik</a></li>
+            </ul>
+            <a href="admin.html" class="btn nav-btn">🔒 Admin Panel</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <span class="section-tag">Ishonchli Himoya</span>
+                <h1>Kasaba Uyushmasi — Sizning <span>Huquq va Imtiyozlaringiz</span> Kafolati</h1>
+                <p>Biz elektrotexnika sanoati xodimlarining ijtimoiy-iqtisodiy huquqlarini himoya qilish, ularning mehnat sharoitlarini yaxshilash va munosib hayot darajasini ta'minlash uchun xizmat qilamiz.</p>
+                <div class="hero-buttons">
+                    <a href="privileges.html" class="btn btn-primary">Imtiyozlar bilan tanishish</a>
+                    <a href="#murojaat" class="btn btn-secondary">Murojaat yuborish</a>
+                </div>
+            </div>
+            <div class="hero-image" style="text-align: right;">
+                <img src="images/union_hero_bg.jpg" alt="Kasaba uyushmasi faoliyati" style="border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border: 4px solid white; max-width: 90%; margin-left: auto;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container stats-grid">
+            <div class="stat-card">
+                <div class="stat-num">5,000+</div>
+                <div class="stat-label">Kasaba a'zolari</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num accent">120+</div>
+                <div class="stat-label">Sanatoriylarga yo'llanmalar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">450+</div>
+                <div class="stat-label">Huquqiy maslahatlar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num accent">98%</div>
+                <div class="stat-label">Ijobiy hal etilgan murojaatlar</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privileges Showcase -->
+    <section class="section section-secondary">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Bizning Imkoniyatlar</span>
+                <h2 class="section-title">A'zolar uchun taqdim etiladigan imtiyozlar</h2>
+                <p class="section-subtitle">Kasaba uyushmasi a'zosi bo'lish orqali siz quyidagi imtiyozlar va qo'llab-quvvatlash tizimidan foydalanish huquqiga egasiz.</p>
+            </div>
+            <div class="privilege-grid">
+                <div class="privilege-card">
+                    <div class="privilege-icon">🏥</div>
+                    <h3 class="privilege-title">Sog'liqni saqlash & Dam olish</h3>
+                    <p class="privilege-desc">Respublikamizdagi eng yaxshi sanatoriylar va davolanish maskanlariga imtiyozli yo'llanmalar.</p>
+                    <a href="privileges.html" class="privilege-link">Batafsil ma'lumot ➔</a>
+                </div>
+                <div class="privilege-card">
+                    <div class="privilege-icon">💰</div>
+                    <h3 class="privilege-title">Moddiy ko'mak</h3>
+                    <p class="privilege-desc">Og'ir ijtimoiy ahvoldagi xodimlarga, yosh oilalarga hamda nafaqadagi a'zolarga moliyaviy yordamlar.</p>
+                    <a href="privileges.html" class="privilege-link">Batafsil ma'lumot ➔</a>
+                </div>
+                <div class="privilege-card">
+                    <div class="privilege-icon">⚖️</div>
+                    <h3 class="privilege-title">Huquqiy maslahatlar</h3>
+                    <p class="privilege-desc">Ish beruvchi bilan yuzaga keladigan mehnat nizolarida bepul huquqiy yordam va advokatlik xizmatlari.</p>
+                    <a href="privileges.html" class="privilege-link">Batafsil ma'lumot ➔</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest News Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Yangiliklar</span>
+                <h2 class="section-title">So'nggi yangiliklar va tadbirlar</h2>
+                <p class="section-subtitle">Kasaba uyushmasi hayoti, erishilgan kelishuvlar va amalga oshirilgan chora-tadbirlar tafsilotlari.</p>
+            </div>
+            <div class="news-grid" id="homeNewsGrid">
+                <!-- Dynamic Loading via app.js -->
+            </div>
+            <div style="text-align: center; margin-top: 48px;">
+                <a href="news.html" class="btn btn-secondary">Barcha yangiliklarni ko'rish</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Application Section -->
+    <section class="section section-secondary" id="murojaat">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Teskari aloqa</span>
+                <h2 class="section-title">Kasaba uyushmasiga murojaat yuborish</h2>
+                <p class="section-subtitle">Savollaringiz, takliflaringiz yoki yordamga ehtiyojingiz bo'lsa, quyidagi shaklni to'ldiring. Biz tez fursatda siz bilan bog'lanamiz.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Manzilimiz</h4>
+                            <p>Toshkent shahri, Mustaqillik shoh ko'chasi, 74-uy</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h4>Ishonch telefoni</h4>
+                            <p>+998 (71) 200-11-22</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h4>Elektron pochta</h4>
+                            <p>info@uzeltexkasaba.uz</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="fullName" class="form-label">To'liq ism-familiyangiz (F.I.SH.)</label>
+                            <input type="text" id="fullName" class="form-control" placeholder="Masalan: Eshmatov Toshmat" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Telefon raqamingiz</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="Masalan: +998 90 123 45 67" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">Murojaatingiz matni</label>
+                            <textarea id="message" class="form-control" placeholder="Muammoingiz yoki taklifingizni bu yerda batafsil yozib qoldiring..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Murojaatni yuborish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">⚡ UzeltexKasaba</div>
+                    <p class="footer-desc">Elektrotexnika sanoati korxonalari xodimlarini birlashtiruvchi, ularning mehnat va ijtimoiy huquqlarini himoya qiluvchi rasmiy ochiq portal.</p>
+                </div>
+                <div>
+                    <div class="footer-title">Tezkor havolalar</div>
+                    <ul class="footer-links">
+                        <li><a href="index.html" class="footer-link">Bosh sahifa</a></li>
+                        <li><a href="news.html" class="footer-link">Yangiliklar</a></li>
+                        <li><a href="privileges.html" class="footer-link">Imtiyozlar</a></li>
+                        <li><a href="legislation.html" class="footer-link">Qonunchilik</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-title">Qonunchilik va Huquq</div>
+                    <ul class="footer-links">
+                        <li><a href="legislation.html?cat=Qonun" class="footer-link">Mehnat Kodeksi</a></li>
+                        <li><a href="legislation.html?cat=Qaror" class="footer-link">Prezident qarorlari</a></li>
+                        <li><a href="legislation.html?cat=Nizom" class="footer-link">Ichki nizom va tartiblar</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 UzeltexKasaba. Barcha huquqlar himoyalangan.</p>
+                <p>Ishlab chiquvchi: Antigravity AI</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

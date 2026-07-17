@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qonunchilik va Hujjatlar - UzeltexKasaba</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                ⚡ <span>UzeltexKasaba</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Bosh sahifa</a></li>
+                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
+                <li><a href="privileges.html" class="nav-link">Imtiyozlar</a></li>
+                <li><a href="legislation.html" class="nav-link active">Qonunchilik</a></li>
+            </ul>
+            <a href="admin.html" class="btn nav-btn">🔒 Admin Panel</a>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="section section-secondary" style="padding: 60px 0;">
+        <div class="container">
+            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;">Qonunchilik va Rasmiy Hujjatlar</h1>
+            <p style="color: var(--text-secondary);">Mehnat munosabatlariga oid qonunlar, kodekslar hamda kasaba uyushmasi faoliyati nizomlari.</p>
+        </div>
+    </section>
+
+    <!-- Legislation Main Content -->
+    <section class="section">
+        <div class="container">
+            <div class="legislation-wrapper">
+                <!-- Filter bar -->
+                <div class="leg-filter-bar">
+                    <button class="filter-btn active" data-category="all">Barchasi</button>
+                    <button class="filter-btn" data-category="Qonun">Qonunlar & Kodekslar</button>
+                    <button class="filter-btn" data-category="Qaror">Hukumat Qarorlari</button>
+                    <button class="filter-btn" data-category="Nizom">Ichki Nizom va Tartiblar</button>
+                </div>
+                
+                <!-- Search bar -->
+                <div class="leg-search-bar">
+                    <input type="text" id="legSearch" class="search-input" placeholder="Hujjat nomini yoki tavsifini yozing...">
+                </div>
+
+                <!-- List of legislations -->
+                <div class="legislation-list" id="legislationList">
+                    <div style="text-align: center; padding: 40px 0; color: var(--text-muted);">Hujjatlar yuklanmoqda...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 UzeltexKasaba. Barcha huquqlar himoyalangan.</p>
+                <p>Ishlab chiquvchi: Antigravity AI</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        let allLegislations = [];
+        let currentCategory = 'all';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchLegislations();
+
+            // Set category filters
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = btn.getAttribute('data-category');
+                    filterAndRenderLegislation();
+                });
+            });
+
+            // Search input handler
+            const searchInput = document.getElementById('legSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    filterAndRenderLegislation();
+                });
+            }
+
+            // Set initial filter from URL if present
+            const urlParams = new URLSearchParams(window.location.search);
+            const cat = urlParams.get('cat');
+            if (cat) {
+                const targetBtn = document.querySelector(`.filter-btn[data-category="${cat}"]`);
+                if (targetBtn) {
+                    targetBtn.click();
+                }
+            }
+        });
+
+        async function fetchLegislations() {
+            try {
+                const response = await fetch('/api/legislations/');
+                if (response.ok) {
+                    allLegislations = await response.json();
+                    renderLegislation(allLegislations);
+                } else {
+                    document.getElementById('legislationList').innerHTML = '<div style="text-align: center; padding: 40px; color: var(--color-danger);">Hujjatlarni yuklab bo\'mladi.</div>';
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById('legislationList').innerHTML = '<div style="text-align: center; padding: 40px; color: var(--color-danger);">Server bilan aloqa uzildi.</div>';
+            }
+        }
+
+        function renderLegislation(list) {
+            const listDiv = document.getElementById('legislationList');
+            if (!listDiv) return;
+
+            if (list.length === 0) {
+                // If DB is empty, show default offline docs as premium demo
+                renderDemoLegislations();
+                return;
+            }
+
+            listDiv.innerHTML = list.map(leg => {
+                const date = new Date(leg.created_at).toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric' });
+                const downloadLink = leg.file_url ? leg.file_url : '#';
+                
+                return `
+                    <div class="legislation-row">
+                        <div class="leg-info">
+                            <span class="leg-title">${escapeHTML(leg.title)}</span>
+                            <div class="leg-meta">
+                                <span class="leg-cat-badge">${escapeHTML(leg.category)}</span>
+                                <span>Kiritildi: ${date}</span>
+                                ${leg.description ? `<span>Tavsif: ${escapeHTML(leg.description)}</span>` : ''}
+                            </div>
+                        </div>
+                        <a href="${downloadLink}" download class="leg-download-btn" title="Hujjatni yuklab olish">📥</a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterAndRenderLegislation() {
+            const searchVal = document.getElementById('legSearch').value.toLowerCase().trim();
+            let filtered = allLegislations;
+
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(l => l.category === currentCategory);
+            }
+
+            if (searchVal) {
+                filtered = filtered.filter(l => 
+                    l.title.toLowerCase().includes(searchVal) || 
+                    (l.description && l.description.toLowerCase().includes(searchVal))
+                );
+            }
+
+            // Render
+            if (allLegislations.length === 0) {
+                renderDemoLegislations(currentCategory, searchVal);
+            } else {
+                renderLegislation(filtered);
+            }
+        }
+
+        function renderDemoLegislations(category = 'all', search = '') {
+            const listDiv = document.getElementById('legislationList');
+            
+            const demos = [
+                {
+                    title: "O'zbekiston Respublikasining Mehnat Kodeksi (Yangi tahriri)",
+                    category: "Qonun",
+                    date: "2023 yil 30 aprel",
+                    desc: "Xodimlar va ish beruvchilar o'rtasidagi munosabatlarni tartibga soluvchi bosh qonun hujjati."
+                },
+                {
+                    title: "O'zbekiston Respublikasining 'Kasaba uyushmalari to'g'risida'gi Qonuni",
+                    category: "Qonun",
+                    date: "2019 yil 6 dekabr",
+                    desc: "Kasaba uyushmalarining huquqlari, majburiyatlari va kafolatlarini belgilovchi qonun."
+                },
+                {
+                    title: "Kasaba uyushmalari faoliyatini yanada takomillashtirish chora-tadbirlari to'g'risidagi qaror",
+                    category: "Qaror",
+                    date: "2022 yil 12 mart",
+                    desc: "Tashkiliy tuzilmani isloh qilish bo'yicha hukumat qarori."
+                },
+                {
+                    title: "Elektrotexnika sanoati korxonalari tarmog'ining tarif-malaka ma'lumotnomasi",
+                    category: "Nizom",
+                    date: "2021 yil 1 avgust",
+                    desc: "Ishchilarning lavozimlari, toifalari va maosh stavkalarini belgilovchi ichki tarmoq yo'riqnomasi."
+                }
+            ];
+
+            let filtered = demos;
+            if (category !== 'all') {
+                filtered = filtered.filter(d => d.category === category);
+            }
+            if (search) {
+                filtered = filtered.filter(d => 
+                    d.title.toLowerCase().includes(search) || 
+                    d.desc.toLowerCase().includes(search)
+                );
+            }
+
+            if (filtered.length === 0) {
+                listDiv.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">Qidiruvga mos keladigan hujjatlar topilmadi.</div>';
+                return;
+            }
+
+            listDiv.innerHTML = filtered.map(leg => `
+                <div class="legislation-row">
+                    <div class="leg-info">
+                        <span class="leg-title">${leg.title}</span>
+                        <div class="leg-meta">
+                            <span class="leg-cat-badge">${leg.category}</span>
+                            <span>Tasdiqlangan: ${leg.date}</span>
+                            <span>${leg.desc}</span>
+                        </div>
+                    </div>
+                    <a href="#" onclick="alert('Loyiha demo rejimida. Ushbu fayl backend orqali yuklanadi.'); return false;" class="leg-download-btn" title="Yuklab olish">📥</a>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
