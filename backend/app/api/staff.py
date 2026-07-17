@@ -5,7 +5,7 @@ from app.db.database import get_db
 from app.models.user import User
 from app.schemas.staff import StaffCreate, StaffResponse, StaffUpdate
 from app.services.staff_service import StaffService
-from app.utils.auth import get_current_user
+from app.utils.auth import get_current_user, get_current_user_optional
 
 router = APIRouter(
     prefix="/staff",
@@ -27,17 +27,38 @@ def get_all_staff(
     search: str | None = Query(default=None),
     page: int = Query(default=1, ge=1),
     size: int = Query(default=100, ge=1, le=200),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User | None = Depends(get_current_user_optional)
 ):
-    return StaffService.get_all(db, search, page, size)
+    staff_list = StaffService.get_all(db, search, page, size)
+    result = []
+    for member in staff_list:
+        result.append({
+            "id": member.id,
+            "full_name": member.full_name,
+            "position": member.position,
+            "email": member.email,
+            "phone": member.phone if current_user else None
+        })
+    return result
 
 
 @router.get("/{staff_id}", response_model=StaffResponse)
-def get_staff(staff_id: int, db: Session = Depends(get_db)):
+def get_staff(
+    staff_id: int, 
+    db: Session = Depends(get_db),
+    current_user: User | None = Depends(get_current_user_optional)
+):
     staff = StaffService.get(db, staff_id)
     if not staff:
         raise HTTPException(status_code=404, detail="Xodim topilmadi")
-    return staff
+    return {
+        "id": staff.id,
+        "full_name": staff.full_name,
+        "position": staff.position,
+        "email": staff.email,
+        "phone": staff.phone if current_user else None
+    }
 
 
 @router.put("/{staff_id}", response_model=StaffResponse)
