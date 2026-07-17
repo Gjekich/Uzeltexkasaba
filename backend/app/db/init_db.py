@@ -5,6 +5,7 @@ from app.models.user import User
 from app.models.news import News
 from app.models.privilege import Privilege
 from app.models.legislation import Legislation
+from app.models.staff import Staff
 from app.utils.auth import get_password_hash
 
 
@@ -103,6 +104,45 @@ def populate_db():
             db.add_all(demo_legislations)
             db.commit()
             print("Demo legislations populated.")
+
+        # 5. Create Default Staff if none exists
+        staff_count = db.query(Staff).count()
+        if staff_count == 0:
+            demo_staff = [
+                Staff(
+                    full_name="Eshmatov Qobiljon Abdullayevich",
+                    position="Tarmoq kasaba uyushmasi raisi",
+                    phone="+998 (71) 200-11-22",
+                    email="q.eshmatov@uzeltexkasaba.uz"
+                ),
+                Staff(
+                    full_name="Karimov Jamshid Shavkatovich",
+                    position="Rais o'rinbosari",
+                    phone="+998 (71) 200-11-23",
+                    email="j.karimov@uzeltexkasaba.uz"
+                ),
+                Staff(
+                    full_name="Sodiqov Dilshod Rustamovich",
+                    position="Bosh huquqshunos",
+                    phone="+998 (71) 200-11-24",
+                    email="d.sodiqov@uzeltexkasaba.uz"
+                ),
+                Staff(
+                    full_name="Nasimova Lola Murodovna",
+                    position="Moliyaviy bo'lim mudiri",
+                    phone="+998 (71) 200-11-25",
+                    email="l.nasimova@uzeltexkasaba.uz"
+                ),
+                Staff(
+                    full_name="Xasanov Alisher Baxtiyorovich",
+                    position="Mehnat muhofazasi bo'limi bosh mutaxassisi",
+                    phone="+998 (71) 200-11-26",
+                    email="a.xasanov@uzeltexkasaba.uz"
+                )
+            ]
+            db.add_all(demo_staff)
+            db.commit()
+            print("Demo staff populated.")
 
     finally:
         db.close()

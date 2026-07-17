@@ -12,9 +12,11 @@ from app.models.news import News
 from app.models.privilege import Privilege
 from app.models.legislation import Legislation
 from app.models.application import Application
+from app.models.staff import Staff
 
 # API Routers
 from app.api.auth import router as auth_router
+from app.api.staff import router as staff_router
 from app.api.news import router as news_router
 from app.api.privilege import router as privilege_router
 from app.api.legislation import router as legislation_router
@@ -47,6 +49,7 @@ app.include_router(privilege_router, prefix="/api")
 app.include_router(legislation_router, prefix="/api")
 app.include_router(application_router, prefix="/api")
 app.include_router(upload_router, prefix="/api")
+app.include_router(staff_router, prefix="/api")
 
 # Static files for uploads (images, PDFs)
 os.makedirs("static/uploads", exist_ok=True)

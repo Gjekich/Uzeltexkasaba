@@ -36,6 +36,7 @@ function initAdmin() {
     document.getElementById('newsForm').addEventListener('submit', submitNewsForm);
     document.getElementById('privilegeForm').addEventListener('submit', submitPrivilegeForm);
     document.getElementById('legislationForm').addEventListener('submit', submitLegislationForm);
+    document.getElementById('staffForm').addEventListener('submit', submitStaffForm);
 }
 
 function showLoginCard() {
@@ -125,6 +126,7 @@ function loadTabData(tab) {
     if (tab === 'privileges') loadPrivilegesList();
     if (tab === 'legislation') loadLegislationList();
     if (tab === 'applications') loadApplicationsList();
+    if (tab === 'staff') loadStaffList();
 }
 
 /* ==========================================================================
@@ -607,5 +609,150 @@ async function handleFileUpload(fileInputId, targetInputId) {
     } catch (error) {
         console.error(error);
         showToast("Yuklash jarayonida xatolik yuz berdi.", "error");
+    }
+}
+
+/* ==========================================================================
+   Staff CRUD
+   ========================================================================== */
+async function loadStaffList() {
+    const tbody = document.getElementById('staffTableBody');
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Yuklanmoqda...</td></tr>';
+
+    try {
+        const response = await fetch('/api/staff/');
+        if (response.ok) {
+            const staffList = await response.json();
+            if (staffList.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Xodimlar ro\'yxati bo\'sh.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = staffList.map(member => {
+                return `
+                    <tr>
+                        <td style="font-weight: 600; color: var(--color-primary);">${escapeHTML(member.full_name)}</td>
+                        <td>${escapeHTML(member.position)}</td>
+                        <td>${member.phone ? escapeHTML(member.phone) : '—'}</td>
+                        <td>${member.email ? escapeHTML(member.email) : '—'}</td>
+                        <td style="text-align: right; white-space: nowrap;">
+                            <button onclick="editStaff(${member.id})" class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.75rem; margin-right: 4px;">✏️ Tahrirlash</button>
+                            <button onclick="deleteStaff(${member.id})" class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.75rem; color: var(--color-danger); border-color: rgba(220,38,38,0.2);">❌ O'chirish</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        } else {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--color-danger);">Yuklashda xatolik yuz berdi.</td></tr>';
+        }
+    } catch (error) {
+        console.error(error);
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--color-danger);">Server bilan aloqa uzildi.</td></tr>';
+    }
+}
+
+function openStaffFormModal(member = null) {
+    const modal = document.getElementById('staffFormModal');
+    const title = document.getElementById('staffFormTitle');
+    
+    if (member) {
+        title.textContent = "Xodim ma'lumotlarini tahrirlash";
+        document.getElementById('editStaffId').value = member.id;
+        document.getElementById('staffNameInput').value = member.full_name;
+        document.getElementById('staffPositionInput').value = member.position;
+        document.getElementById('staffPhoneInput').value = member.phone || '';
+        document.getElementById('staffEmailInput').value = member.email || '';
+    } else {
+        title.textContent = "Yangi xodim qo'shish";
+        document.getElementById('staffForm').reset();
+        document.getElementById('editStaffId').value = '';
+    }
+    
+    modal.classList.add('open');
+}
+
+function closeStaffFormModal() {
+    document.getElementById('staffFormModal').classList.remove('open');
+}
+
+async function submitStaffForm(e) {
+    e.preventDefault();
+    const id = document.getElementById('editStaffId').value;
+    const full_name = document.getElementById('staffNameInput').value.trim();
+    const position = document.getElementById('staffPositionInput').value.trim();
+    const phone = document.getElementById('staffPhoneInput').value.trim() || null;
+    const email = document.getElementById('staffEmailInput').value.trim() || null;
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Saqlanmoqda...';
+
+    const payload = { full_name, position, phone, email };
+    const url = id ? `/api/staff/${id}` : '/api/staff/';
+    const method = id ? 'PUT' : 'POST';
+
+    try {
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            showToast("Xodim ma'lumotlari muvaffaqiyatli saqlandi!", "success");
+            closeStaffFormModal();
+            loadStaffList();
+        } else {
+            const err = await response.json();
+            showToast(err.detail || "Saqlashda xatolik yuz berdi.", "error");
+        }
+    } catch (error) {
+        console.error(error);
+        showToast("Serverga ulanib bo'lmadi.", "error");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Saqlash';
+    }
+}
+
+async function editStaff(id) {
+    showToast("Ma'lumotlar yuklanmoqda...", "info");
+    try {
+        const response = await fetch(`/api/staff/${id}`);
+        if (response.ok) {
+            const member = await response.json();
+            openStaffFormModal(member);
+        } else {
+            showToast("Xodim ma'lumotlarini yuklashda xatolik.", "error");
+        }
+    } catch (error) {
+        console.error(error);
+        showToast("Server bilan aloqa uzildi.", "error");
+    }
+}
+
+async function deleteStaff(id) {
+    if (!confirm("Haqiqatan ham ushbu xodimni ro'yxatdan o'chirmoqchimisiz?")) return;
+
+    try {
+        const response = await fetch(`/api/staff/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        });
+
+        if (response.ok) {
+            showToast("Xodim ro'yxatdan o'chirildi.", "success");
+            loadStaffList();
+        } else {
+            showToast("O'chirishda xatolik yuz berdi.", "error");
+        }
+    } catch (error) {
+        console.error(error);
+        showToast("Server bilan aloqa uzildi.", "error");
     }
 }

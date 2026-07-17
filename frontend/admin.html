@@ -55,6 +55,7 @@
                     <li class="admin-menu-item" data-tab="privileges">🎁 Imtiyozlar</li>
                     <li class="admin-menu-item" data-tab="legislation">⚖️ Qonunchilik</li>
                     <li class="admin-menu-item" data-tab="applications">✉️ Murojaatlar</li>
+                    <li class="admin-menu-item" data-tab="staff">👥 Xodimlar</li>
                 </ul>
                 <div style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">
                     UzeltexKasaba v1.0.0
@@ -142,6 +143,28 @@
                             </tr>
                         </thead>
                         <tbody id="applicationsTableBody">
+                            <!-- Dynamic Content -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- STAFF TAB -->
+                <section id="tab-staff" class="tab-section" style="display: none;">
+                    <div class="admin-section-header">
+                        <h2 style="font-family: var(--font-heading);">Xodimlar boshqaruvi</h2>
+                        <button onclick="openStaffFormModal()" class="btn btn-primary">➕ Yangi qo'shish</button>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>F.I.SH.</th>
+                                <th>Lavozimi</th>
+                                <th>Telefon</th>
+                                <th>Email</th>
+                                <th style="width: 100px; text-align: right;">Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffTableBody">
                             <!-- Dynamic Content -->
                         </tbody>
                     </table>
@@ -236,6 +259,34 @@
                         <button type="button" onclick="triggerFileInput('legFile')" class="btn btn-secondary" style="padding: 0 16px;">📂</button>
                     </div>
                     <input type="file" id="legFile" style="display: none;" onchange="handleFileUpload('legFile', 'legFileUrlInput')">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- STAFF FORM MODAL -->
+    <div class="modal" id="staffFormModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeStaffFormModal()">&times;</span>
+            <h3 id="staffFormTitle" style="font-family: var(--font-heading); margin-bottom: 24px;">Yangi xodim qo'shish</h3>
+            <form id="staffForm">
+                <input type="hidden" id="editStaffId">
+                <div class="form-group">
+                    <label class="form-label">To'liq ismi (Full Name)</label>
+                    <input type="text" id="staffNameInput" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Lavozimi (Position)</label>
+                    <input type="text" id="staffPositionInput" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Telefon raqami (Phone)</label>
+                    <input type="text" id="staffPhoneInput" class="form-control" placeholder="+998 90 123 45 67">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Elektron pochta (Email)</label>
+                    <input type="email" id="staffEmailInput" class="form-control" placeholder="example@domain.com">
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Saqlash</button>
             </form>

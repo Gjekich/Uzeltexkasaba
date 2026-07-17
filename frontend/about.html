@@ -222,6 +222,27 @@
         </div>
     </section>
 
+    <!-- Union Members/Staff Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Jamoamiz</span>
+                <h2 class="section-title">Uyushma xodimlari va a'zolari</h2>
+                <p class="section-subtitle">Kasaba uyushmasi boshqaruv apparati xodimlarining to'liq ro'yxati.</p>
+            </div>
+
+            <!-- Search Bar for Staff -->
+            <div style="max-width: 500px; margin: 0 auto 40px auto; display: flex; gap: 12px;">
+                <input type="text" id="staffSearch" class="search-input" placeholder="Ism yoki lavozim bo'yicha qidirish...">
+            </div>
+
+            <!-- Staff Grid -->
+            <div class="news-grid" id="staffGrid">
+                <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Yuklanmoqda...</div>
+            </div>
+        </div>
+    </section>
+
     <!-- FAQ Accordion Section -->
     <section class="section">
         <div class="container">
@@ -272,25 +293,86 @@
 
     <script src="app.js"></script>
     <script>
-        // FAQ accordion toggle logic
+        let allStaff = [];
+
         document.addEventListener('DOMContentLoaded', () => {
+            // FAQ accordion toggle logic
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 const question = item.querySelector('.faq-question');
                 question.addEventListener('click', () => {
-                    // Check if current is active
                     const isActive = item.classList.contains('active');
-                    
-                    // Close all
                     faqItems.forEach(i => i.classList.remove('active'));
-                    
-                    // Toggle current
                     if (!isActive) {
                         item.classList.add('active');
                     }
                 });
             });
+
+            // Fetch and render Staff
+            fetchStaff();
+
+            const searchInput = document.getElementById('staffSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value.toLowerCase().trim();
+                    filterAndRenderStaff(query);
+                });
+            }
         });
+
+        async function fetchStaff() {
+            try {
+                const response = await fetch('/api/staff/');
+                if (response.ok) {
+                    allStaff = await response.json();
+                    renderStaff(allStaff);
+                } else {
+                    document.getElementById('staffGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Xodimlarni yuklab bo\'mladi.</div>';
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById('staffGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Server bilan aloqa uzildi.</div>';
+            }
+        }
+
+        function renderStaff(list) {
+            const grid = document.getElementById('staffGrid');
+            if (!grid) return;
+
+            if (list.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Qidiruvga mos keladigan xodimlar topilmadi.</div>';
+                return;
+            }
+
+            grid.innerHTML = list.map(member => {
+                const emailHtml = member.email ? `<div>📧 <a href="mailto:${member.email}" style="color: var(--color-primary); font-size: 0.85rem; font-weight: 500;">${escapeHTML(member.email)}</a></div>` : '';
+                const phoneHtml = member.phone ? `<div>📞 <a href="tel:${member.phone}" style="color: var(--color-primary); font-size: 0.85rem; font-weight: 500;">${escapeHTML(member.phone)}</a></div>` : '';
+                
+                return `
+                    <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px;">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: var(--color-primary);">${escapeHTML(member.full_name)}</h3>
+                        <p style="font-size: 0.75rem; font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">${escapeHTML(member.position)}</p>
+                        <div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--border-color); padding-top: 12px; margin-top: auto;">
+                            ${phoneHtml}
+                            ${emailHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterAndRenderStaff(query) {
+            if (!query) {
+                renderStaff(allStaff);
+                return;
+            }
+            const filtered = allStaff.filter(s => 
+                s.full_name.toLowerCase().includes(query) || 
+                s.position.toLowerCase().includes(query)
+            );
+            renderStaff(filtered);
+        }
     </script>
 </body>
 </html>
