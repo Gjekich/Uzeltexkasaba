@@ -620,7 +620,9 @@ async function loadStaffList() {
     tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Yuklanmoqda...</td></tr>';
 
     try {
-        const response = await fetch('/api/staff/');
+        const response = await fetch('/api/staff/', {
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
         if (response.ok) {
             const staffList = await response.json();
             if (staffList.length === 0) {
@@ -721,7 +723,9 @@ async function submitStaffForm(e) {
 async function editStaff(id) {
     showToast("Ma'lumotlar yuklanmoqda...", "info");
     try {
-        const response = await fetch(`/api/staff/${id}`);
+        const response = await fetch(`/api/staff/${id}`, {
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
         if (response.ok) {
             const member = await response.json();
             openStaffFormModal(member);
