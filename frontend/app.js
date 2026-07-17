@@ -113,7 +113,7 @@ async function loadLatestNews() {
                 grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Hozircha yangiliklar yo\'q.</div>';
                 return;
             }
-            
+            grid.innerHTML = newsList.map(news => {
                 const firstImg = news.image_url ? news.image_url.split(',')[0] : '';
                 const bgImage = firstImg ? `style="background-image: url('${firstImg}')"` : 'style="background-color: #1f2937;"';
                 const date = new Date(news.created_at).toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric' });
