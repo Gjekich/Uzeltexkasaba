@@ -49,6 +49,9 @@ function setLanguage(lang) {
     if (typeof renderEvents === 'function' && typeof allEvents !== 'undefined') {
         renderEvents(allEvents);
     }
+    if (typeof renderStaff === 'function' && typeof allStaff !== 'undefined') {
+        renderStaff(allStaff);
+    }
     if (typeof loadLatestNews === 'function') {
         loadLatestNews();
     }
@@ -219,4 +222,61 @@ function getLocalizedField(obj, field) {
     }
     const localized = obj[`${field}_${lang}`];
     return localized || obj[field] || '';
+}
+
+// Staff Position Translation Helper
+function translatePosition(positionName) {
+    if (!positionName) return '';
+    const currentLang = getCurrentLanguage();
+    if (currentLang === 'uz') return positionName;
+    
+    // Normalize position name (replace double spaces, trim)
+    const normalized = positionName.replace(/\s+/g, ' ').trim().toLowerCase();
+    
+    const mapping = {
+        ru: {
+            "boshqaruvi raisi": "Председатель правления",
+            "boshqaruvi raisining birinchi o'rinbosari": "Первый заместитель председателя правления",
+            "boshqaruvi raisining o'rinbosari": "Заместитель председателя правления",
+            "boshqaruvi raisining maslahatchisi": "Советник председателя правления",
+            "boshqaruvi raisining yordamchisi": "Помощник председателя правления",
+            "boshqarma boshlig'i": "Начальник управления",
+            "bo'lim boshlig'i": "Начальник отдела",
+            "bosh buxgalter": "Главный бухгалтер",
+            "bosh mutaxassis": "Главный специалист",
+            "yetakchi mutaxassis": "Ведущий специалист",
+            "mutaxassis": "Специалист",
+            "muhandisi": "Инженер",
+            "haydovchi": "Водитель",
+            "qozonxona operatori": "Оператор котельной",
+            "bino farroshi": "Уборщик здания",
+            "energetik-muhandis": "Инженер-энергетик",
+            "qorovul": "Охранник",
+            "ish yurituvchi": "Делопроизводитель",
+            "arxivrius": "Архивариус"
+        },
+        en: {
+            "boshqaruvi raisi": "Chairman of the Board",
+            "boshqaruvi raisining birinchi o'rinbosari": "First Deputy Chairman of the Board",
+            "boshqaruvi raisining o'rinbosari": "Deputy Chairman of the Board",
+            "boshqaruvi raisining maslahatchisi": "Advisor to the Chairman of the Board",
+            "boshqaruvi raisining yordamchisi": "Assistant to the Chairman of the Board",
+            "boshqarma boshlig'i": "Head of Department",
+            "bo'lim boshlig'i": "Head of Section",
+            "bosh buxgalter": "Chief Accountant",
+            "bosh mutaxassis": "Chief Specialist",
+            "yetakchi mutaxassis": "Leading Specialist",
+            "mutaxassis": "Specialist",
+            "muhandisi": "Engineer",
+            "haydovchi": "Driver",
+            "qozonxona operatori": "Boiler Room Operator",
+            "bino farroshi": "Building Cleaner",
+            "energetik-muhandis": "Energy Engineer",
+            "qorovul": "Guard",
+            "ish yurituvchi": "Office Manager",
+            "arxivrius": "Archivist"
+        }
+    };
+    
+    return (mapping[currentLang] && mapping[currentLang][normalized]) || positionName;
 }
