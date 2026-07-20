@@ -143,8 +143,8 @@
     <!-- Page Title -->
     <section class="section section-secondary" style="padding: 60px 0;">
         <div class="container">
-            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;">Foto va Video Galereya</h1>
-            <p style="color: var(--text-secondary);">Kasaba uyushmasi hayoti, tadbirlar va dam olish maskanlaridan jonli lavhalar.</p>
+            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;" data-i18n="gallery_page_title">Foto va Video Galereya</h1>
+            <p style="color: var(--text-secondary);" data-i18n="gallery_page_subtitle">Kasaba uyushmasi hayoti, tadbirlar va dam olish maskanlaridan jonli lavhalar.</p>
         </div>
     </section>
 
@@ -153,56 +153,15 @@
         <div class="container">
             <!-- Filter Bar -->
             <div class="gallery-filter">
-                <button class="filter-btn active" data-filter="all">Barchasi</button>
-                <button class="filter-btn" data-filter="tadbirlar">Tadbirlar & Loyihalar</button>
-                <button class="filter-btn" data-filter="sanatoriy">Sanatoriylar</button>
-                <button class="filter-btn" data-filter="sport">Sport O'yinlari</button>
+                <button class="filter-btn active" data-filter="all" data-i18n="gallery_filter_all">Barchasi</button>
+                <button class="filter-btn" data-filter="tadbirlar" data-i18n="gallery_filter_events">Tadbirlar & Loyihalar</button>
+                <button class="filter-btn" data-filter="sanatoriy" data-i18n="gallery_filter_resorts">Sanatoriylar</button>
+                <button class="filter-btn" data-filter="sport" data-i18n="gallery_filter_sports">Sport O'yinlari</button>
             </div>
 
             <!-- Grid -->
             <div class="gallery-grid" id="galleryGrid">
-                <div class="gallery-item" data-category="tadbirlar" onclick="openLightbox('images/union_hero_bg.jpg', 'Kasaba uyushmasi delegatsiyasi uchrashuvi')">
-                    <img src="images/union_hero_bg.jpg" alt="Tadbir">
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Tadbirlar</span>
-                        <span class="gallery-caption">Tarmoq kelishuvining imzolanish jarayoni</span>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="sanatoriy" onclick="openLightbox('images/union_hero_bg.jpg', 'Chinobod sanatoriysidagi dam oluvchilar')">
-                    <img src="images/union_hero_bg.jpg" alt="Sanatoriy">
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Sanatoriylar</span>
-                        <span class="gallery-caption">Chinobod sanatoriysidagi dam oluvchilar guruhi</span>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="sport" onclick="openLightbox('images/union_hero_bg.jpg', 'Yillik shaxmat turniri g\'oliblari')">
-                    <img src="images/union_hero_bg.jpg" alt="Sport">
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Sport O'yinlari</span>
-                        <span class="gallery-caption">Yillik shaxmat turniri g'oliblari</span>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="tadbirlar" onclick="openLightbox('images/union_hero_bg.jpg', 'Yosh mutaxassislar seminari')">
-                    <img src="images/union_hero_bg.jpg" alt="Tadbir">
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Tadbirlar</span>
-                        <span class="gallery-caption">Yosh mutaxassislar seminari ishtirokchilari</span>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="sanatoriy" onclick="openLightbox('images/union_hero_bg.jpg', 'Humson sanatoriysi dam olish hududi')">
-                    <img src="images/union_hero_bg.jpg" alt="Sanatoriy">
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Sanatoriylar</span>
-                        <span class="gallery-caption">Humson sanatoriysi dam olish hududi</span>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="sport" onclick="openLightbox('images/union_hero_bg.jpg', 'Mini futbol bo\'yicha kasaba kubogi')">
-                    <img src="images/union_hero_bg.jpg" alt="Sport">
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Sport O'yinlari</span>
-                        <span class="gallery-caption">Mini futbol bo'yicha kasaba kubogi yarim finali</span>
-                    </div>
-                </div>
+                <!-- Loaded dynamically -->
             </div>
         </div>
     </section>
@@ -217,10 +176,10 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                <p>&copy; 2026 UzeltexKasaba. Barcha huquqlar himoyalangan.</p>
+                <p>&copy; 2026 UzeltexKasaba. <span data-i18n="footer_rights">Barcha huquqlar himoyalangan.</span></p>
                 <a href="https://t.me/uzeltexkasaba" target="_blank" style="display: flex; align-items: center; gap: 8px; color: var(--color-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-                    Telegram kanalimiz
+                    <span data-i18n="footer_telegram">Telegram kanalimiz</span>
                 </a>
             </div>
         </div>
@@ -229,28 +188,67 @@
     <script src="translations.js"></script>
     <script src="app.js"></script>
     <script>
-        // Gallery filter logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const filterBtns = document.querySelectorAll('.gallery-filter .filter-btn');
-            const galleryItems = document.querySelectorAll('.gallery-item');
+        const galleryItemsData = [
+            { id: 1, image: 'images/union_hero_bg.jpg', category: 'tadbirlar', tagKey: 'gallery_filter_events', captionKey: 'gallery_cap_1' },
+            { id: 2, image: 'images/union_hero_bg.jpg', category: 'sanatoriy', tagKey: 'gallery_filter_resorts', captionKey: 'gallery_cap_2' },
+            { id: 3, image: 'images/union_hero_bg.jpg', category: 'sport', tagKey: 'gallery_filter_sports', captionKey: 'gallery_cap_3' },
+            { id: 4, image: 'images/union_hero_bg.jpg', category: 'tadbirlar', tagKey: 'gallery_filter_events', captionKey: 'gallery_cap_4' },
+            { id: 5, image: 'images/union_hero_bg.jpg', category: 'sanatoriy', tagKey: 'gallery_filter_resorts', captionKey: 'gallery_cap_5' },
+            { id: 6, image: 'images/union_hero_bg.jpg', category: 'sport', tagKey: 'gallery_filter_sports', captionKey: 'gallery_cap_6' }
+        ];
 
+        let activeFilter = 'all';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGallery();
+
+            // Gallery filter logic
+            const filterBtns = document.querySelectorAll('.gallery-filter .filter-btn');
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
 
-                    const category = btn.getAttribute('data-filter');
-
-                    galleryItems.forEach(item => {
-                        if (category === 'all' || item.getAttribute('data-category') === category) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
+                    activeFilter = btn.getAttribute('data-filter');
+                    applyFilter();
                 });
             });
         });
+
+        function renderGallery() {
+            const grid = document.getElementById('galleryGrid');
+            if (!grid) return;
+
+            const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+
+            grid.innerHTML = galleryItemsData.map(item => {
+                const tag = (translations[currentLang] && translations[currentLang][item.tagKey]) || item.category;
+                const caption = (translations[currentLang] && translations[currentLang][item.captionKey]) || '';
+
+                return `
+                    <div class="gallery-item" data-category="${item.category}" onclick="openLightbox('${item.image}', '${escapeHTML(caption)}')">
+                        <img src="${item.image}" alt="${escapeHTML(caption)}">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">${escapeHTML(tag)}</span>
+                            <span class="gallery-caption">${escapeHTML(caption)}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            applyFilter();
+        }
+
+        function applyFilter() {
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                if (activeFilter === 'all' || item.getAttribute('data-category') === activeFilter) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
 
         // Lightbox Functions
         function openLightbox(src, caption) {
@@ -259,6 +257,9 @@
             img.src = src;
             lightbox.classList.add('open');
         }
+
+        // Expose renderGallery globally for app.js language switcher hook
+        window.renderGallery = renderGallery;
 
         function closeLightbox() {
             document.getElementById('lightbox').classList.remove('open');

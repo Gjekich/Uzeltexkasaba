@@ -52,6 +52,9 @@ function setLanguage(lang) {
     if (typeof renderStaff === 'function' && typeof allStaff !== 'undefined') {
         renderStaff(allStaff);
     }
+    if (typeof renderGallery === 'function') {
+        renderGallery();
+    }
     if (typeof loadLatestNews === 'function') {
         loadLatestNews();
     }

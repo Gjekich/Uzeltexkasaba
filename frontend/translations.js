@@ -183,6 +183,21 @@ const translations = {
         "news_detail_back_error_btn": "Yangiliklar sahifasiga qaytish",
         "news_detail_error_title": "Xatolik",
 
+        // Gallery page specific
+        "gallery_page_title": "Foto va Video Galereya",
+        "gallery_page_subtitle": "Kasaba uyushmasi hayoti, tadbirlar va dam olish maskanlaridan jonli lavhalar.",
+        "gallery_filter_all": "Barchasi",
+        "gallery_filter_events": "Tadbirlar & Loyihalar",
+        "gallery_filter_resorts": "Sanatoriylar",
+        "gallery_filter_sports": "Sport O'yinlari",
+        
+        "gallery_cap_1": "Tarmoq kelishuvining imzolanish jarayoni",
+        "gallery_cap_2": "Chinobod sanatoriysidagi dam oluvchilar guruhi",
+        "gallery_cap_3": "Yillik shaxmat turniri g'oliblari",
+        "gallery_cap_4": "Yosh mutaxassislar seminari ishtirokchilari",
+        "gallery_cap_5": "Humson sanatoriysi dam olish hududi",
+        "gallery_cap_6": "Mini futbol bo'yicha kasaba kubogi yarim finali",
+
         // Events page specific
         "events_page_title": "Tadbirlar va Seminarlar Rejasi",
         "events_page_subtitle": "Kasaba uyushmasi tomonidan o'tkaziladigan seminar, trening, sport o'yinlari va bayram tadbirlari jadvali.",
@@ -437,6 +452,21 @@ const translations = {
         "news_detail_back_error_btn": "Вернуться на страницу новостей",
         "news_detail_error_title": "Ошибка",
 
+        // Gallery page specific
+        "gallery_page_title": "Фото и видео галерея",
+        "gallery_page_subtitle": "Живые кадры из жизни профсоюза, мероприятий и мест отдыха.",
+        "gallery_filter_all": "Все",
+        "gallery_filter_events": "Мероприятия и проекты",
+        "gallery_filter_resorts": "Санатории",
+        "gallery_filter_sports": "Спортивные игры",
+        
+        "gallery_cap_1": "Процесс подписания отраслевого соглашения",
+        "gallery_cap_2": "Группа отдыхающих в санатории Чинабад",
+        "gallery_cap_3": "Победители ежегодного шахматного турнира",
+        "gallery_cap_4": "Участники семинара молодых специалистов",
+        "gallery_cap_5": "Зона отдыха санатория Хумсан",
+        "gallery_cap_6": "Полуфинал профсоюзного кубка по мини-футболу",
+
         // Events page specific
         "events_page_title": "План мероприятий и семинаров",
         "events_page_subtitle": "Расписание семинаров, тренингов, спортивных игр и праздничных мероприятий, проводимых профсоюзом.",
@@ -690,6 +720,21 @@ const translations = {
         "news_detail_error": "An error occurred while connecting to the server.",
         "news_detail_back_error_btn": "Return to news page",
         "news_detail_error_title": "Error",
+
+        // Gallery page specific
+        "gallery_page_title": "Photo and Video Gallery",
+        "gallery_page_subtitle": "Live scenes from the life of the union, events, and recreation areas.",
+        "gallery_filter_all": "All",
+        "gallery_filter_events": "Events & Projects",
+        "gallery_filter_resorts": "Sanatoriums",
+        "gallery_filter_sports": "Sports Games",
+        
+        "gallery_cap_1": "Signing process of the industry agreement",
+        "gallery_cap_2": "Group of vacationers in the Chinabad sanatorium",
+        "gallery_cap_3": "Winners of the annual chess tournament",
+        "gallery_cap_4": "Participants of the young specialists seminar",
+        "gallery_cap_5": "Humson sanatorium recreation area",
+        "gallery_cap_6": "Trade union futsal cup semi-final",
 
         // Events page specific
         "events_page_title": "Events and Seminars Schedule",
