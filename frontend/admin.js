@@ -377,17 +377,22 @@ async function loadPrivilegesList() {
                 return;
             }
 
-            tbody.innerHTML = list.map(priv => `
-                <tr>
-                    <td style="font-size: 1.5rem;">${escapeHTML(priv.icon || '🎁')}</td>
-                    <td><strong>${escapeHTML(priv.title)}</strong></td>
-                    <td style="color: var(--text-secondary); max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHTML(priv.description)}</td>
-                    <td style="text-align: right;">
-                        <button onclick="editPrivilege(${priv.id})" class="admin-action-btn btn-edit">✏️</button>
-                        <button onclick="deletePrivilege(${priv.id})" class="admin-action-btn btn-delete">🗑️</button>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = list.map(priv => {
+                const icon = priv.icon || '🎁';
+                const isImg = icon.includes('/') || icon.includes('.') || icon.startsWith('http');
+                const iconHtml = isImg ? `<img src="${icon}" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%;">` : escapeHTML(icon);
+                return `
+                    <tr>
+                        <td style="font-size: 1.5rem; text-align: center; vertical-align: middle;">${iconHtml}</td>
+                        <td><strong>${escapeHTML(priv.title)}</strong></td>
+                        <td style="color: var(--text-secondary); max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHTML(priv.description)}</td>
+                        <td style="text-align: right;">
+                            <button onclick="editPrivilege(${priv.id})" class="admin-action-btn btn-edit">✏️</button>
+                            <button onclick="deletePrivilege(${priv.id})" class="admin-action-btn btn-delete">🗑️</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
     } catch (e) {
         tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--color-danger);">Yuklashda xatolik.</td></tr>';

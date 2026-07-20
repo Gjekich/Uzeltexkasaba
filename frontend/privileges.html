@@ -119,9 +119,12 @@
 
             grid.innerHTML = list.map(priv => {
                 const icon = priv.icon || '🎁';
+                const isImg = icon.includes('/') || icon.includes('.') || icon.startsWith('http');
+                const iconHtml = isImg ? `<img src="${icon}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">` : escapeHTML(icon);
+                
                 return `
                     <div class="privilege-card" onclick="openPrivilegeDetails(${priv.id})">
-                        <div class="privilege-icon">${escapeHTML(icon)}</div>
+                        <div class="privilege-icon" style="padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">${iconHtml}</div>
                         <h3 class="privilege-title">${escapeHTML(priv.title)}</h3>
                         <p class="privilege-desc">${escapeHTML(priv.description)}</p>
                         <button class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Batafsil ma'lumot</button>
@@ -142,9 +145,13 @@
                 if (response.ok) {
                     const priv = await response.json();
                     
+                    const icon = priv.icon || '🎁';
+                    const isImg = icon.includes('/') || icon.includes('.') || icon.startsWith('http');
+                    const iconHtml = isImg ? `<img src="${icon}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">` : escapeHTML(icon);
+
                     contentDiv.innerHTML = `
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
-                            <div class="privilege-icon" style="margin-bottom: 0; width: 50px; height: 50px; font-size: 1.5rem;">${escapeHTML(priv.icon || '🎁')}</div>
+                            <div class="privilege-icon" style="margin-bottom: 0; width: 50px; height: 50px; padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">${iconHtml}</div>
                             <h2 style="font-family: var(--font-heading); font-size: 1.65rem; font-weight: 700; margin: 0;">${escapeHTML(priv.title)}</h2>
                         </div>
                         <p style="color: var(--text-primary); font-weight: 500; font-size: 1.05rem; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
