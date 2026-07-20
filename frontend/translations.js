@@ -179,6 +179,22 @@ const translations = {
         "modal_reg_org": "Ish joyingiz (Korxona/tashkilot nomi)",
         "modal_reg_btn": "Yuborish",
 
+        // Leadership page specific
+        "lead_page_title": "\"O'zeltexsanoat\" uyushmasi Kasaba uyushmasi boshlang'ich qo'mitasi rahbariyati",
+        "lead_page_subtitle": "Boshlang'ich kasaba uyushmasi qo'mitasining saylangan rahbariyati va a'zolari tarkibi.",
+        "lead_chair_tag": "Qo'mita Raisi",
+        "lead_chair_title": "Kasaba uyushmasi qo'mitasi raisi",
+        "lead_chair_desc": "\"O'zeltexsanoat\" uyushmasi boshlang'ich kasaba uyushmasi qo'mitasi raisi",
+        "lead_chair_badge": "💼 Saylangan rais",
+        "lead_members_tag": "A'zolar tarkibi",
+        "lead_members_title": "Qo'mita a'zolari",
+        "lead_members_desc": "\"O'zeltexsanoat\" uyushmasi kasaba uyushma qo'mitasi son tarkibi (3 kishidan iborat tarkibda saylangan)",
+        "lead_member_badge": "Qo'mita A'zosi",
+        "lead_m1_name": "Axunov Boburmirzo Madaminovich",
+        "lead_m1_desc": "\"O'zeltexsanoat\" uyushmasi boshlang'ich kasaba uyushma qo'mitasi a'zosi",
+        "lead_m2_name": "Xusnidinova Nigora Rovshan qizi",
+        "lead_m3_name": "Buriyev Sirojiddin Zuhriddin o'g'li",
+
         // About page specific
         "about_page_title": "Tashkilot Haqida",
         "about_page_subtitle": "Kasaba uyushmasining tarixi, maqsadlari va tashkiliy tuzilmasi.",
@@ -383,6 +399,22 @@ const translations = {
         "modal_reg_org": "Место работы (Название предприятия)",
         "modal_reg_btn": "Отправить",
 
+        // Leadership page specific
+        "lead_page_title": "Руководство первичного профсоюзного комитета Ассоциации «Узэлтехсаноат»",
+        "lead_page_subtitle": "Избранное руководство и состав членов первичного профсоюзного комитета.",
+        "lead_chair_tag": "Председатель комитета",
+        "lead_chair_title": "Председатель профсоюзного комитета",
+        "lead_chair_desc": "Председатель первичного профсоюзного комитета Ассоциации «Узэлтехсаноат»",
+        "lead_chair_badge": "💼 Избранный председатель",
+        "lead_members_tag": "Состав членов",
+        "lead_members_title": "Члены комитета",
+        "lead_members_desc": "Численный состав профсоюзного комитета Ассоциации «Узэлтехсаноат» (избран в составе 3 человек)",
+        "lead_member_badge": "Член комитета",
+        "lead_m1_name": "Ахунов Бобурмирзо Мадаминович",
+        "lead_m1_desc": "Член первичного профсоюзного комитета Ассоциации «Узэлтехсаноат»",
+        "lead_m2_name": "Хуснидинова Нигора Ровшан кизи",
+        "lead_m3_name": "Буриев Сирожиддин Зухриддин угли",
+
         // About page specific
         "about_page_title": "Организация",
         "about_page_subtitle": "История, цели и организационная структура профсоюза.",
@@ -586,6 +618,22 @@ const translations = {
         "modal_reg_phone": "Phone Number",
         "modal_reg_org": "Place of Work (Organization name)",
         "modal_reg_btn": "Submit",
+
+        // Leadership page specific
+        "lead_page_title": "Leadership of the Primary Trade Union Committee of \"Uzeltexsanoat\" Association",
+        "lead_page_subtitle": "Elected leadership and members of the primary trade union committee.",
+        "lead_chair_tag": "Committee Chairman",
+        "lead_chair_title": "Trade Union Committee Chairman",
+        "lead_chair_desc": "Chairman of the primary trade union committee of \"Uzeltexsanoat\" Association",
+        "lead_chair_badge": "💼 Elected Chairman",
+        "lead_members_tag": "Members list",
+        "lead_members_title": "Committee Members",
+        "lead_members_desc": "Number of members in the trade union committee of \"Uzeltexsanoat\" Association (elected with 3 members)",
+        "lead_member_badge": "Committee Member",
+        "lead_m1_name": "Axunov Boburmirzo Madaminovich",
+        "lead_m1_desc": "Member of the primary trade union committee of \"Uzeltexsanoat\" Association",
+        "lead_m2_name": "Xusnidinova Nigora Rovshan qizi",
+        "lead_m3_name": "Buriyev Sirojiddin Zuhriddin o'g'li",
 
         // About page specific
         "about_page_title": "About the Organization",
