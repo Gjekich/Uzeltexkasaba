@@ -157,7 +157,21 @@ const translations = {
         "news_tag": "Faoliyat",
         "news_load_error": "Yangiliklarni yuklab bo'lmadi.",
         "news_conn_error": "Server bilan aloqa uzildi.",
-        "news_not_found": "Qidiruv bo'yicha yangiliklar topilmadi.",,
+        "news_not_found": "Qidiruv bo'yicha yangiliklar topilmadi.",
+
+        // Legislation page specific
+        "leg_page_title": "Qonunchilik va Rasmiy Hujjatlar",
+        "leg_page_subtitle": "Mehnat munosabatlariga oid qonunlar, kodekslar hamda kasaba uyushmasi faoliyati nizomlari.",
+        "leg_filter_all": "Barchasi",
+        "leg_filter_law": "Qonunlar & Kodekslar",
+        "leg_filter_decision": "Hukumat Qarorlari",
+        "leg_filter_rules": "Ichki Nizom va Tartiblar",
+        "leg_search_placeholder": "Hujjat nomini yoki tavsifini yozing...",
+        "leg_loading": "Hujjatlar yuklanmoqda...",
+        "leg_load_error": "Hujjatlarni yuklab bo'lmadi.",
+        "leg_conn_error": "Server bilan aloqa uzildi.",
+        "leg_added_date": "Kiritildi: ",
+        "leg_not_found": "Bunday hujjat topilmadi.",
 
         // Events page specific
         "events_page_title": "Tadbirlar va Seminarlar Rejasi",
@@ -387,7 +401,21 @@ const translations = {
         "news_tag": "Деятельность",
         "news_load_error": "Не удалось загрузить новости.",
         "news_conn_error": "Соединение с сервером потеряно.",
-        "news_not_found": "Новости по запросу не найдены.",,
+        "news_not_found": "Новости по запросу не найдены.",
+
+        // Legislation page specific
+        "leg_page_title": "Законодательство и официальные документы",
+        "leg_page_subtitle": "Законы, кодексы, касающиеся трудовых отношений, и положения о деятельности профсоюзов.",
+        "leg_filter_all": "Все",
+        "leg_filter_law": "Законы и кодексы",
+        "leg_filter_decision": "Постановления правительства",
+        "leg_filter_rules": "Внутренние регламенты",
+        "leg_search_placeholder": "Введите название или описание документа...",
+        "leg_loading": "Загрузка документов...",
+        "leg_load_error": "Не удалось загрузить документы.",
+        "leg_conn_error": "Соединение с сервером потеряно.",
+        "leg_added_date": "Опубликовано: ",
+        "leg_not_found": "Документы по запросу не найдены.",
 
         // Events page specific
         "events_page_title": "План мероприятий и семинаров",
@@ -617,7 +645,21 @@ const translations = {
         "news_tag": "Activities",
         "news_load_error": "Failed to load news.",
         "news_conn_error": "Connection to server lost.",
-        "news_not_found": "No news found for search query.",,
+        "news_not_found": "No news found for search query.",
+
+        // Legislation page specific
+        "leg_page_title": "Legislation and Official Documents",
+        "leg_page_subtitle": "Laws, codes related to labor relations, and regulations of trade union activity.",
+        "leg_filter_all": "All",
+        "leg_filter_law": "Laws & Codes",
+        "leg_filter_decision": "Government Decisions",
+        "leg_filter_rules": "Internal Regulations",
+        "leg_search_placeholder": "Enter document title or description...",
+        "leg_loading": "Loading documents...",
+        "leg_load_error": "Failed to load documents.",
+        "leg_conn_error": "Connection to server lost.",
+        "leg_added_date": "Added: ",
+        "leg_not_found": "No documents found for search query.",
 
         // Events page specific
         "events_page_title": "Events and Seminars Schedule",

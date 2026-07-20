@@ -40,8 +40,8 @@
     <!-- Page Header -->
     <section class="section section-secondary" style="padding: 60px 0;">
         <div class="container">
-            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;">Qonunchilik va Rasmiy Hujjatlar</h1>
-            <p style="color: var(--text-secondary);">Mehnat munosabatlariga oid qonunlar, kodekslar hamda kasaba uyushmasi faoliyati nizomlari.</p>
+            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;" data-i18n="leg_page_title">Qonunchilik va Rasmiy Hujjatlar</h1>
+            <p style="color: var(--text-secondary);" data-i18n="leg_page_subtitle">Mehnat munosabatlariga oid qonunlar, kodekslar hamda kasaba uyushmasi faoliyati nizomlari.</p>
         </div>
     </section>
 
@@ -51,20 +51,20 @@
             <div class="legislation-wrapper">
                 <!-- Filter bar -->
                 <div class="leg-filter-bar">
-                    <button class="filter-btn active" data-category="all">Barchasi</button>
-                    <button class="filter-btn" data-category="Qonun">Qonunlar & Kodekslar</button>
-                    <button class="filter-btn" data-category="Qaror">Hukumat Qarorlari</button>
-                    <button class="filter-btn" data-category="Nizom">Ichki Nizom va Tartiblar</button>
+                    <button class="filter-btn active" data-category="all" data-i18n="leg_filter_all">Barchasi</button>
+                    <button class="filter-btn" data-category="Qonun" data-i18n="leg_filter_law">Qonunlar & Kodekslar</button>
+                    <button class="filter-btn" data-category="Qaror" data-i18n="leg_filter_decision">Hukumat Qarorlari</button>
+                    <button class="filter-btn" data-category="Nizom" data-i18n="leg_filter_rules">Ichki Nizom va Tartiblar</button>
                 </div>
                 
                 <!-- Search bar -->
                 <div class="leg-search-bar">
-                    <input type="text" id="legSearch" class="search-input" placeholder="Hujjat nomini yoki tavsifini yozing...">
+                    <input type="text" id="legSearch" class="search-input" placeholder="Hujjat nomini yoki tavsifini yozing..." data-i18n="leg_search_placeholder" data-i18n-attr="placeholder">
                 </div>
 
                 <!-- List of legislations -->
                 <div class="legislation-list" id="legislationList">
-                    <div style="text-align: center; padding: 40px 0; color: var(--text-muted);">Hujjatlar yuklanmoqda...</div>
+                    <div style="text-align: center; padding: 40px 0; color: var(--text-muted);" data-i18n="leg_loading">Hujjatlar yuklanmoqda...</div>
                 </div>
             </div>
         </div>
@@ -74,10 +74,10 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                <p>&copy; 2026 UzeltexKasaba. Barcha huquqlar himoyalangan.</p>
+                <p>&copy; 2026 UzeltexKasaba. <span data-i18n="footer_rights">Barcha huquqlar himoyalangan.</span></p>
                 <a href="https://t.me/uzeltexkasaba" target="_blank" style="display: flex; align-items: center; gap: 8px; color: var(--color-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-                    Telegram kanalimiz
+                    <span data-i18n="footer_telegram">Telegram kanalimiz</span>
                 </a>
             </div>
         </div>
@@ -129,11 +129,15 @@
                     allLegislations = await response.json();
                     renderLegislation(allLegislations);
                 } else {
-                    document.getElementById('legislationList').innerHTML = '<div style="text-align: center; padding: 40px; color: var(--color-danger);">Hujjatlarni yuklab bo\'mladi.</div>';
+                    const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+                    const errMsg = (translations[currentLang] && translations[currentLang]["leg_load_error"]) || "Hujjatlarni yuklab bo'lmadi.";
+                    document.getElementById('legislationList').innerHTML = `<div style="text-align: center; padding: 40px; color: var(--color-danger);">${errMsg}</div>`;
                 }
             } catch (error) {
                 console.error(error);
-                document.getElementById('legislationList').innerHTML = '<div style="text-align: center; padding: 40px; color: var(--color-danger);">Server bilan aloqa uzildi.</div>';
+                const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+                const errMsg = (translations[currentLang] && translations[currentLang]["leg_conn_error"]) || "Server bilan aloqa uzildi.";
+                document.getElementById('legislationList').innerHTML = `<div style="text-align: center; padding: 40px; color: var(--color-danger);">${errMsg}</div>`;
             }
         }
 
@@ -141,24 +145,49 @@
             const listDiv = document.getElementById('legislationList');
             if (!listDiv) return;
 
+            const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+
             if (list.length === 0) {
-                // If DB is empty, show default offline docs as premium demo
                 renderDemoLegislations();
                 return;
             }
 
+            const categoryMapping = {
+                uz: { "Qonun": "Qonunlar & Kodekslar", "Qaror": "Hukumat Qarorlari", "Nizom": "Ichki Nizom va Tartiblar" },
+                ru: { "Qonun": "Законы и кодексы", "Qaror": "Постановления правительства", "Nizom": "Внутренние регламенты" },
+                en: { "Qonun": "Laws & Codes", "Qaror": "Government Decisions", "Nizom": "Internal Regulations" }
+            };
+
+            const addedText = (translations[currentLang] && translations[currentLang]["leg_added_date"]) || "Kiritildi: ";
+            const descText = (translations[currentLang] && translations[currentLang]["leg_description_label"]) || "Tavsif: ";
+
             listDiv.innerHTML = list.map(leg => {
-                const date = new Date(leg.created_at).toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric' });
+                let dateStr = '';
+                try {
+                    const d = new Date(leg.created_at);
+                    if (!isNaN(d.getTime())) {
+                        dateStr = d.toLocaleDateString(currentLang === 'uz' ? 'uz-UZ' : (currentLang === 'ru' ? 'ru-RU' : 'en-US'), { day: 'numeric', month: 'long', year: 'numeric' });
+                    } else {
+                        dateStr = leg.created_at ? leg.created_at.substring(0, 10) : '';
+                    }
+                } catch(e) {
+                    dateStr = leg.created_at || '';
+                }
+
                 const downloadLink = leg.file_url ? leg.file_url : '#';
+                const title = getLocalizedField(leg, 'title');
+                const description = getLocalizedField(leg, 'description');
                 
+                const mappedCat = (categoryMapping[currentLang] && categoryMapping[currentLang][leg.category]) || leg.category;
+
                 return `
                     <div class="legislation-row">
                         <div class="leg-info">
-                            <span class="leg-title">${escapeHTML(leg.title)}</span>
+                            <span class="leg-title">${escapeHTML(title)}</span>
                             <div class="leg-meta">
-                                <span class="leg-cat-badge">${escapeHTML(leg.category)}</span>
-                                <span>Kiritildi: ${date}</span>
-                                ${leg.description ? `<span>Tavsif: ${escapeHTML(leg.description)}</span>` : ''}
+                                <span class="leg-cat-badge">${escapeHTML(mappedCat)}</span>
+                                <span>${escapeHTML(addedText)}${dateStr}</span>
+                                ${description ? `<span>${escapeHTML(descText)}${escapeHTML(description)}</span>` : ''}
                             </div>
                         </div>
                         <a href="${downloadLink}" download class="leg-download-btn" title="Hujjatni yuklab olish">📥</a>
@@ -182,7 +211,6 @@
                 );
             }
 
-            // Render
             if (allLegislations.length === 0) {
                 renderDemoLegislations(currentCategory, searchVal);
             } else {
@@ -192,35 +220,32 @@
 
         function renderDemoLegislations(category = 'all', search = '') {
             const listDiv = document.getElementById('legislationList');
-            
-            const demos = [
-                {
-                    title: "O'zbekiston Respublikasining Mehnat Kodeksi (Yangi tahriri)",
-                    category: "Qonun",
-                    date: "2023 yil 30 aprel",
-                    desc: "Xodimlar va ish beruvchilar o'rtasidagi munosabatlarni tartibga soluvchi bosh qonun hujjati."
-                },
-                {
-                    title: "O'zbekiston Respublikasining 'Kasaba uyushmalari to'g'risida'gi Qonuni",
-                    category: "Qonun",
-                    date: "2019 yil 6 dekabr",
-                    desc: "Kasaba uyushmalarining huquqlari, majburiyatlari va kafolatlarini belgilovchi qonun."
-                },
-                {
-                    title: "Kasaba uyushmalari faoliyatini yanada takomillashtirish chora-tadbirlari to'g'risidagi qaror",
-                    category: "Qaror",
-                    date: "2022 yil 12 mart",
-                    desc: "Tashkiliy tuzilmani isloh qilish bo'yicha hukumat qarori."
-                },
-                {
-                    title: "Elektrotexnika sanoati korxonalari tarmog'ining tarif-malaka ma'lumotnomasi",
-                    category: "Nizom",
-                    date: "2021 yil 1 avgust",
-                    desc: "Ishchilarning lavozimlari, toifalari va maosh stavkalarini belgilovchi ichki tarmoq yo'riqnomasi."
-                }
-            ];
+            const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
 
-            let filtered = demos;
+            const demos = {
+                uz: [
+                    { title: "O'zbekiston Respublikasining Mehnat Kodeksi (Yangi tahriri)", category: "Qonun", date: "2023 yil 30 aprel", desc: "Xodimlar va ish beruvchilar o'rtasidagi munosabatlarni tartibga soluvchi bosh qonun hujjati." },
+                    { title: "O'zbekiston Respublikasining 'Kasaba uyushmalari to'g'risida'gi Qonuni", category: "Qonun", date: "2019 yil 6 dekabr", desc: "Kasaba uyushmalarining huquqlari, majburiyatlari va kafolatlarini belgilovchi qonun." },
+                    { title: "Kasaba uyushmalari faoliyatini yanada takomillashtirish chora-tadbirlari to'g'risidagi qaror", category: "Qaror", date: "2022 yil 12 mart", desc: "Tashkiliy tuzilmani isloh qilish bo'yicha hukumat qarori." },
+                    { title: "Elektrotexnika sanoati korxonalari tarmog'ining tarif-malaka ma'lumotnomasi", category: "Nizom", date: "2021 yil 1 avgust", desc: "Ishchilarning lavozimlari, toifalari va maosh stavkalarini belgilovchi ichki tarmoq yo'riqnomasi." }
+                ],
+                ru: [
+                    { title: "Трудовой кодекс Республики Узбекистан (Новая редакция)", category: "Qonun", date: "30 апреля 2023 г.", desc: "Основной закон, регулирующий отношения между работниками и работодателями." },
+                    { title: "Закон Республики Узбекистан «О профессиональных союзах»", category: "Qonun", date: "6 декабря 2019 г.", desc: "Закон, определяющий права, обязанности и гарантии деятельности профсоюзов." },
+                    { title: "Постановление о мерах по дальнейшему совершенствованию деятельности профсоюзов", category: "Qaror", date: "12 марта 2022 г.", desc: "Постановление правительства о реформировании организационной структуры." },
+                    { title: "Тарифно-квалификационный справочник предприятий электротехнической промышленности", category: "Nizom", date: "1 августа 2021 г.", desc: "Внутренняя отраслевая инструкция, определяющая должности, разряды и тарифные ставки работников." }
+                ],
+                en: [
+                    { title: "Labor Code of the Republic of Uzbekistan (New Edition)", category: "Qonun", date: "April 30, 2023", desc: "The main law regulating relations between employees and employers." },
+                    { title: "Law of the Republic of Uzbekistan 'On Trade Unions'", category: "Qonun", date: "December 6, 2019", desc: "Law defining the rights, obligations, and guarantees of trade union activities." },
+                    { title: "Decision on measures to further improve the activities of trade unions", category: "Qaror", date: "March 12, 2022", desc: "Government decision on reforming the organizational structure." },
+                    { title: "Tariff-qualification handbook of electrical industry enterprises", category: "Nizom", date: "August 1, 2021", desc: "Internal industry instruction defining job positions, categories, and salary rates." }
+                ]
+            };
+
+            const activeDemos = demos[currentLang] || demos.uz;
+            let filtered = activeDemos;
+            
             if (category !== 'all') {
                 filtered = filtered.filter(d => d.category === category);
             }
@@ -232,23 +257,35 @@
             }
 
             if (filtered.length === 0) {
-                listDiv.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">Qidiruvga mos keladigan hujjatlar topilmadi.</div>';
+                const errMsg = (translations[currentLang] && translations[currentLang]["leg_not_found"]) || "Bunday hujjat topilmadi.";
+                listDiv.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--text-muted);">${errMsg}</div>`;
                 return;
             }
 
-            listDiv.innerHTML = filtered.map(leg => `
-                <div class="legislation-row">
-                    <div class="leg-info">
-                        <span class="leg-title">${leg.title}</span>
-                        <div class="leg-meta">
-                            <span class="leg-cat-badge">${leg.category}</span>
-                            <span>Tasdiqlangan: ${leg.date}</span>
-                            <span>${leg.desc}</span>
+            const categoryMapping = {
+                uz: { "Qonun": "Qonunlar & Kodekslar", "Qaror": "Hukumat Qarorlari", "Nizom": "Ichki Nizom va Tartiblar" },
+                ru: { "Qonun": "Законы и кодексы", "Qaror": "Постановления правительства", "Nizom": "Внутренние регламенты" },
+                en: { "Qonun": "Laws & Codes", "Qaror": "Government Decisions", "Nizom": "Internal Regulations" }
+            };
+
+            const addedText = currentLang === 'uz' ? 'Tasdiqlangan: ' : (currentLang === 'ru' ? 'Утверждено: ' : 'Approved: ');
+
+            listDiv.innerHTML = filtered.map(leg => {
+                const mappedCat = (categoryMapping[currentLang] && categoryMapping[currentLang][leg.category]) || leg.category;
+                return `
+                    <div class="legislation-row">
+                        <div class="leg-info">
+                            <span class="leg-title">${leg.title}</span>
+                            <div class="leg-meta">
+                                <span class="leg-cat-badge">${escapeHTML(mappedCat)}</span>
+                                <span>${escapeHTML(addedText)}${leg.date}</span>
+                                <span>${leg.desc}</span>
+                            </div>
                         </div>
+                        <a href="#" onclick="alert('${currentLang === 'uz' ? 'Loyiha demo rejimida. Ushbu fayl backend orqali yuklanadi.' : (currentLang === 'ru' ? 'Проект находится в демо-режиме. Этот файл загружается через бэкэнд.' : 'Project is in demo mode. This file is uploaded via backend.')}'); return false;" class="leg-download-btn" title="Yuklab olish">📥</a>
                     </div>
-                    <a href="#" onclick="alert('Loyiha demo rejimida. Ushbu fayl backend orqali yuklanadi.'); return false;" class="leg-download-btn" title="Yuklab olish">📥</a>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
     </script>
 </body>
