@@ -207,6 +207,11 @@ const translations = {
         "guide_search": "Qo'llanma bo'limlarini qidirish...",
         "guide_download_btn": "📕 To'liq qo'llanmani yuklab olish (PDF)",
 
+        // Sihatgoh promo card
+        "priv_sihatgoh_title": "Sihatgoh.uz rasmiy portali",
+        "priv_sihatgoh_desc": "O'zbekiston kasaba uyushmalari Federatsiyasi tarkibidagi barcha sanatoriy-sihatgohlar bo'yicha ma'lumotlar, narxlar va bron qilish tizimi.",
+        "priv_sihatgoh_btn": "Portalga o'tish ➔",
+
         // Events page specific
         "events_page_title": "Tadbirlar va Seminarlar Rejasi",
         "events_page_subtitle": "Kasaba uyushmasi tomonidan o'tkaziladigan seminar, trening, sport o'yinlari va bayram tadbirlari jadvali.",
@@ -485,6 +490,11 @@ const translations = {
         "guide_search": "Поиск по разделам руководства...",
         "guide_download_btn": "📕 Скачать полное руководство (PDF)",
 
+        // Sihatgoh promo card
+        "priv_sihatgoh_title": "Официальный портал Sihatgoh.uz",
+        "priv_sihatgoh_desc": "Информация, цены и система бронирования всех санаториев в структуре Федерации профсоюзов Узбекистана.",
+        "priv_sihatgoh_btn": "Перейти на портал ➔",
+
         // Events page specific
         "events_page_title": "План мероприятий и семинаров",
         "events_page_subtitle": "Расписание семинаров, тренингов, спортивных игр и праздничных мероприятий, проводимых профсоюзом.",
@@ -762,6 +772,11 @@ const translations = {
         "guide_table_page": "Page",
         "guide_search": "Search guide sections...",
         "guide_download_btn": "📕 Download full guide (PDF)",
+
+        // Sihatgoh promo card
+        "priv_sihatgoh_title": "Sihatgoh.uz Official Portal",
+        "priv_sihatgoh_desc": "Information, pricing, and booking system of all sanatoriums within the Federation of Trade Unions of Uzbekistan.",
+        "priv_sihatgoh_btn": "Go to portal ➔",
 
         // Events page specific
         "events_page_title": "Events and Seminars Schedule",

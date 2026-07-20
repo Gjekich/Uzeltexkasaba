@@ -120,34 +120,48 @@
             const grid = document.getElementById('privilegeGrid');
             if (!grid) return;
 
+            const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+            const detailBtnText = (translations[currentLang] && translations[currentLang]["read_more"]) || "Batafsil ma'lumot";
+
+            const sihatgohTitle = (translations[currentLang] && translations[currentLang]["priv_sihatgoh_title"]) || "Sihatgoh.uz rasmiy portali";
+            const sihatgohDesc = (translations[currentLang] && translations[currentLang]["priv_sihatgoh_desc"]) || "O'zbekiston kasaba uyushmalari Federatsiyasi tarkibidagi barcha sanatoriy-sihatgohlar bo'yicha ma'lumotlar, narxlar va bron qilish tizimi.";
+            const sihatgohBtn = (translations[currentLang] && translations[currentLang]["priv_sihatgoh_btn"]) || "Portalga o'tish ➔";
+
+            const promoCardHtml = `
+                <div class="privilege-card" onclick="window.open('https://www.sihatgoh.uz/', '_blank')" style="background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(15, 41, 99, 0.08) 100%); border: 1.5px dashed var(--color-primary); cursor: pointer; display: flex; flex-direction: column;">
+                    <div class="privilege-icon" style="background-color: rgba(15, 41, 99, 0.1); color: var(--color-primary);">🏨</div>
+                    <h3 class="privilege-title" style="color: var(--color-primary); font-weight: 700; margin-bottom: 8px;">${escapeHTML(sihatgohTitle)}</h3>
+                    <p class="privilege-desc" style="color: var(--text-primary); font-weight: 500; font-size: 0.85rem; line-height: 1.5;">${escapeHTML(sihatgohDesc)}</p>
+                    <a href="https://www.sihatgoh.uz/" target="_blank" class="btn btn-primary" style="margin-top: auto; width: 100%; text-align: center; display: inline-block; box-sizing: border-box; text-decoration: none; font-weight: 600; padding: 10px 16px; font-size: 0.85rem;">${escapeHTML(sihatgohBtn)}</a>
+                </div>
+            `;
+
             if (list.length === 0) {
                 grid.innerHTML = `
                     <div class="privilege-card" onclick="openDemoPrivilege('sanatorium')">
                         <div class="privilege-icon">🏥</div>
                         <h3 class="privilege-title">Sanatoriyga imtiyozli yo'llanmalar</h3>
                         <p class="privilege-desc">Kasaba a'zolari va ularning oila a'zolari uchun 50% gacha imtiyozli dam olish maskanlari yo'llanmalari.</p>
-                        <button class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Batafsil ma'lumot</button>
+                        <button class="btn btn-secondary" style="margin-top: auto; width: 100%;">Batafsil ma'lumot</button>
                     </div>
                     <div class="privilege-card" onclick="openDemoPrivilege('financial')">
                         <div class="privilege-icon">💰</div>
                         <h3 class="privilege-title">Bir martalik moddiy yordam</h3>
                         <p class="privilege-desc">Bemorlik, to'y marosimi yoki og'ir ijtimoiy sharoitlar yuzaga kelganda moddiy yordam ajratish tizimi.</p>
-                        <button class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Batafsil ma'lumot</button>
+                        <button class="btn btn-secondary" style="margin-top: auto; width: 100%;">Batafsil ma'lumot</button>
                     </div>
                     <div class="privilege-card" onclick="openDemoPrivilege('kids')">
                         <div class="privilege-icon">🧸</div>
                         <h3 class="privilege-title">Bolalar oromgohlari</h3>
                         <p class="privilege-desc">Yozgi mavsumda xodimlarning farzandlarini oromgohlarga yuborish xarajatlarini qisman qoplash.</p>
-                        <button class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Batafsil ma'lumot</button>
+                        <button class="btn btn-secondary" style="margin-top: auto; width: 100%;">Batafsil ma'lumot</button>
                     </div>
+                    ${promoCardHtml}
                 `;
                 return;
             }
 
-            const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
-            const detailBtnText = (translations[currentLang] && translations[currentLang]["read_more"]) || "Batafsil ma'lumot";
-
-            grid.innerHTML = list.map(priv => {
+            const cardsHtml = list.map(priv => {
                 const icon = priv.icon || '🎁';
                 const isImg = icon.includes('/') || icon.includes('.') || icon.startsWith('http');
                 const iconHtml = isImg ? `<img src="${icon}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">` : escapeHTML(icon);
@@ -156,14 +170,16 @@
                 const description = getLocalizedField(priv, 'description');
 
                 return `
-                    <div class="privilege-card" onclick="openPrivilegeDetails(${priv.id})">
+                    <div class="privilege-card" onclick="openPrivilegeDetails(${priv.id})" style="display: flex; flex-direction: column;">
                         <div class="privilege-icon" style="padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">${iconHtml}</div>
                         <h3 class="privilege-title">${escapeHTML(title)}</h3>
                         <p class="privilege-desc">${escapeHTML(description)}</p>
-                        <button class="btn btn-secondary" style="margin-top: 16px; width: 100%;">${escapeHTML(detailBtnText)}</button>
+                        <button class="btn btn-secondary" style="margin-top: auto; width: 100%;">${escapeHTML(detailBtnText)}</button>
                     </div>
                 `;
             }).join('');
+
+            grid.innerHTML = cardsHtml + promoCardHtml;
         }
 
         async function openPrivilegeDetails(id) {
