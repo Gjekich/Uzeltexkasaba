@@ -4,7 +4,11 @@ from pydantic import BaseModel
 
 class LegislationBase(BaseModel):
     title: str
+    title_ru: str | None = None
+    title_en: str | None = None
     description: str | None = None
+    description_ru: str | None = None
+    description_en: str | None = None
     file_url: str | None = None
     category: str
 

@@ -7,7 +7,46 @@ document.addEventListener('DOMContentLoaded', () => {
     highlightActiveLink();
     initContactForm();
     loadLatestNews();
+    initLanguageSwitcher();
 });
+
+// Language Switcher Logic
+function getCurrentLanguage() {
+    return localStorage.getItem('preferred_language') || 'uz';
+}
+
+function setLanguage(lang) {
+    if (typeof translations === 'undefined' || !translations[lang]) return;
+    localStorage.setItem('preferred_language', lang);
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const attr = el.getAttribute('data-i18n-attr');
+        if (translations[lang] && translations[lang][key]) {
+            if (attr) {
+                el.setAttribute(attr, translations[lang][key]);
+            } else {
+                el.innerText = translations[lang][key];
+            }
+        }
+    });
+    
+    // Sync select elements
+    document.querySelectorAll('.lang-select').forEach(sel => {
+        sel.value = lang;
+    });
+}
+
+function initLanguageSwitcher() {
+    const currentLang = getCurrentLanguage();
+    setLanguage(currentLang);
+    
+    document.querySelectorAll('.lang-select').forEach(sel => {
+        sel.addEventListener('change', (e) => {
+            setLanguage(e.target.value);
+        });
+    });
+}
 
 // Highlight Active Nav Link
 function highlightActiveLink() {

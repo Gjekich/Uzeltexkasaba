@@ -266,7 +266,11 @@ async function submitNewsForm(e) {
     e.preventDefault();
     const id = document.getElementById('editNewsId').value;
     const title = document.getElementById('newsTitleInput').value.trim();
+    const title_ru = document.getElementById('newsTitleRuInput').value.trim() || null;
+    const title_en = document.getElementById('newsTitleEnInput').value.trim() || null;
     const content = document.getElementById('newsContentInput').value.trim();
+    const content_ru = document.getElementById('newsContentRuInput').value.trim() || null;
+    const content_en = document.getElementById('newsContentEnInput').value.trim() || null;
     
     // Join all images with commas
     const imageUrl = currentNewsImages.join(',');
@@ -277,7 +281,11 @@ async function submitNewsForm(e) {
 
     const payload = { 
         title, 
+        title_ru,
+        title_en,
         content, 
+        content_ru,
+        content_en,
         image_url: imageUrl || null,
         created_at: createdAt
     };
@@ -314,7 +322,11 @@ async function editNews(id) {
             const news = await response.json();
             document.getElementById('editNewsId').value = news.id;
             document.getElementById('newsTitleInput').value = news.title;
+            document.getElementById('newsTitleRuInput').value = news.title_ru || '';
+            document.getElementById('newsTitleEnInput').value = news.title_en || '';
             document.getElementById('newsContentInput').value = news.content;
+            document.getElementById('newsContentRuInput').value = news.content_ru || '';
+            document.getElementById('newsContentEnInput').value = news.content_en || '';
             document.getElementById('newsImageUrlInput').value = news.image_url || '';
             
             // Handle multiple images
@@ -414,11 +426,17 @@ async function submitPrivilegeForm(e) {
     e.preventDefault();
     const id = document.getElementById('editPrivilegeId').value;
     const title = document.getElementById('privilegeTitleInput').value.trim();
+    const title_ru = document.getElementById('privilegeTitleRuInput').value.trim() || null;
+    const title_en = document.getElementById('privilegeTitleEnInput').value.trim() || null;
     const description = document.getElementById('privilegeDescInput').value.trim();
+    const description_ru = document.getElementById('privilegeDescRuInput').value.trim() || null;
+    const description_en = document.getElementById('privilegeDescEnInput').value.trim() || null;
     const icon = document.getElementById('privilegeIconInput').value.trim();
     const content = document.getElementById('privilegeContentInput').value.trim();
+    const content_ru = document.getElementById('privilegeContentRuInput').value.trim() || null;
+    const content_en = document.getElementById('privilegeContentEnInput').value.trim() || null;
 
-    const payload = { title, description, icon, content };
+    const payload = { title, title_ru, title_en, description, description_ru, description_en, icon, content, content_ru, content_en };
     const method = id ? 'PUT' : 'POST';
     const url = id ? `/api/privileges/${id}` : '/api/privileges/';
 
@@ -451,9 +469,15 @@ async function editPrivilege(id) {
             const priv = await response.json();
             document.getElementById('editPrivilegeId').value = priv.id;
             document.getElementById('privilegeTitleInput').value = priv.title;
+            document.getElementById('privilegeTitleRuInput').value = priv.title_ru || '';
+            document.getElementById('privilegeTitleEnInput').value = priv.title_en || '';
             document.getElementById('privilegeDescInput').value = priv.description;
+            document.getElementById('privilegeDescRuInput').value = priv.description_ru || '';
+            document.getElementById('privilegeDescEnInput').value = priv.description_en || '';
             document.getElementById('privilegeIconInput').value = priv.icon || '🎁';
             document.getElementById('privilegeContentInput').value = priv.content || '';
+            document.getElementById('privilegeContentRuInput').value = priv.content_ru || '';
+            document.getElementById('privilegeContentEnInput').value = priv.content_en || '';
             
             document.getElementById('privilegeFormTitle').textContent = "Imtiyozni tahrirlash";
             document.getElementById('privilegeFormModal').classList.add('open');
@@ -533,11 +557,15 @@ async function submitLegislationForm(e) {
     e.preventDefault();
     const id = document.getElementById('editLegislationId').value;
     const title = document.getElementById('legTitleInput').value.trim();
+    const title_ru = document.getElementById('legTitleRuInput').value.trim() || null;
+    const title_en = document.getElementById('legTitleEnInput').value.trim() || null;
     const description = document.getElementById('legDescInput').value.trim();
+    const description_ru = document.getElementById('legDescRuInput').value.trim() || null;
+    const description_en = document.getElementById('legDescEnInput').value.trim() || null;
     const category = document.getElementById('legCategoryInput').value;
     const fileUrl = document.getElementById('legFileUrlInput').value.trim();
 
-    const payload = { title, description: description || null, category, file_url: fileUrl || null };
+    const payload = { title, title_ru, title_en, description: description || null, description_ru, description_en, category, file_url: fileUrl || null };
     const method = id ? 'PUT' : 'POST';
     const url = id ? `/api/legislations/${id}` : '/api/legislations/';
 
@@ -570,7 +598,11 @@ async function editLegislation(id) {
             const leg = await response.json();
             document.getElementById('editLegislationId').value = leg.id;
             document.getElementById('legTitleInput').value = leg.title;
+            document.getElementById('legTitleRuInput').value = leg.title_ru || '';
+            document.getElementById('legTitleEnInput').value = leg.title_en || '';
             document.getElementById('legDescInput').value = leg.description || '';
+            document.getElementById('legDescRuInput').value = leg.description_ru || '';
+            document.getElementById('legDescEnInput').value = leg.description_en || '';
             document.getElementById('legCategoryInput').value = leg.category;
             document.getElementById('legFileUrlInput').value = leg.file_url || '';
             

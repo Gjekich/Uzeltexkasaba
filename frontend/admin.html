@@ -182,12 +182,28 @@
             <form id="newsForm">
                 <input type="hidden" id="editNewsId">
                 <div class="form-group">
-                    <label class="form-label">Sarlavha (Title)</label>
+                    <label class="form-label">Sarlavha (O'zbekcha)</label>
                     <input type="text" id="newsTitleInput" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Batafsil matni (Content)</label>
-                    <textarea id="newsContentInput" class="form-control" style="min-height: 180px;" required></textarea>
+                    <label class="form-label">Sarlavha (Русский - ixtiyoriy)</label>
+                    <input type="text" id="newsTitleRuInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sarlavha (English - ixtiyoriy)</label>
+                    <input type="text" id="newsTitleEnInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Batafsil matni (O'zbekcha)</label>
+                    <textarea id="newsContentInput" class="form-control" style="min-height: 140px;" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Batafsil matni (Русский - ixtiyoriy)</label>
+                    <textarea id="newsContentRuInput" class="form-control" style="min-height: 120px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Batafsil matni (English - ixtiyoriy)</label>
+                    <textarea id="newsContentEnInput" class="form-control" style="min-height: 120px;"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Nashr etilgan sana (Sana va vaqt)</label>
@@ -217,20 +233,44 @@
             <form id="privilegeForm">
                 <input type="hidden" id="editPrivilegeId">
                 <div class="form-group">
-                    <label class="form-label">Imtiyoz nomi (Title)</label>
+                    <label class="form-label">Imtiyoz nomi (O'zbekcha)</label>
                     <input type="text" id="privilegeTitleInput" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Tavsif (Description - qisqacha)</label>
+                    <label class="form-label">Imtiyoz nomi (Русский - ixtiyoriy)</label>
+                    <input type="text" id="privilegeTitleRuInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Imtiyoz nomi (English - ixtiyoriy)</label>
+                    <input type="text" id="privilegeTitleEnInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tavsif (O'zbekcha)</label>
                     <input type="text" id="privilegeDescInput" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tavsif (Русский - ixtiyoriy)</label>
+                    <input type="text" id="privilegeDescRuInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tavsif (English - ixtiyoriy)</label>
+                    <input type="text" id="privilegeDescEnInput" class="form-control">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Emoji Icon (Masalan: 🏥, 💰, ⚖️)</label>
                     <input type="text" id="privilegeIconInput" class="form-control" placeholder="Emoji" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Batafsil ma'lumot (Tartib va hujjatlar)</label>
-                    <textarea id="privilegeContentInput" class="form-control" style="min-height: 150px;"></textarea>
+                    <label class="form-label">Batafsil ma'lumot (O'zbekcha)</label>
+                    <textarea id="privilegeContentInput" class="form-control" style="min-height: 120px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Batafsil ma'lumot (Русский - ixtiyoriy)</label>
+                    <textarea id="privilegeContentRuInput" class="form-control" style="min-height: 100px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Batafsil ma'lumot (English - ixtiyoriy)</label>
+                    <textarea id="privilegeContentEnInput" class="form-control" style="min-height: 100px;"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Saqlash</button>
             </form>
@@ -245,12 +285,28 @@
             <form id="legislationForm">
                 <input type="hidden" id="editLegislationId">
                 <div class="form-group">
-                    <label class="form-label">Hujjat sarlavhasi (Title)</label>
+                    <label class="form-label">Hujjat sarlavhasi (O'zbekcha)</label>
                     <input type="text" id="legTitleInput" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Tavsif (Description - ixtiyoriy)</label>
+                    <label class="form-label">Hujjat sarlavhasi (Русский - ixtiyoriy)</label>
+                    <input type="text" id="legTitleRuInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Hujjat sarlavhasi (English - ixtiyoriy)</label>
+                    <input type="text" id="legTitleEnInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tavsif (O'zbekcha - ixtiyoriy)</label>
                     <input type="text" id="legDescInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tavsif (Русский - ixtiyoriy)</label>
+                    <input type="text" id="legDescRuInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tavsif (English - ixtiyoriy)</label>
+                    <input type="text" id="legDescEnInput" class="form-control">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Kategoriya</label>
