@@ -150,8 +150,8 @@
     <!-- Page Title -->
     <section class="section section-secondary" style="padding: 60px 0;">
         <div class="container">
-            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;">Tadbirlar va Seminarlar Rejasi</h1>
-            <p style="color: var(--text-secondary);">Kasaba uyushmasi tomonidan o'tkaziladigan seminar, trening, sport o'yinlari va bayram tadbirlari jadvali.</p>
+            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;" data-i18n="events_page_title">Tadbirlar va Seminarlar Rejasi</h1>
+            <p style="color: var(--text-secondary);" data-i18n="events_page_subtitle">Kasaba uyushmasi tomonidan o'tkaziladigan seminar, trening, sport o'yinlari va bayram tadbirlari jadvali.</p>
         </div>
     </section>
 
@@ -163,19 +163,19 @@
                 <div class="event-card">
                     <div class="event-date-box">
                         <span class="event-date-day">24</span>
-                        <span class="event-date-month">Avgust</span>
+                        <span class="event-date-month" data-i18n="month_august">Avgust</span>
                     </div>
                     <div class="event-info">
-                        <span class="event-cat">Seminar</span>
-                        <h3 class="event-title">Mehnat muhofazasi bo'yicha jamoatchi vakillarni o'qitish seminari</h3>
-                        <p class="event-desc">Sanoat korxonalarida texnika xavfsizligi qoidalariga rioya etilishi va jarohatlanishlarning oldini olishga qaratilgan amaliy o'quv kursi.</p>
+                        <span class="event-cat" data-i18n="cat_seminar">Seminar</span>
+                        <h3 class="event-title" data-i18n="event1_title">Mehnat muhofazasi bo'yicha jamoatchi vakillarni o'qitish seminari</h3>
+                        <p class="event-desc" data-i18n="event1_desc">Sanoat korxonalarida texnika xavfsizligi qoidalariga rioya etilishi va jarohatlanishlarning oldini olishga qaratilgan amaliy o'quv kursi.</p>
                         <div class="event-meta-info">
-                            <span>📍 Joy: Uyushma Bosh binosi, 3-qavat</span>
-                            <span>⏰ Vaqt: 10:00 - 16:00</span>
+                            <span data-i18n="event1_loc">📍 Joy: Uyushma Bosh binosi, 3-qavat</span>
+                            <span data-i18n="event1_time">⏰ Vaqt: 10:00 - 16:00</span>
                         </div>
                     </div>
                     <div class="event-action">
-                        <button onclick="alert('Ushbu tadbirda qatnashish uchun korxonangiz kasaba qo\'mitasiga murojaat qiling.')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;">Ro'yxatdan o'tish</button>
+                        <button onclick="registerEventAlert()" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
                     </div>
                 </div>
 
@@ -183,19 +183,19 @@
                 <div class="event-card">
                     <div class="event-date-box" style="background-color: var(--color-accent);">
                         <span class="event-date-day">10</span>
-                        <span class="event-date-month">Sentabr</span>
+                        <span class="event-date-month" data-i18n="month_september">Sentabr</span>
                     </div>
                     <div class="event-info">
-                        <span class="event-cat">Sport</span>
-                        <h3 class="event-title">Tarmoq korxonalari xodimlari o'rtasida Shaxmat turniri</h3>
-                        <p class="event-desc">An'anaviy har yili o'tkaziladigan elektrotexnika sohasi kasaba a'zolari o'rtasidagi respublika turniri boshlang'ich saralash bosqichi.</p>
+                        <span class="event-cat" data-i18n="cat_sport">Sport</span>
+                        <h3 class="event-title" data-i18n="event2_title">Tarmoq korxonalari xodimlari o'rtasida Shaxmat turniri</h3>
+                        <p class="event-desc" data-i18n="event2_desc">An'anaviy har yili o'tkaziladigan elektrotexnika sohasi kasaba a'zolari o'rtasidagi respublika turniri boshlang'ich saralash bosqichi.</p>
                         <div class="event-meta-info">
-                            <span>📍 Joy: Sport saroyi, Toshkent</span>
-                            <span>⏰ Vaqt: 09:00 dan boshlab</span>
+                            <span data-i18n="event2_loc">📍 Joy: Sport saroyi, Toshkent</span>
+                            <span data-i18n="event2_time">⏰ Vaqt: 09:00 dan boshlab</span>
                         </div>
                     </div>
                     <div class="event-action">
-                        <button onclick="alert('Ushbu tadbirda qatnashish uchun korxonangiz kasaba qo\'mitasiga murojaat qiling.')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;">Ro'yxatdan o'tish</button>
+                        <button onclick="registerEventAlert()" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
                     </div>
                 </div>
 
@@ -203,19 +203,19 @@
                 <div class="event-card">
                     <div class="event-date-box">
                         <span class="event-date-day">18</span>
-                        <span class="event-date-month">Sentabr</span>
+                        <span class="event-date-month" data-i18n="month_september">Sentabr</span>
                     </div>
                     <div class="event-info">
-                        <span class="event-cat">Yig'ilish</span>
-                        <h3 class="event-title">Xodimlar huquqiy himoyasini kuchaytirish yuzasida tarmoq kengashi yig'ilishi</h3>
-                        <p class="event-desc">Kollektiv shartnomalar bajarilishi monitoringi va mehnat nizolarini oldindan hal qilish tizimlarini takomillashtirish masalalari tahlili.</p>
+                        <span class="event-cat" data-i18n="cat_meeting">Yig'ilish</span>
+                        <h3 class="event-title" data-i18n="event3_title">Xodimlar huquqiy himoyasini kuchaytirish yuzasida tarmoq kengashi yig'ilishi</h3>
+                        <p class="event-desc" data-i18n="event3_desc">Kollektiv shartnomalar bajarilishi monitoringi va mehnat nizolarini oldindan hal qilish tizimlarini takomillashtirish masalalari tahlili.</p>
                         <div class="event-meta-info">
-                            <span>📍 Joy: Konferensiyalar zali</span>
-                            <span>⏰ Vaqt: 14:00 - 17:00</span>
+                            <span data-i18n="event3_loc">📍 Joy: Konferensiyalar zali</span>
+                            <span data-i18n="event3_time">⏰ Vaqt: 14:00 - 17:00</span>
                         </div>
                     </div>
                     <div class="event-action">
-                        <button onclick="alert('Ushbu tadbirda qatnashish uchun korxonangiz kasaba qo\'mitasiga murojaat qiling.')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;">Ro'yxatdan o'tish</button>
+                        <button onclick="registerEventAlert()" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
                     </div>
                 </div>
             </div>
@@ -226,10 +226,10 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                <p>&copy; 2026 UzeltexKasaba. Barcha huquqlar himoyalangan.</p>
+                <p>&copy; 2026 UzeltexKasaba. <span data-i18n="footer_rights">Barcha huquqlar himoyalangan.</span></p>
                 <a href="https://t.me/uzeltexkasaba" target="_blank" style="display: flex; align-items: center; gap: 8px; color: var(--color-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-                    Telegram kanalimiz
+                    <span data-i18n="footer_telegram">Telegram kanalimiz</span>
                 </a>
             </div>
         </div>
@@ -237,5 +237,16 @@
 
     <script src="translations.js"></script>
     <script src="app.js"></script>
+    <script>
+        function registerEventAlert() {
+            const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+            const messages = {
+                uz: "Ushbu tadbirda qatnashish uchun korxonangiz kasaba qo'mitasiga murojaat qiling.",
+                ru: "Для участия в данном мероприятии обратитесь в профсоюзный комитет вашего предприятия.",
+                en: "To participate in this event, please contact the trade union committee of your enterprise."
+            };
+            alert(messages[currentLang] || messages.uz);
+        }
+    </script>
 </body>
 </html>
