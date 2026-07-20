@@ -237,6 +237,38 @@
                     <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Yuklanmoqda...</div>
                 </div>
             </div>
+    </section>
+
+    <!-- Methodological Guide Section -->
+    <section class="section" style="background-color: var(--bg-primary); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <div class="section-header" style="margin-bottom: 32px;">
+                <span class="section-tag" data-i18n="guide_tag">Uslubiy Qo'llanma</span>
+                <h2 class="section-title" data-i18n="guide_title">Boshlang'ich Tashkilotlar Uchun Uslubiy Qo'llanma</h2>
+                <p class="section-subtitle" data-i18n="guide_subtitle">Tashkilotlar etakchilari faoliyatida foydalanishlari uchun tavsiyalar va normativ hujjatlar to'plami.</p>
+            </div>
+
+            <!-- Search and Guide Table -->
+            <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-sm); max-width: 1000px; margin: 0 auto;">
+                <div style="max-width: 500px; margin: 0 auto 24px auto;">
+                    <input type="text" id="guideSearch" class="search-input" style="width: 100%; box-sizing: border-box;" placeholder="Qo'llanma bo'limlarini qidirish..." data-i18n="guide_search" data-i18n-attr="placeholder" oninput="filterAndRenderGuide(this.value.toLowerCase().trim())">
+                </div>
+
+                <div style="overflow-x: auto; max-height: 500px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
+                    <table style="width: 100%; border-collapse: collapse; min-width: 600px; background-color: var(--bg-secondary);">
+                        <thead style="position: sticky; top: 0; background-color: var(--bg-primary); z-index: 10;">
+                            <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
+                                <th style="padding: 14px 16px; font-weight: 700; color: var(--color-primary); width: 80px;" data-i18n="guide_table_no">№</th>
+                                <th style="padding: 14px 16px; font-weight: 700; color: var(--color-primary);" data-i18n="guide_table_title">Mavzu / Hujjat nomi</th>
+                                <th style="padding: 14px 16px; font-weight: 700; color: var(--color-primary); width: 120px; text-align: center;" data-i18n="guide_table_page">Sahifa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="guideTableBody">
+                            <!-- Dynamically loaded -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -401,6 +433,96 @@
             );
             renderStaff(filtered);
         }
+
+        // Methodological Guide Data
+        const guideItems = [
+            { id: 1, title_uz: "Kirish", title_ru: "Введение", title_en: "Introduction", page: 7 },
+            { id: 2, title_uz: "Kasaba uyushmalari faoliyatining huquqiy asoslari", title_ru: "Правовые основы деятельности профсоюзов", title_en: "Legal Foundations of Trade Union Activities", page: 8 },
+            { id: 3, title_uz: "O'zbekiston kasaba uyushmalari Federatsiyasi Ijroiya qo'mitasining 2021-yil 24-avgustdagi 3-52 \"c\"-sonli qarori", title_ru: "Постановление Исполкома Федерации профсоюзов Узбекистана от 24 августа 2021 года № 3-52 «с»", title_en: "Decision of the Executive Committee of the Federation of Trade Unions of Uzbekistan dated August 24, 2021, No. 3-52 's'", page: 10 },
+            { id: 4, title_uz: "O'zbekiston kasaba uyushmalari Federatsiyasi tizimida jamoa shartnomalari loyihalarini jamoatchilik ekspertizasidan o'tkazish, qabul qilingan jamoa shartnomalarini ro'yxatga olish Tartibi", title_ru: "Порядок проведения общественной экспертизы проектов коллекческих договоров в системе Федерации профсоюзов Узбекистана и регистрации принятых коллективных договоров", title_en: "Procedure for Public Expertise of Draft Collective Agreements and Registration of Concluded Collective Agreements", page: 12 },
+            { id: 5, title_uz: "Jamoa shartnomalarini tuzish bo'yicha tavsiyalar", title_ru: "Рекомендации по заключению коллективных договоров", title_en: "Recommendations on concluding collective agreements", page: 23 },
+            { id: 6, title_uz: "Jamoa shartnomalari bo'yicha hisobot shakllari (1-JSh va 2-JSh)ni to'ldirishga oid TAVSIYALAR va ularga ilovalar", title_ru: "РЕКОМЕНДАЦИИ и приложения по заполнению форм отчетности коллективных договоров (1-JSh и 2-JSh)", title_en: "RECOMMENDATIONS and annexes on filling reporting forms of collective agreements (1-JSh and 2-JSh)", page: 30 },
+            { id: 7, title_uz: "Mehnatga haq to'lashni tartibga solish sohasida kasaba uyushmalarining vazifalari", title_ru: "Задачи профсоюзов в области регулирования оплаты труда", title_en: "Tasks of trade unions in the field of regulation of labor remuneration", page: 57 },
+            { id: 8, title_uz: "Mehnatni muhofaza qilish bo'yicha vakil to'g'risida Nizom", title_ru: "Положение о представителе по охране труда", title_en: "Regulation on the representative for labor protection", page: 63 },
+            { id: 9, title_uz: "O'zbekiston kasaba uyushmalari Federatsiyasi Kengashi Rayosatining 2017-yil 4-apreldagi 6-44 \"c\"-sonli qarori", title_ru: "Постановление Президиума Совета Федерации профсоюзов Узбекистана от 4 апреля 2017 года № 6-44 «с»", title_en: "Decision of the Presidium of the Council of the Federation of Trade Unions of Uzbekistan dated April 4, 2017, No. 6-44 's'", page: 68 },
+            { id: 10, title_uz: "Kasaba uyushmasi qo'mitasining mehnatni muhofaza qilish bo'yicha komissiyasi to'g'risida Nizom", title_ru: "Положение о комиссии по охране труда профсоюзного комитета", title_en: "Regulation on the labor protection commission of the trade union committee", page: 69 },
+            { id: 11, title_uz: "Mehnatni muhofaza qilish tadbirlarini rejalashtirish bo'yicha tavsiyalar va ilovalari", title_ru: "Рекомендации и приложения по планированию мероприятий по охране труда", title_en: "Recommendations and annexes on planning labor protection measures", page: 76 },
+            { id: 12, title_uz: "Boshlang'ich kasaba uyushma qo'mitasi (tashkiloti)ning mehnat muhofazasi va xavfsizligi bo'yicha olib borgan ishlari haqida ma'lumot", title_ru: "Информация о проделанной работе первичного профсоюзного комитета (организации) по охране труда и технике безопасности", title_en: "Information on the work of the primary trade union committee (organization) on labor protection and safety", page: 87 },
+            { id: 13, title_uz: "Korxonalarda mehnatni muhofaza qilish va mehnatning xavfsiz usullarida ishlash uchun o'tkaziladigan yo'riqnomalarning holatini tekshirish uchun kasaba uyushmasi qo'mitasiga tavsiyanoma", title_ru: "Рекомендация профсоюзному комитету для проверки состояния инструктажей по охране труда и безопасным методам работы на предприятиях", title_en: "Recommendation to the trade union committee for checking the status of labor protection briefings and safe working methods at enterprises", page: 90 },
+            { id: 14, title_uz: "Ishlab chiqarishdagi baxtsiz hodisa va salomatlikka boshqa xil zarar yetkazilishi to'g'risidagi N-1 shakldagi Dalolatnomani tuzish va ro'yxatga olishni nazorat qilish yuzasidan kasaba uyushma qo'mitasining mehnatni muhofaza qilish bo'yicha komissiyasiga tavsiyanoma", title_ru: "Рекомендация комиссии профсоюзного комитета по охране труда по составлению и контролю за регистрацией акта формы Н-1 о несчастном случае на производстве", title_en: "Recommendation to the union committee's labor protection commission on compiling and controlling the registration of form N-1 accident reports", page: 94 },
+            { id: 15, title_uz: "Mehnat muhofazasi bo'yicha komissiyaning jamoatchilik nazoratini amalga oshirishda aniqlangan kamchiliklarni bartaraf etish bo'yicha tavsiyalar", title_ru: "Рекомендации по устранению недостатков, выявленных при осуществлении общественного контроля комиссией по охране труда", title_en: "Recommendations for eliminating deficiencies identified during public control by the labor protection commission", page: 106 },
+            { id: 16, title_uz: "Mehnat muhofazasi bo'yicha komissiya raisiga uslubiy maslahat", title_ru: "Методический совет председателю комиссии по охране труда", title_en: "Methodological advice to the chairman of the labor protection commission", page: 107 },
+            { id: 17, title_uz: "Kasb kasalliklarining oldini olish yuzasidan tibbiyot profilaktika muassasalari va kasaba uyushmalarining tavsiyalari", title_ru: "Рекомендации лечебно-профилактических учреждений и профсоюзов по профилактике профессиональных заболеваний", title_en: "Recommendations of medical preventive institutions and trade unions on prevention of occupational diseases", page: 108 },
+            { id: 18, title_uz: "O'zbekiston kasaba uyushmalari Federatsiyasi Kengashi Rayosatining 2017-yil 20-noyabrdagi 8-108 \"c\"-sonli qarori", title_ru: "Постановление Президиума Совета Федерации профсоюзов Узбекистана от 20 ноября 2017 года № 8-108 «с»", title_en: "Decision of the Presidium of the Council of the Federation of Trade Unions of Uzbekistan dated November 20, 2017, No. 8-108 's'", page: 114 },
+            { id: 19, title_uz: "Mehnat muhofazasi va xavfsizligi bo'yicha jamoatchilik nazoratini tashkil etish yuzasidan respublika ko'rik-tanlovi to'g'risida Nizom", title_ru: "Положение о республиканском смотре-конкурсе по организации общественного контроля по охране труда и технике безопасности", title_en: "Regulation on the republican review contest on organizing public control over labor protection and safety", page: 116 },
+            { id: 20, title_uz: "O'zbekiston kasaba uyushmalari Federatsiyasi Ijroiya qo'mitasining 2021-yil 19-martdagi 2-37 \"c\"-sonli qarori", title_ru: "Постановление Исполкома Федерации профсоюзов Узбекистана от 19 марта 2021 года № 2-37 «с»", title_en: "Decision of the Executive Committee of the Federation of Trade Unions of Uzbekistan dated March 19, 2021, No. 2-37 's'", page: 141 },
+            { id: 21, title_uz: "O'zbekiston kasaba uyushmalari Federatsiyasi tizimida jismoniy va yuridik shaxslarning murojaatlari bilan ishlash tartibi to'g'risidagi Nizom", title_ru: "Положение о порядке работы с обращениями физических и юридических лиц в системе Федерации профсоюзов Узбекистана", title_en: "Regulation on the procedure of working with appeals of individuals and legal entities in the system of the Federation of Trade Unions of Uzbekistan", page: 143 },
+            { id: 22, title_uz: "O'zbekiston kasaba uyushmalari Federatsiyasi Ijroiya qo'mitasining 2023-yil 23-maydagi 9-5-sonli qarori", title_ru: "Постановление Исполкома Федерации профсоюзов Узбекистана от 23 мая 2023 года № 9-5", title_en: "Decision of the Executive Committee of the Federation of Trade Unions of Uzbekistan dated May 23, 2023, No. 9-5", page: 154 },
+            { id: 23, title_uz: "Kasaba uyushmasi qo'mitasi, organida mehnat shartnomasini bekor qilish taqdimnomasini ko'rib chiqish Tartibi", title_ru: "Порядок рассмотрения представления об аннулировании трудового договора в профсоюзном комитете, органе", title_en: "Procedure for reviewing representations on terminating labor contracts in trade union committees and organs", page: 155 },
+            { id: 24, title_uz: "O'zbekiston kasaba uyushmalari Federatsiyasi Kengashining 2013-yil 25-yanvardagi 7-4-sonli qarori", title_ru: "Постановление Совета Федерации профсоюзов Узбекистана от 25 января 2013 года № 7-4", title_en: "Decision of the Council of the Federation of Trade Unions of Uzbekistan dated January 25, 2013, No. 7-4", page: 161 },
+            { id: 25, title_uz: "Kasaba uyushmasiga a'zolik badallarini taqsimlash, kasaba uyushma budjeti mablag'laridan maqsadli va samarali foydalanish tartibi to'g'riside Nizom", title_ru: "Положение о распределении членских профсоюзных взносов, целевом и эффективном использовании средств профсоюзного бюджета", title_en: "Regulation on distribution of membership trade union fees, targeted and effective use of union budget funds", page: 167 },
+            { id: 26, title_uz: "O'zbekiston kasaba uyushmalari Federatsiyasi Kengashi Rayosatining 2012-yil 24-apreldagi 6-11-sonli qarori", title_ru: "Постановление Президиума Совета Федерации профсоюзов Узбекистана от 24 апреля 2012 года № 6-11", title_en: "Decision of the Presidium of the Council of the Federation of Trade Unions of Uzbekistan dated April 24, 2012, No. 6-11", page: 179 },
+            { id: 27, title_uz: "Kasaba uyushmalari tashkilotlarida kasaba uyushma budjeti mablag'larining sarflanishida moliyaviy hujjatlarni rasmiylashtirish Tartibi", title_ru: "Порядок оформления финансовых документов при расходовании средств профсоюзного бюджета в профсоюзных организациях", title_en: "Procedure for drawing up financial documents when spending union budget funds in union organizations", page: 181 },
+            { id: 28, title_uz: "O'zbekiston kasaba uyushmalari Federatsiyasi Kengashi Rayosatining 2013-yil 26-yanvardagi 9-24-sonli qarori", title_ru: "Постановление Президиума Совета Федерации профсоюзов Узбекистана от 26 января 2013 года № 9-24", title_en: "Decision of the Presidium of the Council of the Federation of Trade Unions of Uzbekistan dated January 26, 2013, No. 9-24", page: 196 },
+            { id: 29, title_uz: "Ijtimoiy sug'urta budjeti mablag'lari hisobidan sanatoriylarga yo'llanmalarni rejalashtirish, chiqarish, taqsimlash, sotish, berish, hisobga olish va hisobotini yuritish tartibi to'g'risida Yo'riqnoma", title_ru: "Инструкция о порядке планирования, выпуска, распределения, продажи, выдачи, учета и отчетности путевок в санатории за счет средств бюджета социального страхования", title_en: "Instructions on planning, issuing, distributing, selling, allocating, accounting, and reporting of sanatorium vouchers from social insurance funds", page: 198 },
+            { id: 30, title_uz: "Kasaba uyushmalari organlarining xodimlar va ularning oila a'zolarini sog'lomlashtirish uchun yo'naltirilgan mablag'larni sarflash tartibi to'g'risida Nizom", title_ru: "Положение о порядке расходования средств профсоюзных органов, направляемых на оздоровление работников и членов их семей", title_en: "Regulation on the spending procedure of trade union funds allocated for the rehabilitation of workers and their families", page: 210 },
+            { id: 31, title_uz: "Kasaba uyushmalari organlarining xodimlar va ularning oila a'zolarini sog'lomlashtirish uchun yo'naltirilgan mablag'larni sarflash tartibi to'g'risida NIZOM (Molya vazirligi, Mehnat vazirligi, Soliq qo'mitasi va Markaziy bank qarori)", title_ru: "ПОЛОЖЕНИЕ о расходовании средств профсоюзных органов на оздоровление работников и членов их семей (Решение Минфина, Минтруда, Налогового комитета и ЦБ)", title_en: "REGULATION on spending union organ funds for the rehabilitation of workers and families (Decision of Ministry of Finance, Ministry of Labor, Tax Committee and Central Bank)", page: 211 },
+            { id: 32, title_uz: "Kasaba uyushmasidan sanatoriylarga yo'llanmalar olish tartibi (namuna)", title_ru: "Порядок получения путевок в санатории из профсоюза (образец)", title_en: "Procedure for obtaining sanatorium vouchers from the trade union (sample)", page: 215 },
+            { id: 33, title_uz: "Kasaba uyushmasi a'zolik badallari hisobidan sanatoriy va dam olish uylariga imtiyozli yo'llanmalar olishni rejalashtirish, chiqarish, taqsimlash, sotish, hisobga olish, berish va hisobotlarni tartibga solish to'g'risida Yo'riqnoma", title_ru: "Инструкция о планировании, выпуске, распределении, продаже, учете, выдаче и отчетности льготных путевок в санатории и дома отдыха за счет членских профсоюзных взносов", title_en: "Instructions on planning, issuing, distributing, selling, accounting, allocating, and reporting of discounted vouchers to sanatoriums and rest homes from membership fees", page: 217 },
+            { id: 34, title_uz: "Kasaba uyushmalari Federatsiyasida madaniy-ma'rifiy yo'nalishida tavsiyalar", title_ru: "Рекомендации в культурно-просветительском направлении в системе Федерации профсоюзов", title_en: "Recommendations in the cultural-educational direction in the system of the Federation of Trade Unions", page: 229 },
+            { id: 35, title_uz: "Kasaba uyushmalari tizimida madaniy-ommaviy tadbirlar o'tkazish to'g'risidagi Nizom", title_ru: "Положение о проведении культурно-массовых мероприятий в системе профсоюзов", title_en: "Regulation on holding cultural-mass events in the trade union system", page: 232 },
+            { id: 36, title_uz: "Korxona, tashkilot va muassasalarda «Ma'naviyat va ma'rifat» xonalarini tashkil etish va jihozlash bo'yicha tavsiyalar", title_ru: "Рекомендации по созданию и оснащению кабинетов «Духовности и просветительства» на предприятиях, организациях и учреждениях", title_en: "Recommendations on establishing and equipping 'Spirituality and Enlightenment' rooms in enterprises, organizations, and institutions", page: 236 },
+            { id: 37, title_uz: "Kasaba uyushmalari Federatsiyasining jismoniy tarbiya va ommaviy sportni rivojlantirish Konsepsiyasi", title_ru: "Концепция развития физической культуры и массового спорта Федерации профсоюзов", title_en: "Concept of physical education and mass sports development of the Federation of Trade Unions", page: 238 },
+            { id: 38, title_uz: "Kasaba uyushmalari tizimida ommaviy sport-sog'lomlashtirish tadbirlarini o'tkazish to'g'risidagi Nizom", title_ru: "Положение о проведении массовых спортивно-оздоровительных мероприятий в системе профсоюзов", title_en: "Regulation on holding mass sports and health events in the trade union system", page: 244 },
+            { id: 39, title_uz: "Kasaba uyushmalari tizimidagi korxona, tashkilot, muassasalarda jismoniy tarbiya va sportni rivojlantirish, ommaviyligini oshirish, aholining mehnat samaradorligini oshirish va mehnat qilish faolligini uzaytirish uchun tavsiyalar", title_ru: "Рекомендации по развитию физической культуры и спорта на предприятиях, в организациях и учреждениях для повышения эффективности труда и продления трудовой активности населения", title_en: "Recommendations on physical education and sports development in enterprises and organizations to increase labor productivity and prolong activity", page: 249 },
+            { id: 40, title_uz: "O'zbekiston kasaba uyushmalari Federatsiyasi Kengashi Rayosatining 2015-yil 31-martdagi 21-53 \"c\"-sonli qarori", title_ru: "Постановление Президиума Совета Федерации профсоюзов Узбекистана от 31 марта 2015 года № 21-53 «с»", title_en: "Decision of the Presidium of the Council of the Federation of Trade Unions of Uzbekistan dated March 31, 2015, No. 21-53 's'", page: 261 },
+            { id: 41, title_uz: "Kasaba uyushmalari tizimidagi boshlang'ich tashkilotlar o'rtasida o'tkaziladigan «Eng namunali boshlang'ich tashkilot» ko'rik-tanlovi to'g'risida Nizom", title_ru: "Положение о смотре-конкурсе «Самая образцовая первичная организация», проводимом среди первичных организаций в системе профсоюзов", title_en: "Regulation on review contest 'The Most Exemplary Primary Organization' held among primary organizations in the trade union system", page: 264 },
+            { id: 42, title_uz: "Boshlang'ich tashkilotda ishni rejalashtirish, hujjatlarni rasmiylashtirish yuzasidan tavsiyalar, hujjatlar namunalari", title_ru: "Рекомендации по планированию работы в первичной организации, оформлению документов и образцы документов", title_en: "Recommendations on work planning in primary organizations, document preparation, and document samples", page: 277 },
+            { id: 43, title_uz: "Kasaba uyushmalari organlarida saylab qo'yiladigan lavozimlarga saylangan xodimlar bilan mehnat munosabatlarini rasmiylashtirish yuzasidan tushuntirish", title_ru: "Разъяснение о порядке оформления трудовых отношений с работниками, избранными на выборные должности в профсоюзных органах", title_en: "Explanation on formatting labor relations with employees elected to elective positions in trade union organs", page: 294 }
+        ];
+
+        function renderGuide(filterQuery = '') {
+            const tbody = document.getElementById('guideTableBody');
+            if (!tbody) return;
+
+            const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+
+            const filteredItems = guideItems.filter(item => {
+                const title = item[`title_${currentLang}`] || item.title_uz;
+                return title.toLowerCase().includes(filterQuery);
+            });
+
+            if (filteredItems.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="3" style="padding: 24px; text-align: center; color: var(--text-muted);">
+                            ${currentLang === 'uz' ? 'Mavzular topilmadi.' : (currentLang === 'ru' ? 'Разделы не найдены.' : 'No topics found.')}
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filteredItems.map(item => {
+                const title = item[`title_${currentLang}`] || item.title_uz;
+                return `
+                    <tr style="border-bottom: 1px solid var(--border-color); hover:background-color: var(--bg-primary);">
+                        <td style="padding: 14px 16px; font-weight: 600; color: var(--text-secondary);">${item.id}</td>
+                        <td style="padding: 14px 16px; font-weight: 500; color: var(--text-primary); line-height: 1.5;">${escapeHTML(title)}</td>
+                        <td style="padding: 14px 16px; font-weight: 600; color: var(--color-primary); text-align: center; font-variant-numeric: tabular-nums;">${item.page}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterAndRenderGuide(query) {
+            renderGuide(query);
+        }
+
+        // Initialize guide rendering
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGuide();
+        });
     </script>
 </body>
 </html>

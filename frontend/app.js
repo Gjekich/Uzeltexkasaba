@@ -55,6 +55,9 @@ function setLanguage(lang) {
     if (typeof renderGallery === 'function') {
         renderGallery();
     }
+    if (typeof renderGuide === 'function') {
+        renderGuide();
+    }
     if (typeof loadLatestNews === 'function') {
         loadLatestNews();
     }

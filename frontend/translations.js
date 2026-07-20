@@ -198,6 +198,14 @@ const translations = {
         "gallery_cap_5": "Humson sanatoriysi dam olish hududi",
         "gallery_cap_6": "Mini futbol bo'yicha kasaba kubogi yarim finali",
 
+        // Guide translations
+        "guide_title": "Boshlang'ich Tashkilotlar Uchun Uslubiy Qo'llanma",
+        "guide_subtitle": "Tashkilotlar etakchilari faoliyatida foydalanishlari uchun tavsiyalar va normativ hujjatlar to'plami.",
+        "guide_table_no": "№",
+        "guide_table_title": "Mavzu / Hujjat nomi",
+        "guide_table_page": "Sahifa",
+        "guide_search": "Qo'llanma bo'limlarini qidirish...",
+
         // Events page specific
         "events_page_title": "Tadbirlar va Seminarlar Rejasi",
         "events_page_subtitle": "Kasaba uyushmasi tomonidan o'tkaziladigan seminar, trening, sport o'yinlari va bayram tadbirlari jadvali.",
@@ -467,6 +475,14 @@ const translations = {
         "gallery_cap_5": "Зона отдыха санатория Хумсан",
         "gallery_cap_6": "Полуфинал профсоюзного кубка по мини-футболу",
 
+        // Guide translations
+        "guide_title": "Методическое руководство для первичных организаций",
+        "guide_subtitle": "Сборник рекомендаций и нормативных документов для использования руководителями первичных организаций.",
+        "guide_table_no": "№",
+        "guide_table_title": "Тема / Название документа",
+        "guide_table_page": "Страница",
+        "guide_search": "Поиск по разделам руководства...",
+
         // Events page specific
         "events_page_title": "План мероприятий и семинаров",
         "events_page_subtitle": "Расписание семинаров, тренингов, спортивных игр и праздничных мероприятий, проводимых профсоюзом.",
@@ -735,6 +751,14 @@ const translations = {
         "gallery_cap_4": "Participants of the young specialists seminar",
         "gallery_cap_5": "Humson sanatorium recreation area",
         "gallery_cap_6": "Trade union futsal cup semi-final",
+
+        // Guide translations
+        "guide_title": "Methodological Guide for Primary Organizations",
+        "guide_subtitle": "A collection of recommendations and regulatory documents for leaders of primary organizations.",
+        "guide_table_no": "No.",
+        "guide_table_title": "Topic / Document Title",
+        "guide_table_page": "Page",
+        "guide_search": "Search guide sections...",
 
         // Events page specific
         "events_page_title": "Events and Seminars Schedule",
