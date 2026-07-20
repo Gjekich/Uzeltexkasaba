@@ -194,7 +194,7 @@
                     // Parse multiple images
                     const images = news.image_url ? news.image_url.split(',').filter(x => x) : [];
                     const featuredImg = images.length > 0 ? images[0] : '';
-                    const imgHtml = featuredImg ? `<img class="detail-img" src="${featuredImg}" alt="${escapeHTML(news.title)}">` : '';
+                    const imgHtml = `<img class="detail-img" src="${featuredImg || 'images/default_news.jpg'}" alt="${escapeHTML(news.title)}">`;
                     
                     // Create gallery HTML
                     let galleryHtml = '';

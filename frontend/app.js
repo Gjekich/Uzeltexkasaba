@@ -115,7 +115,7 @@ async function loadLatestNews() {
             }
             grid.innerHTML = newsList.map(news => {
                 const firstImg = news.image_url ? news.image_url.split(',')[0] : '';
-                const bgImage = firstImg ? `style="background-image: url('${firstImg}')"` : 'style="background-color: #1f2937;"';
+                const bgImage = firstImg ? `style="background-image: url('${firstImg}')"` : 'style="background-image: url(\'images/default_news.jpg\')"';
                 const date = new Date(news.created_at).toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric' });
                 
                 return `
