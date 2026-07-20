@@ -250,8 +250,11 @@
 
             <!-- Search and Guide Table -->
             <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-sm); max-width: 1000px; margin: 0 auto;">
-                <div style="max-width: 500px; margin: 0 auto 24px auto;">
+                <div style="max-width: 600px; margin: 0 auto 24px auto; display: flex; flex-direction: column; gap: 16px; align-items: center;">
                     <input type="text" id="guideSearch" class="search-input" style="width: 100%; box-sizing: border-box;" placeholder="Qo'llanma bo'limlarini qidirish..." data-i18n="guide_search" data-i18n-attr="placeholder" oninput="filterAndRenderGuide(this.value.toLowerCase().trim())">
+                    <a href="images/Boshlangich_tashkilotlar_uchun_uslubiy_qollanma.pdf" target="_blank" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; padding: 10px 24px; font-size: 0.9rem; text-decoration: none;" data-i18n="guide_download_btn">
+                        📕 To'liq qo'llanmani yuklab olish (PDF)
+                    </a>
                 </div>
 
                 <div style="overflow-x: auto; max-height: 500px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
@@ -506,10 +509,18 @@
             tbody.innerHTML = filteredItems.map(item => {
                 const title = item[`title_${currentLang}`] || item.title_uz;
                 return `
-                    <tr style="border-bottom: 1px solid var(--border-color); hover:background-color: var(--bg-primary);">
+                    <tr style="border-bottom: 1px solid var(--border-color); transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='var(--bg-primary)'" onmouseout="this.style.backgroundColor='transparent'">
                         <td style="padding: 14px 16px; font-weight: 600; color: var(--text-secondary);">${item.id}</td>
-                        <td style="padding: 14px 16px; font-weight: 500; color: var(--text-primary); line-height: 1.5;">${escapeHTML(title)}</td>
-                        <td style="padding: 14px 16px; font-weight: 600; color: var(--color-primary); text-align: center; font-variant-numeric: tabular-nums;">${item.page}</td>
+                        <td style="padding: 14px 16px; font-weight: 500; color: var(--text-primary); line-height: 1.5;">
+                            <a href="images/Boshlangich_tashkilotlar_uchun_uslubiy_qollanma.pdf#page=${item.page}" target="_blank" style="color: var(--text-primary); text-decoration: none; display: block; width: 100%;">
+                                ${escapeHTML(title)} <span style="font-size: 0.75rem; color: var(--color-primary); margin-left: 4px; vertical-align: middle;">↗</span>
+                            </a>
+                        </td>
+                        <td style="padding: 14px 16px; font-weight: 600; color: var(--color-primary); text-align: center; font-variant-numeric: tabular-nums;">
+                            <a href="images/Boshlangich_tashkilotlar_uchun_uslubiy_qollanma.pdf#page=${item.page}" target="_blank" style="color: var(--color-primary); text-decoration: none; font-weight: 700;">
+                                ${item.page}
+                            </a>
+                        </td>
                     </tr>
                 `;
             }).join('');

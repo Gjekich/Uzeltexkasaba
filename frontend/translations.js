@@ -205,6 +205,7 @@ const translations = {
         "guide_table_title": "Mavzu / Hujjat nomi",
         "guide_table_page": "Sahifa",
         "guide_search": "Qo'llanma bo'limlarini qidirish...",
+        "guide_download_btn": "📕 To'liq qo'llanmani yuklab olish (PDF)",
 
         // Events page specific
         "events_page_title": "Tadbirlar va Seminarlar Rejasi",
@@ -482,6 +483,7 @@ const translations = {
         "guide_table_title": "Тема / Название документа",
         "guide_table_page": "Страница",
         "guide_search": "Поиск по разделам руководства...",
+        "guide_download_btn": "📕 Скачать полное руководство (PDF)",
 
         // Events page specific
         "events_page_title": "План мероприятий и семинаров",
@@ -759,6 +761,7 @@ const translations = {
         "guide_table_title": "Topic / Document Title",
         "guide_table_page": "Page",
         "guide_search": "Search guide sections...",
+        "guide_download_btn": "📕 Download full guide (PDF)",
 
         // Events page specific
         "events_page_title": "Events and Seminars Schedule",
