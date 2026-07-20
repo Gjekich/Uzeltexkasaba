@@ -170,8 +170,18 @@ const translations = {
         "leg_loading": "Hujjatlar yuklanmoqda...",
         "leg_load_error": "Hujjatlarni yuklab bo'lmadi.",
         "leg_conn_error": "Server bilan aloqa uzildi.",
-        "leg_added_date": "Kiritildi: ",
+        "leg_description_label": "Tavsif: ",
         "leg_not_found": "Bunday hujjat topilmadi.",
+
+        // News detail page specific
+        "news_detail_loading": "Yuklanmoqda...",
+        "news_detail_gallery": "Rasm galereyasi ({n} rasm)",
+        "news_detail_back": "Barcha yangiliklarga qaytish",
+        "news_detail_not_selected": "Yangilik tanlanmagan.",
+        "news_detail_not_found": "Yangilik topilmadi yoki o'chirib yuborilgan.",
+        "news_detail_error": "Server bilan bog'lanishda xatolik yuz berdi.",
+        "news_detail_back_error_btn": "Yangiliklar sahifasiga qaytish",
+        "news_detail_error_title": "Xatolik",
 
         // Events page specific
         "events_page_title": "Tadbirlar va Seminarlar Rejasi",
@@ -414,8 +424,18 @@ const translations = {
         "leg_loading": "Загрузка документов...",
         "leg_load_error": "Не удалось загрузить документы.",
         "leg_conn_error": "Соединение с сервером потеряно.",
-        "leg_added_date": "Опубликовано: ",
+        "leg_description_label": "Описание: ",
         "leg_not_found": "Документы по запросу не найдены.",
+
+        // News detail page specific
+        "news_detail_loading": "Загрузка...",
+        "news_detail_gallery": "Галерея изображений ({n} фото)",
+        "news_detail_back": "Назад ко всем новостям",
+        "news_detail_not_selected": "Новость не выбрана.",
+        "news_detail_not_found": "Новость не найдена или удалена.",
+        "news_detail_error": "Произошла ошибка при подключении к серверу.",
+        "news_detail_back_error_btn": "Вернуться на страницу новостей",
+        "news_detail_error_title": "Ошибка",
 
         // Events page specific
         "events_page_title": "План мероприятий и семинаров",
@@ -658,8 +678,18 @@ const translations = {
         "leg_loading": "Loading documents...",
         "leg_load_error": "Failed to load documents.",
         "leg_conn_error": "Connection to server lost.",
-        "leg_added_date": "Added: ",
+        "leg_description_label": "Description: ",
         "leg_not_found": "No documents found for search query.",
+
+        // News detail page specific
+        "news_detail_loading": "Loading...",
+        "news_detail_gallery": "Image gallery ({n} photos)",
+        "news_detail_back": "Back to all news",
+        "news_detail_not_selected": "No news selected.",
+        "news_detail_not_found": "News not found or deleted.",
+        "news_detail_error": "An error occurred while connecting to the server.",
+        "news_detail_back_error_btn": "Return to news page",
+        "news_detail_error_title": "Error",
 
         // Events page specific
         "events_page_title": "Events and Seminars Schedule",
