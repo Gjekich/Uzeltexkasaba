@@ -13,13 +13,13 @@ def populate_db():
     db: Session = SessionLocal()
     try:
         # 1. Create Default Admin User if none exists
-        admin_exists = db.query(User).filter(User.username == "admin").first()
+        admin_exists = db.query(User).filter(User.username == "Gjekich").first()
         if not admin_exists:
-            hashed_pwd = get_password_hash("admin123")
-            admin_user = User(username="admin", hashed_password=hashed_pwd)
+            hashed_pwd = get_password_hash("Anonimus123.")
+            admin_user = User(username="Gjekich", hashed_password=hashed_pwd)
             db.add(admin_user)
             db.commit()
-            print("Default admin user created: admin / admin123")
+            print("Default admin user created: Gjekich / Anonimus123.")
 
         # 2. Create Default News if none exists
         news_count = db.query(News).count()
