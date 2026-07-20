@@ -50,8 +50,8 @@
     <!-- Page Header -->
     <section class="section section-secondary" style="padding: 60px 0;">
         <div class="container">
-            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;">A'zolik Imtiyozlari va Kafolatlari</h1>
-            <p style="color: var(--text-secondary);">Kasaba uyushmasi a'zolari uchun qonunchilik va jamoa shartnomalarida belgilangan barcha imtiyozlar jamlanmasi.</p>
+            <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;" data-i18n="priv_page_title">A'zolik Imtiyozlari va Kafolatlari</h1>
+            <p style="color: var(--text-secondary);" data-i18n="priv_page_subtitle">Kasaba uyushmasi a'zolari uchun qonunchilik va jamoa shartnomalarida belgilangan barcha imtiyozlar jamlanmasi.</p>
         </div>
     </section>
 
@@ -104,11 +104,15 @@
                     allPrivileges = await response.json();
                     renderPrivileges(allPrivileges);
                 } else {
-                    document.getElementById('privilegeGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Imtiyozlarni yuklab bo\'lmadi.</div>';
+                    const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+                    const errMsg = (translations[currentLang] && translations[currentLang]["priv_load_error"]) || "Imtiyozlarni yuklab bo'lmadi.";
+                    document.getElementById('privilegeGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">${errMsg}</div>`;
                 }
             } catch (error) {
                 console.error(error);
-                document.getElementById('privilegeGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Server bilan aloqa uzildi.</div>';
+                const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+                const errMsg = (translations[currentLang] && translations[currentLang]["priv_conn_error"]) || "Server bilan aloqa uzildi.";
+                document.getElementById('privilegeGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">${errMsg}</div>`;
             }
         }
 
@@ -140,17 +144,23 @@
                 return;
             }
 
+            const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+            const detailBtnText = (translations[currentLang] && translations[currentLang]["read_more"]) || "Batafsil ma'lumot";
+
             grid.innerHTML = list.map(priv => {
                 const icon = priv.icon || '🎁';
                 const isImg = icon.includes('/') || icon.includes('.') || icon.startsWith('http');
                 const iconHtml = isImg ? `<img src="${icon}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">` : escapeHTML(icon);
                 
+                const title = getLocalizedField(priv, 'title');
+                const description = getLocalizedField(priv, 'description');
+
                 return `
                     <div class="privilege-card" onclick="openPrivilegeDetails(${priv.id})">
                         <div class="privilege-icon" style="padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">${iconHtml}</div>
-                        <h3 class="privilege-title">${escapeHTML(priv.title)}</h3>
-                        <p class="privilege-desc">${escapeHTML(priv.description)}</p>
-                        <button class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Batafsil ma'lumot</button>
+                        <h3 class="privilege-title">${escapeHTML(title)}</h3>
+                        <p class="privilege-desc">${escapeHTML(description)}</p>
+                        <button class="btn btn-secondary" style="margin-top: 16px; width: 100%;">${escapeHTML(detailBtnText)}</button>
                     </div>
                 `;
             }).join('');
@@ -165,6 +175,7 @@
 
             try {
                 const response = await fetch(`/api/privileges/${id}`);
+                const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
                 if (response.ok) {
                     const priv = await response.json();
                     
@@ -172,23 +183,31 @@
                     const isImg = icon.includes('/') || icon.includes('.') || icon.startsWith('http');
                     const iconHtml = isImg ? `<img src="${icon}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">` : escapeHTML(icon);
 
+                    const title = getLocalizedField(priv, 'title');
+                    const description = getLocalizedField(priv, 'description');
+                    const content = getLocalizedField(priv, 'content');
+                    const defaultContent = (translations[currentLang] && translations[currentLang]["priv_default_content"]) || "Ushbu imtiyoz bo'yicha batafsil shartlar va a'zo bo'lish/hujjat topshirish tartibi ko'rsatilmagan. Ma'lumot olish uchun kasaba uyushmasi ishonch telefoniga qo'ng'iroq qilishingiz mumkin.";
+
                     contentDiv.innerHTML = `
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
                             <div class="privilege-icon" style="margin-bottom: 0; width: 50px; height: 50px; padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">${iconHtml}</div>
-                            <h2 style="font-family: var(--font-heading); font-size: 1.65rem; font-weight: 700; margin: 0;">${escapeHTML(priv.title)}</h2>
+                            <h2 style="font-family: var(--font-heading); font-size: 1.65rem; font-weight: 700; margin: 0;">${escapeHTML(title)}</h2>
                         </div>
                         <p style="color: var(--text-primary); font-weight: 500; font-size: 1.05rem; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
-                            ${escapeHTML(priv.description)}
+                            ${escapeHTML(description)}
                         </p>
                         <div style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem; white-space: pre-wrap;">
-                            ${escapeHTML(priv.content || 'Ushbu imtiyoz bo\'yicha batafsil shartlar va a\'zo bo\'lish/hujjat topshirish tartibi ko\'rsatilmagan. Ma\'lumot olish uchun kasaba uyushmasi ishonch telefoniga qo\'ng\'iroq qilishingiz mumkin.')}
+                            ${escapeHTML(content || defaultContent)}
                         </div>
                     `;
                 } else {
-                    contentDiv.innerHTML = '<div style="color: var(--color-danger); text-align: center;">Imtiyoz topilmadi.</div>';
+                    const errMsg = (translations[currentLang] && translations[currentLang]["priv_not_found"]) || "Imtiyoz topilmadi.";
+                    contentDiv.innerHTML = `<div style="color: var(--color-danger); text-align: center;">${errMsg}</div>`;
                 }
             } catch (error) {
-                contentDiv.innerHTML = '<div style="color: var(--color-danger); text-align: center;">Server xatoligi yuz berdi.</div>';
+                const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+                const errMsg = (translations[currentLang] && translations[currentLang]["priv_server_error"]) || "Server xatoligi yuz berdi.";
+                contentDiv.innerHTML = `<div style="color: var(--color-danger); text-align: center;">${errMsg}</div>`;
             }
         }
 

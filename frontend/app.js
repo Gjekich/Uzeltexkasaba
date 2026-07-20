@@ -35,6 +35,23 @@ function setLanguage(lang) {
     document.querySelectorAll('.lang-select').forEach(sel => {
         sel.value = lang;
     });
+
+    // Dynamic lists re-render on language switch
+    if (typeof renderPrivileges === 'function' && typeof allPrivileges !== 'undefined') {
+        renderPrivileges(allPrivileges);
+    }
+    if (typeof renderLegislations === 'function' && typeof allLegislations !== 'undefined') {
+        renderLegislations(allLegislations);
+    }
+    if (typeof renderNews === 'function' && typeof allNews !== 'undefined') {
+        renderNews(allNews);
+    }
+    if (typeof renderEvents === 'function' && typeof allEvents !== 'undefined') {
+        renderEvents(allEvents);
+    }
+    if (typeof loadLatestNews === 'function') {
+        loadLatestNews();
+    }
 }
 
 function initLanguageSwitcher() {
@@ -157,16 +174,19 @@ async function loadLatestNews() {
                 const bgImage = firstImg ? `style="background-image: url('${firstImg}')"` : 'style="background-image: url(\'images/default_news.jpg\')"';
                 const date = new Date(news.created_at).toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric' });
                 
+                const title = getLocalizedField(news, 'title');
+                const content = getLocalizedField(news, 'content');
+
                 return `
                     <div class="news-card">
                         <div class="news-img" ${bgImage}>
-                            <span class="news-badge">Faoliyat</span>
+                            <span class="news-badge" data-i18n="news_tag">Faoliyat</span>
                         </div>
                         <div class="news-body">
                             <span class="news-date">${date}</span>
-                            <h3 class="news-title">${escapeHTML(news.title)}</h3>
-                            <p class="news-excerpt">${escapeHTML(news.content)}</p>
-                            <a href="news_detail.html?id=${news.id}" class="privilege-link" style="margin-top: 16px;">Batafsil ➔</a>
+                            <h3 class="news-title">${escapeHTML(title)}</h3>
+                            <p class="news-excerpt">${escapeHTML(content)}</p>
+                            <a href="news_detail.html?id=${news.id}" class="privilege-link" style="margin-top: 16px;" data-i18n="read_more">Batafsil ➔</a>
                         </div>
                     </div>
                 `;
@@ -189,4 +209,14 @@ function escapeHTML(str) {
             '"': '&quot;'
         }[tag] || tag)
     );
+}
+
+// Localized field helper for objects
+function getLocalizedField(obj, field) {
+    const lang = getCurrentLanguage();
+    if (lang === 'uz') {
+        return obj[field] || '';
+    }
+    const localized = obj[`${field}_${lang}`];
+    return localized || obj[field] || '';
 }

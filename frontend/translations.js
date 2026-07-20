@@ -139,6 +139,16 @@ const translations = {
         "close": "Yopish",
         "search_placeholder": "Qidirish...",
 
+        // Privileges page specific
+        "priv_page_title": "A'zolik Imtiyozlari va Kafolatlari",
+        "priv_page_subtitle": "Kasaba uyushmasi a'zolari uchun qonunchilik va jamoa shartnomalarida belgilangan barcha imtiyozlar jamlanmasi.",
+        "priv_loading": "Imtiyozlar yuklanmoqda...",
+        "priv_load_error": "Imtiyozlarni yuklab bo'lmadi.",
+        "priv_conn_error": "Server bilan aloqa uzildi.",
+        "priv_not_found": "Imtiyoz topilmadi.",
+        "priv_server_error": "Server xatoligi yuz berdi.",
+        "priv_default_content": "Ushbu imtiyoz bo'yicha batafsil shartlar va a'zo bo'lish/hujjat topshirish tartibi ko'rsatilmagan. Ma'lumot olish uchun kasaba uyushmasi ishonch telefoniga qo'ng'iroq qilishingiz mumkin.",
+
         // About page specific
         "about_page_title": "Tashkilot Haqida",
         "about_page_subtitle": "Kasaba uyushmasining tarixi, maqsadlari va tashkiliy tuzilmasi.",
@@ -303,6 +313,16 @@ const translations = {
         "close": "Закрыть",
         "search_placeholder": "Поиск...",
 
+        // Privileges page specific
+        "priv_page_title": "Льготы и гарантии членства",
+        "priv_page_subtitle": "Свод всех льгот, определенных законодательством и коллективными договорами для членов профсоюза.",
+        "priv_loading": "Загрузка льгот...",
+        "priv_load_error": "Не удалось загрузить льготы.",
+        "priv_conn_error": "Соединение с сервером потеряно.",
+        "priv_not_found": "Льгота не найдена.",
+        "priv_server_error": "Произошла ошибка сервера.",
+        "priv_default_content": "Подробные условия и процедура подачи заявления/документов по данной льготе не указаны. Для получения информации вы можете позвонить по телефону доверия профсоюза.",
+
         // About page specific
         "about_page_title": "Организация",
         "about_page_subtitle": "История, цели и организационная структура профсоюза.",
@@ -466,6 +486,16 @@ const translations = {
         "read_more": "Read More",
         "close": "Close",
         "search_placeholder": "Search...",
+
+        // Privileges page specific
+        "priv_page_title": "Membership Benefits and Guarantees",
+        "priv_page_subtitle": "A collection of all benefits defined by legislation and collective agreements for union members.",
+        "priv_loading": "Loading benefits...",
+        "priv_load_error": "Failed to load benefits.",
+        "priv_conn_error": "Connection to server lost.",
+        "priv_not_found": "Benefit not found.",
+        "priv_server_error": "Server error occurred.",
+        "priv_default_content": "Detailed terms and application/document submission procedures for this benefit are not specified. For information, you can call the trade union helpline.",
 
         // About page specific
         "about_page_title": "About the Organization",
