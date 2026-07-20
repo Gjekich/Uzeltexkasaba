@@ -20,6 +20,22 @@ const translations = {
         "stat_members": "A'zolar soni",
         "stat_enterprises": "Tashkilotlar",
         "stat_agreements": "Jamoa shartnomalari",
+        "stat_members_val": "Kasaba a'zolari",
+        "stat_sanatoriums_val": "Sanatoriylarga yo'llanmalar",
+        "stat_advice_val": "Huquqiy maslahatlar",
+        "stat_resolved_val": "Ijobiy hal etilgan murojaatlar",
+
+        // Privileges Showcase
+        "priv_showcase_tag": "Bizning Imkoniyatlar",
+        "priv_showcase_title": "A'zolar uchun taqdim etiladigan imtiyozlar",
+        "priv_showcase_subtitle": "Kasaba uyushmasi a'zosi bo'lish orqali siz quyidagi imtiyozlar va qo'llab-quvvatlash tizimidan foydalanish huquqiga egasiz.",
+        "priv1_title": "Sog'liqni saqlash & Dam olish",
+        "priv1_desc": "Respublikamizdagi eng yaxshi sanatoriylar va davolanish maskanlariga imtiyozli yo'llanmalar.",
+        "priv_more": "Batafsil ma'lumot ➔",
+        "priv2_title": "Moddiy ko'mak",
+        "priv2_desc": "Og'ir ijtimoiy ahvoldagi xodimlarga, yosh oilalarga hamda nafaqadagi a'zolarga moliyaviy yordamlar.",
+        "priv3_title": "Huquqiy maslahatlar",
+        "priv3_desc": "Ish beruvchi bilan yuzaga keladigan mehnat nizolarida bepul huquqiy yordam va advokatlik xizmatlari.",
 
         // About Section (Home)
         "about_tag": "Biz Haqimizda",
@@ -93,6 +109,30 @@ const translations = {
         // Footer
         "footer_rights": "Barcha huquqlar himoyalangan.",
         "footer_telegram": "Telegram kanalimiz",
+        "footer_desc": "Elektrotexnika sanoati korxonalari xodimlarini birlashtiruvchi, ularning mehnat va ijtimoiy huquqlarini himoya qiluvchi rasmiy ochiq portal.",
+        "footer_quick_links": "Tezkor havolalar",
+        "footer_legislation_title": "Qonunchilik va Huquq",
+        "footer_labor_code": "Mehnat Kodeksi",
+        "footer_presidential_decrees": "Prezident qarorlari",
+        "footer_internal_regulations": "Ichki nizom va tartiblar",
+
+        // Latest News Section (Home)
+        "latest_news_title": "So'nggi yangiliklar va tadbirlar",
+        "latest_news_subtitle": "Kasaba uyushmasi hayoti, erishilgan kelishuvlar va amalga oshirilgan chora-tadbirlar tafsilotlari.",
+        "view_all_news": "Barcha yangiliklarni ko'rish",
+
+        // Feedback / Contact Form
+        "feedback_tag": "Teskari aloqa",
+        "feedback_title": "Kasaba uyushmasiga murojaat yuborish",
+        "feedback_subtitle": "Savollaringiz, takliflaringiz yoki yordamga ehtiyojingiz bo'lsa, quyidagi shaklni to'ldiring. Biz tez fursatda siz bilan bog'lanamiz.",
+        "contact_info_address_title": "Manzilimiz",
+        "contact_info_phone_title": "Ishonch telefoni",
+        "contact_info_email_title": "Elektron pochta",
+        "contact_info_telegram_title": "Telegram kanalimiz",
+        "form_name_label": "To'liq ism-familiyangiz (F.I.SH.)",
+        "form_phone_label": "Telefon raqamingiz",
+        "form_message_label": "Murojaatingiz matni",
+        "form_submit_btn": "Murojaatni yuborish",
 
         // Details pages
         "read_more": "Batafsil ko'rish",
@@ -120,6 +160,22 @@ const translations = {
         "stat_members": "Количество членов",
         "stat_enterprises": "Организации",
         "stat_agreements": "Коллективные договоры",
+        "stat_members_val": "Члены профсоюза",
+        "stat_sanatoriums_val": "Путевки в санатории",
+        "stat_advice_val": "Юридические консультации",
+        "stat_resolved_val": "Положительно решенные обращения",
+
+        // Privileges Showcase
+        "priv_showcase_tag": "Наши возможности",
+        "priv_showcase_title": "Льготы, предоставляемые членам",
+        "priv_showcase_subtitle": "Став членом профсоюза, вы получаете право на следующие льготы и систему поддержки.",
+        "priv1_title": "Здоровье и отдых",
+        "priv1_desc": "Льготные путевки в лучшие санатории и лечебные учреждения страны.",
+        "priv_more": "Подробнее ➔",
+        "priv2_title": "Материальная помощь",
+        "priv2_desc": "Финансовая помощь работникам в тяжелом социальном положении, молодым семьям и пенсионерам.",
+        "priv3_title": "Юридическая помощь",
+        "priv3_desc": "Бесплатная юридическая помощь и адвокатские услуги при трудовых спорах с работодателем.",
 
         // About Section (Home)
         "about_tag": "О нас",
@@ -193,6 +249,30 @@ const translations = {
         // Footer
         "footer_rights": "Все права защищены.",
         "footer_telegram": "Наш Telegram канал",
+        "footer_desc": "Официальный открытый портал, объединяющий работников предприятий электротехнической промышленности и защищающий их трудовые и социальные права.",
+        "footer_quick_links": "Быстрые ссылки",
+        "footer_legislation_title": "Законодательство и право",
+        "footer_labor_code": "Трудовой кодекс",
+        "footer_presidential_decrees": "Постановления Президента",
+        "footer_internal_regulations": "Внутренние правила и процедуры",
+
+        // Latest News Section (Home)
+        "latest_news_title": "Последние новости и события",
+        "latest_news_subtitle": "Детали жизни профсоюза, достигнутые соглашения и предпринятые меры.",
+        "view_all_news": "Посмотреть все новости",
+
+        // Feedback / Contact Form
+        "feedback_tag": "Обратная связь",
+        "feedback_title": "Отправить обращение в профсоюз",
+        "feedback_subtitle": "Если у вас есть вопросы, предложения или вам нужна помощь, заполните форму ниже. Мы свяжемся с вами в ближайшее время.",
+        "contact_info_address_title": "Наш адрес",
+        "contact_info_phone_title": "Телефон доверия",
+        "contact_info_email_title": "Электронная почта",
+        "contact_info_telegram_title": "Наш Telegram канал",
+        "form_name_label": "Ваше полное имя (Ф.И.О.)",
+        "form_phone_label": "Номер телефона",
+        "form_message_label": "Текст вашего обращения",
+        "form_submit_btn": "Отправить обращение",
 
         // Details pages
         "read_more": "Читать далее",
@@ -220,6 +300,22 @@ const translations = {
         "stat_members": "Total Members",
         "stat_enterprises": "Organizations",
         "stat_agreements": "Collective Agreements",
+        "stat_members_val": "Union members",
+        "stat_sanatoriums_val": "Sanatorium vouchers",
+        "stat_advice_val": "Legal consultations",
+        "stat_resolved_val": "Resolved applications",
+
+        // Privileges Showcase
+        "priv_showcase_tag": "Our opportunities",
+        "priv_showcase_title": "Benefits provided to members",
+        "priv_showcase_subtitle": "By becoming a union member, you are entitled to the following benefits and support system.",
+        "priv1_title": "Health & Recreation",
+        "priv1_desc": "Discounted vouchers to the best sanatoriums and treatment resorts in the country.",
+        "priv_more": "More details ➔",
+        "priv2_title": "Financial support",
+        "priv2_desc": "Financial aid for employees in difficult social situations, young families, and retirees.",
+        "priv3_title": "Legal advice",
+        "priv3_desc": "Free legal assistance and advocacy services in labor disputes with the employer.",
 
         // About Section (Home)
         "about_tag": "About Us",
@@ -293,6 +389,30 @@ const translations = {
         // Footer
         "footer_rights": "All rights reserved.",
         "footer_telegram": "Our Telegram Channel",
+        "footer_desc": "Official open portal uniting employees of electrical industry enterprises, protecting their labor and social rights.",
+        "footer_quick_links": "Quick Links",
+        "footer_legislation_title": "Legislation and Rights",
+        "footer_labor_code": "Labor Code",
+        "footer_presidential_decrees": "Presidential Decrees",
+        "footer_internal_regulations": "Internal Regulations and Procedures",
+
+        // Latest News Section (Home)
+        "latest_news_title": "Latest News and Events",
+        "latest_news_subtitle": "Details of trade union life, agreements reached, and measures taken.",
+        "view_all_news": "View All News",
+
+        // Feedback / Contact Form
+        "feedback_tag": "Feedback",
+        "feedback_title": "Submit Application to Trade Union",
+        "feedback_subtitle": "If you have questions, suggestions, or need assistance, fill out the form below. We will contact you soon.",
+        "contact_info_address_title": "Our Address",
+        "contact_info_phone_title": "Helpline",
+        "contact_info_email_title": "Email Address",
+        "contact_info_telegram_title": "Our Telegram Channel",
+        "form_name_label": "Your Full Name (FN)",
+        "form_phone_label": "Phone Number",
+        "form_message_label": "Text of Your Application",
+        "form_submit_btn": "Submit Application",
 
         // Details pages
         "read_more": "Read More",
