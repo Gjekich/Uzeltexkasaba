@@ -41,11 +41,11 @@
     <section class="section section-secondary" style="padding: 60px 0;">
         <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
             <div>
-                <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;">Yangiliklar va Faoliyat</h1>
-                <p style="color: var(--text-secondary);">Kasaba uyushmasining eng so'nggi yangiliklari va amalga oshirilgan ishlari.</p>
+                <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;" data-i18n="news_page_title">Yangiliklar va Faoliyat</h1>
+                <p style="color: var(--text-secondary);" data-i18n="news_page_subtitle">Kasaba uyushmasining eng so'nggi yangiliklari va amalga oshirilgan ishlari.</p>
             </div>
             <div style="min-width: 300px;">
-                <input type="text" id="newsSearch" class="search-input" style="width: 100%;" placeholder="Yangiliklarni qidirish...">
+                <input type="text" id="newsSearch" class="search-input" style="width: 100%;" placeholder="Yangiliklarni qidirish..." data-i18n="news_search_placeholder" data-i18n-attr="placeholder">
             </div>
         </div>
     </section>
@@ -55,7 +55,7 @@
         <div class="container">
             <div class="news-grid" id="newsGrid">
                 <!-- Dynamic Content -->
-                <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Yangiliklar yuklanmoqda...</div>
+                <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);" data-i18n="news_loading">Yangiliklar yuklanmoqda...</div>
             </div>
         </div>
     </section>
@@ -64,10 +64,10 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                <p>&copy; 2026 UzeltexKasaba. Barcha huquqlar himoyalangan.</p>
+                <p>&copy; 2026 UzeltexKasaba. <span data-i18n="footer_rights">Barcha huquqlar himoyalangan.</span></p>
                 <a href="https://t.me/uzeltexkasaba" target="_blank" style="display: flex; align-items: center; gap: 8px; color: var(--color-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-                    Telegram kanalimiz
+                    <span data-i18n="footer_telegram">Telegram kanalimiz</span>
                 </a>
             </div>
         </div>
@@ -98,11 +98,15 @@
                     allNews = await response.json();
                     renderNews(allNews);
                 } else {
-                    document.getElementById('newsGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Yangiliklarni yuklab bo\'lmadi.</div>';
+                    const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+                    const errMsg = (translations[currentLang] && translations[currentLang]["news_load_error"]) || "Yangiliklarni yuklab bo'lmadi.";
+                    document.getElementById('newsGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">${errMsg}</div>`;
                 }
             } catch (error) {
                 console.error(error);
-                document.getElementById('newsGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Server bilan aloqa uzildi.</div>';
+                const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+                const errMsg = (translations[currentLang] && translations[currentLang]["news_conn_error"]) || "Server bilan aloqa uzildi.";
+                document.getElementById('newsGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">${errMsg}</div>`;
             }
         }
 
@@ -110,26 +114,46 @@
             const grid = document.getElementById('newsGrid');
             if (!grid) return;
 
+            const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+
             if (list.length === 0) {
-                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Qidiruv bo\'yicha yangiliklar topilmadi.</div>';
+                const errMsg = (translations[currentLang] && translations[currentLang]["news_not_found"]) || "Qidiruv bo'yicha yangiliklar topilmadi.";
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">${errMsg}</div>`;
                 return;
             }
+
+            const badgeText = (translations[currentLang] && translations[currentLang]["news_tag"]) || "Faoliyat";
+            const detailText = (translations[currentLang] && translations[currentLang]["read_more"]) || "Batafsil o'qish";
 
             grid.innerHTML = list.map(news => {
                 const firstImg = news.image_url ? news.image_url.split(',')[0] : '';
                 const bgImage = firstImg ? `style="background-image: url('${firstImg}')"` : 'style="background-image: url(\'images/default_news.jpg\')"';
-                const date = new Date(news.created_at).toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric' });
                 
+                let dateStr = '';
+                try {
+                    const d = new Date(news.created_at);
+                    if (!isNaN(d.getTime())) {
+                        dateStr = d.toLocaleDateString(currentLang === 'uz' ? 'uz-UZ' : (currentLang === 'ru' ? 'ru-RU' : 'en-US'), { day: 'numeric', month: 'long', year: 'numeric' });
+                    } else {
+                        dateStr = news.created_at ? news.created_at.substring(0, 10) : '';
+                    }
+                } catch(e) {
+                    dateStr = news.created_at || '';
+                }
+
+                const title = getLocalizedField(news, 'title');
+                const content = getLocalizedField(news, 'content');
+
                 return `
                     <div class="news-card">
                         <div class="news-img" ${bgImage}>
-                            <span class="news-badge">Faoliyat</span>
+                            <span class="news-badge">${escapeHTML(badgeText)}</span>
                         </div>
                         <div class="news-body">
-                            <span class="news-date">${date}</span>
-                            <h3 class="news-title">${escapeHTML(news.title)}</h3>
-                            <p class="news-excerpt">${escapeHTML(news.content)}</p>
-                            <a href="news_detail.html?id=${news.id}" class="btn btn-secondary" style="margin-top: 16px; width: 100%; display: inline-block; text-align: center; box-sizing: border-box;">Batafsil o'qish</a>
+                            <span class="news-date">${dateStr}</span>
+                            <h3 class="news-title">${escapeHTML(title)}</h3>
+                            <p class="news-excerpt">${escapeHTML(content)}</p>
+                            <a href="news_detail.html?id=${news.id}" class="btn btn-secondary" style="margin-top: 16px; width: 100%; display: inline-block; text-align: center; box-sizing: border-box;">${escapeHTML(detailText)}</a>
                         </div>
                     </div>
                 `;

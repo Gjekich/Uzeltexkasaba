@@ -149,6 +149,16 @@ const translations = {
         "priv_server_error": "Server xatoligi yuz berdi.",
         "priv_default_content": "Ushbu imtiyoz bo'yicha batafsil shartlar va a'zo bo'lish/hujjat topshirish tartibi ko'rsatilmagan. Ma'lumot olish uchun kasaba uyushmasi ishonch telefoniga qo'ng'iroq qilishingiz mumkin.",
 
+        // News page specific
+        "news_page_title": "Yangiliklar va Faoliyat",
+        "news_page_subtitle": "Kasaba uyushmasining eng so'nggi yangiliklari va amalga oshirilgan ishlari.",
+        "news_search_placeholder": "Yangiliklarni qidirish...",
+        "news_loading": "Yangiliklar yuklanmoqda...",
+        "news_tag": "Faoliyat",
+        "news_load_error": "Yangiliklarni yuklab bo'lmadi.",
+        "news_conn_error": "Server bilan aloqa uzildi.",
+        "news_not_found": "Qidiruv bo'yicha yangiliklar topilmadi.",,
+
         // Events page specific
         "events_page_title": "Tadbirlar va Seminarlar Rejasi",
         "events_page_subtitle": "Kasaba uyushmasi tomonidan o'tkaziladigan seminar, trening, sport o'yinlari va bayram tadbirlari jadvali.",
@@ -369,6 +379,16 @@ const translations = {
         "priv_server_error": "Произошла ошибка сервера.",
         "priv_default_content": "Подробные условия и процедура подачи заявления/документов по данной льготе не указаны. Для получения информации вы можете позвонить по телефону доверия профсоюза.",
 
+        // News page specific
+        "news_page_title": "Новости и Деятельность",
+        "news_page_subtitle": "Последние новости и результаты деятельности профсоюза.",
+        "news_search_placeholder": "Поиск новостей...",
+        "news_loading": "Загрузка новостей...",
+        "news_tag": "Деятельность",
+        "news_load_error": "Не удалось загрузить новости.",
+        "news_conn_error": "Соединение с сервером потеряно.",
+        "news_not_found": "Новости по запросу не найдены.",,
+
         // Events page specific
         "events_page_title": "План мероприятий и семинаров",
         "events_page_subtitle": "Расписание семинаров, тренингов, спортивных игр и праздничных мероприятий, проводимых профсоюзом.",
@@ -588,6 +608,16 @@ const translations = {
         "priv_not_found": "Benefit not found.",
         "priv_server_error": "Server error occurred.",
         "priv_default_content": "Detailed terms and application/document submission procedures for this benefit are not specified. For information, you can call the trade union helpline.",
+
+        // News page specific
+        "news_page_title": "News and Activities",
+        "news_page_subtitle": "The latest news and achievements of the trade union.",
+        "news_search_placeholder": "Search news...",
+        "news_loading": "Loading news...",
+        "news_tag": "Activities",
+        "news_load_error": "Failed to load news.",
+        "news_conn_error": "Connection to server lost.",
+        "news_not_found": "No news found for search query.",,
 
         // Events page specific
         "events_page_title": "Events and Seminars Schedule",
