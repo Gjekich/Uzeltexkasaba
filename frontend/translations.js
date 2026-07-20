@@ -212,6 +212,23 @@ const translations = {
         "priv_sihatgoh_desc": "O'zbekiston kasaba uyushmalari Federatsiyasi tarkibidagi barcha sanatoriy-sihatgohlar bo'yicha ma'lumotlar, narxlar va bron qilish tizimi.",
         "priv_sihatgoh_btn": "Portalga o'tish ➔",
 
+        // Ishonch newspaper section
+        "newspaper_tag": "Rasmiy Nashr",
+        "newspaper_title": "\"Ishonch\" Gazetasi",
+        "newspaper_subtitle": "O'zbekiston kasaba uyushmalari Federatsiyasining rasmiy nashri — mehnat huquqi, ijtimoiy himoya va kasaba uyushmasi hayotidagi so'nggi yangiliklarni o'z ichiga oladi.",
+        "newspaper_badge": "So'nggi son",
+        "newspaper_read_btn": "O'qishni boshlash",
+        "newspaper_info_title": "Ishonch — Kasaba Uyushmasining Ovozi",
+        "newspaper_info_desc": "Gazeta mehnat munosabatlari, xodimlar huquqlari, sanatoriy va dam olish imkoniyatlari, kasaba uyushmasi yangiliklari hamda qonunchilik sohasidagi o'zgarishlar haqida batafsil maqolalar bilan sizni xabardor qiladi.",
+        "newspaper_feat1": "Haftalik chiquvchi rasmiy nashr",
+        "newspaper_feat2": "Mehnat huquqi va qonunchilik yangiliklari",
+        "newspaper_feat3": "Sanatoriy va dam olish yangiliklari",
+        "newspaper_feat4": "O'zbek va rus tillarida mavjud",
+        "newspaper_open_btn": "Gazetani o'qish",
+        "newspaper_archive_btn": "Arxiv",
+        "newspaper_download": "Yuklab olish",
+        "newspaper_flipbook_hint": "Sahifalar bo'yicha o'tish uchun ok tugmalaridan foydalaning",
+
         // Events page specific
         "events_page_title": "Tadbirlar va Seminarlar Rejasi",
         "events_page_subtitle": "Kasaba uyushmasi tomonidan o'tkaziladigan seminar, trening, sport o'yinlari va bayram tadbirlari jadvali.",
@@ -495,6 +512,23 @@ const translations = {
         "priv_sihatgoh_desc": "Информация, цены и система бронирования всех санаториев в структуре Федерации профсоюзов Узбекистана.",
         "priv_sihatgoh_btn": "Перейти на портал ➔",
 
+        // Ishonch newspaper section
+        "newspaper_tag": "Официальное издание",
+        "newspaper_title": "Газета «Ишонч»",
+        "newspaper_subtitle": "Официальное издание Федерации профсоюзов Узбекистана — о трудовых правах, социальной защите и последних новостях профсоюзной жизни.",
+        "newspaper_badge": "Последний номер",
+        "newspaper_read_btn": "Начать чтение",
+        "newspaper_info_title": "Ишонч — Голос Профсоюза",
+        "newspaper_info_desc": "Газета информирует о трудовых отношениях, правах работников, возможностях отдыха в санаториях, новостях профсоюза и изменениях в области законодательства.",
+        "newspaper_feat1": "Еженедельное официальное издание",
+        "newspaper_feat2": "Новости о трудовом праве и законодательстве",
+        "newspaper_feat3": "Новости о санаториях и отдыхе",
+        "newspaper_feat4": "Доступно на узбекском и русском языках",
+        "newspaper_open_btn": "Читать газету",
+        "newspaper_archive_btn": "Архив",
+        "newspaper_download": "Скачать",
+        "newspaper_flipbook_hint": "Используйте кнопки со стрелками для навигации по страницам",
+
         // Events page specific
         "events_page_title": "План мероприятий и семинаров",
         "events_page_subtitle": "Расписание семинаров, тренингов, спортивных игр и праздничных мероприятий, проводимых профсоюзом.",
@@ -777,6 +811,23 @@ const translations = {
         "priv_sihatgoh_title": "Sihatgoh.uz Official Portal",
         "priv_sihatgoh_desc": "Information, pricing, and booking system of all sanatoriums within the Federation of Trade Unions of Uzbekistan.",
         "priv_sihatgoh_btn": "Go to portal ➔",
+
+        // Ishonch newspaper section
+        "newspaper_tag": "Official Publication",
+        "newspaper_title": "\"Ishonch\" Newspaper",
+        "newspaper_subtitle": "The official publication of the Federation of Trade Unions of Uzbekistan — covering labor rights, social protection and the latest news from trade union life.",
+        "newspaper_badge": "Latest Issue",
+        "newspaper_read_btn": "Start Reading",
+        "newspaper_info_title": "Ishonch — The Voice of the Trade Union",
+        "newspaper_info_desc": "The newspaper keeps you informed with in-depth articles on labor relations, workers' rights, sanatorium and recreation opportunities, trade union news, and legislative updates.",
+        "newspaper_feat1": "Weekly official publication",
+        "newspaper_feat2": "Labor law and legislative updates",
+        "newspaper_feat3": "Sanatorium and recreation news",
+        "newspaper_feat4": "Available in Uzbek and Russian",
+        "newspaper_open_btn": "Read newspaper",
+        "newspaper_archive_btn": "Archive",
+        "newspaper_download": "Download",
+        "newspaper_flipbook_hint": "Use arrow buttons to navigate between pages",
 
         // Events page specific
         "events_page_title": "Events and Seminars Schedule",

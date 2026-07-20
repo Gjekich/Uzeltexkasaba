@@ -132,6 +132,108 @@
         </div>
     </section>
 
+    <!-- Ishonch Newspaper Section -->
+    <section class="section section-secondary" style="padding: 80px 0;">
+        <div class="container">
+            <div class="section-header" style="margin-bottom: 48px;">
+                <span class="section-tag" data-i18n="newspaper_tag">Rasmiy Nashr</span>
+                <h2 class="section-title" data-i18n="newspaper_title">"Ishonch" Gazetasi</h2>
+                <p class="section-subtitle" data-i18n="newspaper_subtitle">O'zbekiston kasaba uyushmalari Federatsiyasining rasmiy nashri — mehnat huquqi, ijtimoiy himoya va kasaba uyushmasi hayotidagi so'nggi yangiliklarni o'z ichiga oladi.</p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 60px; flex-wrap: wrap; justify-content: center;">
+                <!-- Newspaper Cover -->
+                <div style="position: relative; cursor: pointer; flex-shrink: 0;" onclick="openFlipbook()">
+                    <div style="position: relative; width: 300px; border-radius: 8px; overflow: hidden; box-shadow: -8px 8px 30px rgba(0,0,0,0.3), 4px 4px 0 rgba(0,0,0,0.1); transform: perspective(900px) rotateY(-3deg); transition: transform 0.4s ease; background: white;" onmouseover="this.style.transform='perspective(900px) rotateY(0deg) scale(1.02)'" onmouseout="this.style.transform='perspective(900px) rotateY(-3deg)'">
+                        <img src="images/ishonch_gazeta.png" alt="Ishonch gazetasi" style="width: 100%; display: block;">
+                        <!-- Play overlay -->
+                        <div style="position: absolute; inset: 0; background: rgba(15,41,99,0.55); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'">
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--color-primary)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg>
+                            </div>
+                            <span style="color: white; font-weight: 700; font-size: 1rem; text-shadow: 0 2px 8px rgba(0,0,0,0.4);" data-i18n="newspaper_read_btn">O'qishni boshlash</span>
+                        </div>
+                    </div>
+                    <!-- Book spine effect -->
+                    <div style="position: absolute; top: 0; left: -6px; width: 6px; height: 100%; background: linear-gradient(to right, #0a1f55, #1a3a8a); border-radius: 2px 0 0 2px;"></div>
+                    <!-- Clickable badge -->
+                    <div style="position: absolute; top: -10px; right: -10px; background: linear-gradient(135deg, #e8c840, #f0a020); color: #1a1a1a; font-size: 0.7rem; font-weight: 800; padding: 6px 12px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="newspaper_badge">So'nggi son</div>
+                </div>
+
+                <!-- Info block -->
+                <div style="max-width: 420px;">
+                    <h3 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; margin-bottom: 12px; line-height: 1.2;" data-i18n="newspaper_info_title">Ishonch — Kasaba Uyushmasining Ovozi</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.75; margin-bottom: 24px; font-size: 0.95rem;" data-i18n="newspaper_info_desc">Gazeta mehnat munosabatlari, xodimlar huquqlari, sanatoriy va dam olish imkoniyatlari, kasaba uyushmasi yangiliklari hamda qonunchilik sohasidagi o'zgarishlar haqida batafsil maqolalar bilan sizni xabardor qiladi.</p>
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px;">
+                        <div style="display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 500;">
+                            <span style="font-size: 1.3rem;">📰</span>
+                            <span data-i18n="newspaper_feat1">Haftalik chiquvchi rasmiy nashr</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 500;">
+                            <span style="font-size: 1.3rem;">⚖️</span>
+                            <span data-i18n="newspaper_feat2">Mehnat huquqi va qonunchilik yangiliklari</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 500;">
+                            <span style="font-size: 1.3rem;">🏖️</span>
+                            <span data-i18n="newspaper_feat3">Sanatoriy va dam olish yangiliklari</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 500;">
+                            <span style="font-size: 1.3rem;">🌐</span>
+                            <span data-i18n="newspaper_feat4">O'zbek va rus tillarida mavjud</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button onclick="openFlipbook()" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 700;">
+                            📖 <span data-i18n="newspaper_open_btn">Gazetani o'qish</span>
+                        </button>
+                        <a href="https://www.kasaba.uz/ishonch" target="_blank" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600;">
+                            🔗 <span data-i18n="newspaper_archive_btn">Arxiv</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flipbook Modal -->
+    <div id="flipbookModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:9999; align-items:center; justify-content:center; padding:16px;" onclick="closeFlipbook()">
+        <div style="background: #1a1a2e; border-radius: 12px; overflow: hidden; width: 100%; max-width: 900px; max-height: 96vh; display: flex; flex-direction: column; box-shadow: 0 24px 80px rgba(0,0,0,0.8);" onclick="event.stopPropagation()">
+            <!-- Modal header -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: linear-gradient(135deg, #0f2963 0%, #1a3a8a 100%);">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 1.4rem;">📰</span>
+                    <div>
+                        <div style="color: white; font-weight: 700; font-size: 1rem;" data-i18n="newspaper_title">"Ishonch" Gazetasi</div>
+                        <div style="color: rgba(255,255,255,0.6); font-size: 0.8rem;" data-i18n="newspaper_badge">So'nggi son</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <a href="images/Boshlangich_tashkilotlar_uchun_uslubiy_qollanma.pdf" target="_blank" style="color: rgba(255,255,255,0.7); font-size: 0.8rem; text-decoration: none; display: flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">
+                        ⬇ <span data-i18n="newspaper_download">Yuklab olish</span>
+                    </a>
+                    <button onclick="closeFlipbook()" style="background:rgba(255,255,255,0.1); border:none; color:white; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1.1rem; display:flex; align-items:center; justify-content:center; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,0,0,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">&times;</button>
+                </div>
+            </div>
+            <!-- Flipbook viewer area -->
+            <div id="flipbookViewer" style="flex:1; overflow:auto; display:flex; align-items:center; justify-content:center; background: #0d0d1a; padding: 24px;">
+                <div style="position: relative; width: 100%; max-width: 780px;">
+                    <!-- Pages container -->
+                    <div id="flipbookPages" style="display: flex; gap: 0; box-shadow: 0 8px 40px rgba(0,0,0,0.6);">
+                        <img id="flipPage" src="images/ishonch_gazeta.png" alt="Ishonch gazeta sahifasi" style="width: 100%; border-radius: 4px; display: block; user-select:none;">
+                    </div>
+                    <!-- Page turn buttons -->
+                    <button onclick="flipPrev()" id="flipPrevBtn" style="position:absolute; left:-20px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.15); border:none; color:white; width:44px; height:44px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: background 0.2s; backdrop-filter: blur(4px);" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">‹</button>
+                    <button onclick="flipNext()" id="flipNextBtn" style="position:absolute; right:-20px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.15); border:none; color:white; width:44px; height:44px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: background 0.2s; backdrop-filter: blur(4px);" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">›</button>
+                </div>
+            </div>
+            <!-- Footer bar -->
+            <div style="display:flex; align-items:center; justify-content:center; gap:16px; padding:12px 20px; border-top:1px solid rgba(255,255,255,0.08); background:#1a1a2e;">
+                <span id="flipPageIndicator" style="color: rgba(255,255,255,0.5); font-size: 0.85rem;"></span>
+                <span style="color: rgba(255,255,255,0.3); font-size: 0.75rem;" data-i18n="newspaper_flipbook_hint">Sahifalar bo'yicha o'tish uchun ok tugmalaridan foydalaning</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Contact & Application Section -->
     <section class="section section-secondary" id="murojaat">
         <div class="container">
@@ -238,5 +340,63 @@
 
     <script src="translations.js"></script>
     <script src="app.js?v=1.3"></script>
+    <script>
+        // Flipbook reader — Ishonch gazeta
+        // Pages array: add more image paths here as new issues arrive
+        const flipbookPages = [
+            'images/ishonch_gazeta.png'
+        ];
+        let currentFlipPage = 0;
+
+        function openFlipbook() {
+            const modal = document.getElementById('flipbookModal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            showFlipPage(0);
+        }
+
+        function closeFlipbook() {
+            const modal = document.getElementById('flipbookModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        function showFlipPage(index) {
+            currentFlipPage = index;
+            const img = document.getElementById('flipPage');
+            const indicator = document.getElementById('flipPageIndicator');
+            img.style.opacity = '0';
+            img.style.transform = 'scale(0.97)';
+            img.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+            setTimeout(() => {
+                img.src = flipbookPages[currentFlipPage];
+                img.style.opacity = '1';
+                img.style.transform = 'scale(1)';
+            }, 150);
+            if (indicator) {
+                indicator.textContent = (currentFlipPage + 1) + ' / ' + flipbookPages.length;
+            }
+            document.getElementById('flipPrevBtn').style.opacity = currentFlipPage === 0 ? '0.3' : '1';
+            document.getElementById('flipNextBtn').style.opacity = currentFlipPage === flipbookPages.length - 1 ? '0.3' : '1';
+        }
+
+        function flipPrev() {
+            if (currentFlipPage > 0) showFlipPage(currentFlipPage - 1);
+        }
+
+        function flipNext() {
+            if (currentFlipPage < flipbookPages.length - 1) showFlipPage(currentFlipPage + 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('flipbookModal');
+            if (modal.style.display === 'flex') {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') flipNext();
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') flipPrev();
+                if (e.key === 'Escape') closeFlipbook();
+            }
+        });
+    </script>
 </body>
 </html>
