@@ -108,28 +108,22 @@ Imtiyozli yo'llanma olish uchun zarur hujjatlar:
         if legislation_count == 0:
             demo_legislations = [
                 Legislation(
-                    title="O'zbekiston Respublikasining Mehnat Kodeksi (Yangi tahriri)",
-                    description="Xodimlar va ish beruvchilar o'rtasidagi munosabatlarni tartibga soluvchi bosh qonun hujjati. (Lex.uz rasmiy havolasi)",
-                    category="Qonun",
-                    file_url="https://lex.uz/docs/6257288"
-                ),
-                Legislation(
                     title="O'zbekiston Respublikasining 'Kasaba uyushmalari to'g'risida'gi Qonuni",
-                    description="Kasaba uyushmalarining huquqlari, majburiyatlari va kafolatlarini belgilovchi qonun. (Lex.uz rasmiy havolasi)",
+                    description="Kasaba uyushmalarini tashkil etish, ularning huquqlari va faoliyati kafolatlarini tartibga soluvchi qonun.",
                     category="Qonun",
-                    file_url="https://lex.uz/docs/4638365"
+                    file_url="https://lex.uz/uz/docs/-4631281?ONDATE=14.08.2024"
                 ),
                 Legislation(
-                    title="Kasaba uyushmalari faoliyatini yanada takomillashtirish chora-tadbirlari to'g'risidagi qaror",
-                    description="Tashkiliy tuzilmani isloh qilish bo'yicha hukumat qarori. (Lex.uz rasmiy havolasi)",
-                    category="Qaror",
-                    file_url="https://lex.uz/docs/5049306"
-                ),
-                Legislation(
-                    title="Elektrotexnika sanoati korxonalari tarmog'ining tarif-malaka ma'lumotnomasi",
-                    description="Ishchilarning lavozimlari, toifalari va maosh stavkalarini belgilovchi ichki tarmoq yo'riqnomasi.",
+                    title="Kasaba uyushmasi va uning huquqlari",
+                    description="Kasaba uyushmalari va ularning a'zolari huquqlari, vakolatlari va kafolatlari to'g'risida rasmiy tushuntirish va ma'lumotlar.",
                     category="Nizom",
-                    file_url=""
+                    file_url="https://gov.uz/oz/advice/554/document/2194"
+                ),
+                Legislation(
+                    title="O'zbekiston Respublikasining Mehnat Kodeksi (Yangi tahriri)",
+                    description="Xodimlar va ish beruvchilar o'rtasidagi mehnat munosabatlarini tartibga soluvchi bosh kodeks.",
+                    category="Qonun",
+                    file_url="https://lex.uz/ru/docs/-6257288"
                 )
             ]
             db.add_all(demo_legislations)
