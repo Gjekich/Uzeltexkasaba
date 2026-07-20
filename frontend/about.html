@@ -190,20 +190,28 @@
     <!-- Union Members/Staff Section -->
     <section class="section section-secondary">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" style="margin-bottom: 32px;">
                 <span class="section-tag">Qo'mita A'zolari</span>
                 <h2 class="section-title">Boshlang'ich qo'mita a'zolari</h2>
                 <p class="section-subtitle">Kasaba uyushmasi boshlang'ich qo'mitasiga a'zo bo'lgan "O'zeltexsanoat" uyushmasi xodimlari.</p>
             </div>
 
-            <!-- Search Bar for Staff -->
-            <div style="max-width: 500px; margin: 0 auto 40px auto; display: flex; gap: 12px;">
-                <input type="text" id="staffSearch" class="search-input" placeholder="Ism yoki lavozim bo'yicha qidirish...">
+            <!-- Toggle Button -->
+            <div style="text-align: center; margin-bottom: 24px;">
+                <button id="toggleStaffBtn" class="btn btn-secondary" onclick="toggleStaffList()" style="min-width: 280px; font-weight: 600; padding: 12px 24px; font-size: 0.95rem;">📋 Ro'yxatni ko'rish</button>
             </div>
+            
+            <!-- Collapsible Container -->
+            <div id="staffCollapsibleContainer" style="display: none; transition: all 0.3s ease;">
+                <!-- Search Bar for Staff -->
+                <div style="max-width: 500px; margin: 0 auto 32px auto; display: flex; gap: 12px;">
+                    <input type="text" id="staffSearch" class="search-input" placeholder="Ism yoki lavozim bo'yicha qidirish...">
+                </div>
 
-            <!-- Staff Grid -->
-            <div class="news-grid" id="staffGrid">
-                <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Yuklanmoqda...</div>
+                <!-- Staff Grid -->
+                <div class="news-grid" id="staffGrid">
+                    <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Yuklanmoqda...</div>
+                </div>
             </div>
         </div>
     </section>
@@ -280,9 +288,6 @@
                 });
             });
 
-            // Fetch and render Staff
-            fetchStaff();
-
             const searchInput = document.getElementById('staffSearch');
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => {
@@ -292,12 +297,34 @@
             }
         });
 
+        let staffLoaded = false;
+
+        function toggleStaffList() {
+            const container = document.getElementById('staffCollapsibleContainer');
+            const btn = document.getElementById('toggleStaffBtn');
+            if (container.style.display === 'none') {
+                container.style.display = 'block';
+                btn.textContent = "❌ Ro'yxatni yopish";
+                btn.classList.add('btn-primary');
+                btn.classList.remove('btn-secondary');
+                if (!staffLoaded) {
+                    fetchStaff();
+                }
+            } else {
+                container.style.display = 'none';
+                btn.textContent = "📋 Ro'yxatni ko'rish";
+                btn.classList.add('btn-secondary');
+                btn.classList.remove('btn-primary');
+            }
+        }
+
         async function fetchStaff() {
             try {
                 const response = await fetch('/api/staff/');
                 if (response.ok) {
                     allStaff = await response.json();
                     renderStaff(allStaff);
+                    staffLoaded = true;
                 } else {
                     document.getElementById('staffGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Xodimlarni yuklab bo\'mladi.</div>';
                 }
