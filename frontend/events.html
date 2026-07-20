@@ -175,7 +175,7 @@
                         </div>
                     </div>
                     <div class="event-action">
-                        <button onclick="registerEventAlert()" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
+                        <button onclick="openRegisterModal('event1_title')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
                     </div>
                 </div>
 
@@ -195,7 +195,7 @@
                         </div>
                     </div>
                     <div class="event-action">
-                        <button onclick="registerEventAlert()" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
+                        <button onclick="openRegisterModal('event2_title')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
                     </div>
                 </div>
 
@@ -215,12 +215,39 @@
                         </div>
                     </div>
                     <div class="event-action">
-                        <button onclick="registerEventAlert()" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
+                        <button onclick="openRegisterModal('event3_title')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Event Registration Modal -->
+    <div class="modal" id="registerModal" onclick="closeRegisterModal()">
+        <div class="modal-content" style="max-width: 500px;" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeRegisterModal()">&times;</span>
+            <h2 style="font-family: var(--font-heading); margin-bottom: 20px; font-weight: 700; color: var(--color-primary);" data-i18n="modal_reg_title">Tadbirga ro'yxatdan o'tish</h2>
+            <form id="eventRegForm" onsubmit="submitEventRegistration(event)">
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="regEventName" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;" data-i18n="modal_reg_event">Tanlangan tadbir</label>
+                    <input type="text" id="regEventName" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: #f5f6f7;" readonly>
+                </div>
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="regFullName" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;" data-i18n="modal_reg_fullname">F.I.Sh. (To'liq ismingiz)</label>
+                    <input type="text" id="regFullName" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="regPhone" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;" data-i18n="modal_reg_phone">Telefon raqamingiz</label>
+                    <input type="tel" id="regPhone" class="form-input" placeholder="+998" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="regOrg" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;" data-i18n="modal_reg_org">Ish joyingiz (Korxona/tashkilot nomi)</label>
+                    <input type="text" id="regOrg" class="form-input" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-weight: 600;" data-i18n="modal_reg_btn">Yuborish</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -238,14 +265,69 @@
     <script src="translations.js"></script>
     <script src="app.js"></script>
     <script>
-        function registerEventAlert() {
+        function openRegisterModal(eventTitleKey) {
+            const modal = document.getElementById('registerModal');
+            const input = document.getElementById('regEventName');
             const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
-            const messages = {
-                uz: "Ushbu tadbirda qatnashish uchun korxonangiz kasaba qo'mitasiga murojaat qiling.",
-                ru: "Для участия в данном мероприятии обратитесь в профсоюзный комитет вашего предприятия.",
-                en: "To participate in this event, please contact the trade union committee of your enterprise."
-            };
-            alert(messages[currentLang] || messages.uz);
+            const translatedTitle = (translations[currentLang] && translations[currentLang][eventTitleKey]) || eventTitleKey;
+            input.value = translatedTitle;
+            modal.classList.add('open');
+        }
+
+        function closeRegisterModal() {
+            document.getElementById('registerModal').classList.remove('open');
+            document.getElementById('eventRegForm').reset();
+        }
+
+        async function submitEventRegistration(e) {
+            e.preventDefault();
+            const eventName = document.getElementById('regEventName').value;
+            const fullName = document.getElementById('regFullName').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const org = document.getElementById('regOrg').value.trim();
+            
+            const message = `Tadbirga ro'yxatdan o'tish:\n- Tadbir: ${eventName}\n- Tashkilot: ${org}`;
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const origText = submitBtn.innerText;
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Yuborilmoqda...';
+            
+            try {
+                const response = await fetch('/api/applications/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        full_name: fullName,
+                        phone: phone,
+                        message: message
+                    })
+                });
+                
+                const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+                if (response.ok) {
+                    const successMsgs = {
+                        uz: "Arizangiz qabul qilindi! Tez orada siz bilan bog'lanamiz.",
+                        ru: "Ваша заявка принята! Мы свяжемся с вами в ближайшее время.",
+                        en: "Your application has been received! We will contact you shortly."
+                    };
+                    alert(successMsgs[currentLang] || successMsgs.uz);
+                    closeRegisterModal();
+                } else {
+                    const errMsgs = {
+                        uz: "Xatolik yuz berdi. Iltimos qaytadan urinib ko'ring.",
+                        ru: "Произошла ошибка. Пожалуйста, попробуйте еще раз.",
+                        en: "An error occurred. Please try again."
+                    };
+                    alert(errMsgs[currentLang] || errMsgs.uz);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Server error");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = origText;
+            }
         }
     </script>
 </body>

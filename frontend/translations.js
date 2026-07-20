@@ -171,6 +171,14 @@ const translations = {
         "event3_loc": "Joy: Konferensiyalar zali",
         "event3_time": "Vaqt: 14:00 - 17:00",
 
+        // Registration modal
+        "modal_reg_title": "Tadbirga ro'yxatdan o'tish",
+        "modal_reg_event": "Tanlangan tadbir",
+        "modal_reg_fullname": "F.I.Sh. (To'liq ismingiz)",
+        "modal_reg_phone": "Telefon raqamingiz",
+        "modal_reg_org": "Ish joyingiz (Korxona/tashkilot nomi)",
+        "modal_reg_btn": "Yuborish",
+
         // About page specific
         "about_page_title": "Tashkilot Haqida",
         "about_page_subtitle": "Kasaba uyushmasining tarixi, maqsadlari va tashkiliy tuzilmasi.",
@@ -367,6 +375,14 @@ const translations = {
         "event3_loc": "Место: Конференц-зал",
         "event3_time": "Время: 14:00 - 17:00",
 
+        // Registration modal
+        "modal_reg_title": "Регистрация на мероприятие",
+        "modal_reg_event": "Выбранное мероприятие",
+        "modal_reg_fullname": "Ф.И.О. (Полное имя)",
+        "modal_reg_phone": "Номер телефона",
+        "modal_reg_org": "Место работы (Название предприятия)",
+        "modal_reg_btn": "Отправить",
+
         // About page specific
         "about_page_title": "Организация",
         "about_page_subtitle": "История, цели и организационная структура профсоюза.",
@@ -562,6 +578,14 @@ const translations = {
         "event3_desc": "Analysis of monitoring the implementation of collective agreements and improving labor dispute resolution systems.",
         "event3_loc": "Venue: Conference Hall",
         "event3_time": "Time: 14:00 - 17:00",
+
+        // Registration modal
+        "modal_reg_title": "Register for the Event",
+        "modal_reg_event": "Selected Event",
+        "modal_reg_fullname": "Full Name",
+        "modal_reg_phone": "Phone Number",
+        "modal_reg_org": "Place of Work (Organization name)",
+        "modal_reg_btn": "Submit",
 
         // About page specific
         "about_page_title": "About the Organization",
