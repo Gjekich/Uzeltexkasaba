@@ -136,7 +136,31 @@ const translations = {
 
         // Details pages
         "read_more": "Batafsil ko'rish",
-        "close": "Yopish"
+        "close": "Yopish",
+        "search_placeholder": "Qidirish...",
+
+        // About page specific
+        "about_page_title": "Tashkilot Haqida",
+        "about_page_subtitle": "Kasaba uyushmasining tarixi, maqsadlari va tashkiliy tuzilmasi.",
+        "about_main_desc1": "\"O'zeltexsanoat\" uyushmasi tizimidagi elektrotexnika sanoati korxonalarining xodimlarini birlashtiruvchi kasaba uyushmasi nodavlat va notijorat jamoat tashkilotidir.",
+        "about_main_desc2": "Asosiy vazifamiz — har bir xodimning munosib ish haqi olishi, xavfsiz va qulay mehnat sharoitlarida ishlashi hamda qonuniy huquqlari buzilmasligini ta'minlashdir. Biz ish beruvchi va xodimlar o'rtasidagi munosabatlarni jamoaviy shartnomalar orqali muvozanatda saqlab kelamiz.",
+        "rule_of_law_title": "Qonun ustuvorligi",
+        "rule_of_law_desc": "Mehnat Kodeksi talablariga qat'iy rioya etilishini nazorat qilish.",
+        "social_protection_title": "Ijtimoiy himoya",
+        "social_protection_desc": "Kam ta'minlanganlar va muhtojlarga moddiy ko'mak berish.",
+        "committee_members_tag": "Qo'mita A'zolari",
+        "faq_section_tag": "Savollarga javoblar",
+        "faq_section_subtitle": "A'zolik shartlari va eng ko'p so'raladigan mavzular bo'yicha batafsil ma'lumotlar.",
+        "faq_q1_text": "Jamoa shartnomasidagi barcha bo'sh qoldirilgan bandlar (_____) yakuniy tahrirda to'liq to'ldirilishi shartmi?",
+        "faq_a1_text": "Ha. Jamoa shartnomasi yakuniy imzolanishidan oldin barcha bo'sh qoldirilgan bandlar (sana, muddatlar, foizlar, BHM hisobidagi summalar) kelishuv komissiyasi hamda ish beruvchi vakillari tomonidan to'liq to'ldirilishi va aniqlashtirilishi shart. Bo'sh qoldirilgan bandlar bilan shartnoma ro'yxatdan o'tmaydi.",
+        "faq_q2_text": "Kasaba uyushmasiga a'zolik badali miqdori qancha va u qanday to'lanadi?",
+        "faq_a2_text": "Amaldagi qoidalarga ko'ra, kasaba uyushmasiga a'zolik badali xodimning oylik ish haqining 1 foizi miqdorida belgilanadi. Ushbu mablag' xodimning rozilik arizasiga asosan har oyda uning oylik ish haqidan buxgalteriya orqali avtomatik tarzda kasaba uyushmasi hisob raqamiga o'tkazib boriladi.",
+        "faq_q3_text": "Bayram mukofotlari majburiy to'lov sifatida belgilanadimi yoki ish beruvchining ixtiyoriga bog'liqmi?",
+        "faq_a3_text": "Jamoa shartnomasida belgilangan bayram mukofotlari va to'lovlari (masalan, 8-mart, Mustaqillik bayrami va boshqalar) shartnoma imzolangach, ish beruvchi uchun majburiy hisoblanadi va ixtiyoriy ravishda bekor qilinishi mumkin emas.",
+        "faq_q4_text": "Oliy ta'lim kontrakti to'lab berilganda 3 yil ishlab berish sharti qanday tartibga solinadi?",
+        "faq_a4_text": "Xodimning yoki uning farzandining oliy ta'lim muassasasidagi o'qishi uchun to'lov qilingan taqdirda, tashkilot va xodim o'rtasida alohida yozma shartnoma (kelishuv) rasmiylashtiriladi. Unda o'qish yakunlangach 3 yil davomida uzluksiz ishlab berish majburiyati va tomonlarning huquqlari batafsil belgilab qo'yiladi.",
+        "faq_q5_text": "Ichki turizm va boshqa imtiyozlardan foydalanish mezonlari qanday o'rnatiladi?",
+        "faq_a5_text": "Ichki turizm, yo'llanmalar va moddiy yordamlardan foydalanish shartlari va navbat mezonlari har bir a'zo uchun adolatli va ochiq-oydin bo'lishini ta'minlash maqsadida alohida ichki Nizom va qo'mitaning tasdiqlangan tartibi asosida belgilab olinadi."
     },
 
     ru: {
@@ -276,7 +300,31 @@ const translations = {
 
         // Details pages
         "read_more": "Читать далее",
-        "close": "Закрыть"
+        "close": "Закрыть",
+        "search_placeholder": "Поиск...",
+
+        // About page specific
+        "about_page_title": "Организация",
+        "about_page_subtitle": "История, цели и организационная структура профсоюза.",
+        "about_main_desc1": "Профессиональный союз, объединяющий работников предприятий электротехнической промышленности в системе ассоциации «Узэлтехсаноат», является негосударственной и некоммерческой общественной организацией.",
+        "about_main_desc2": "Наша главная задача — обеспечить каждому работнику достойную заработную плату, безопасные и комфортные условия труда, защиту его законных прав. Мы поддерживаем баланс в отношениях между работодателем и работниками посредством коллективных договоров.",
+        "rule_of_law_title": "Верховенство закона",
+        "rule_of_law_desc": "Контроль за строгим соблюдением требований Трудового кодекса.",
+        "social_protection_title": "Социальная защита",
+        "social_protection_desc": "Предоставление материальной помощи малообеспеченным и нуждающимся.",
+        "committee_members_tag": "Члены Комитета",
+        "faq_section_tag": "Ответы на вопросы",
+        "faq_section_subtitle": "Подробная информация об условиях членства и наиболее часто задаваемых темах.",
+        "faq_q1_text": "Обязательно ли заполнять все пустые пункты (_____) в коллективном договоре в окончательной редакции?",
+        "faq_a1_text": "Да. Перед окончательным подписанием коллективного договора все пустые пункты (даты, сроки, проценты, суммы на основе БРВ) должны быть полностью заполнены и уточнены согласительной комиссией и представителями работодателя. Договор с пустыми пунктами не подлежит регистрации.",
+        "faq_q2_text": "Каков размер членского взноса в профсоюз и как он выплачивается?",
+        "faq_a2_text": "Согласно действующим правилам, членский взнос в профсоюз устанавливается в размере 1% от ежемесячной заработной платы работника. Данные средства ежемесячно автоматически переводятся на банковский счет профсоюза из заработной платы через бухгалтерию на основании заявления работника.",
+        "faq_q3_text": "Являются ли праздничные премии обязательными выплатами или это на усмотрение работодателя?",
+        "faq_a3_text": "Праздничные премии и выплаты, предусмотренные коллективным договором (например, на 8 марта, День независимости и т.д.), после подписания договора становятся обязательными для работодателя и не могут быть отменены в одностороннем порядке.",
+        "faq_q4_text": "Как регулируется условие отработки в течение 3 лет при оплате контракта на высшее образование?",
+        "faq_a4_text": "В случае оплаты обучения работника или его ребенка в высшем учебном заведении между организацией и работником оформляется отдельное письменное соглашение (договор). В нем подробно прописываются обязательство непрерывной работы в течение 3 лет после окончания учебы и права сторон.",
+        "faq_q5_text": "Как устанавливаются критерии пользования внутренним туризмом и другими льготами?",
+        "faq_a5_text": "Условия и критерии очереди пользования внутренним туризмом, путевками и материальной помощью устанавливаются на основе отдельного внутреннего Положения и утвержденного порядка комитета для обеспечения справедливости и прозрачности для каждого члена."
     },
 
     en: {
@@ -416,6 +464,30 @@ const translations = {
 
         // Details pages
         "read_more": "Read More",
-        "close": "Close"
+        "close": "Close",
+        "search_placeholder": "Search...",
+
+        // About page specific
+        "about_page_title": "About the Organization",
+        "about_page_subtitle": "History, goals, and organizational structure of the trade union.",
+        "about_main_desc1": "The trade union, uniting employees of electrical industry enterprises within the \"Uzeltexsanoat\" association system, is a non-governmental and non-profit public organization.",
+        "about_main_desc2": "Our primary task is to ensure that every employee receives a decent wage, works in safe and comfortable conditions, and that their legal rights are protected. We maintain a balance in employer-employee relations through collective bargaining agreements.",
+        "rule_of_law_title": "Rule of Law",
+        "rule_of_law_desc": "Monitoring strict compliance with the Labor Code requirements.",
+        "social_protection_title": "Social Protection",
+        "social_protection_desc": "Providing financial assistance to low-income and needy individuals.",
+        "committee_members_tag": "Committee Members",
+        "faq_section_tag": "Q&A",
+        "faq_section_subtitle": "Detailed information on membership conditions and frequently asked topics.",
+        "faq_q1_text": "Is it mandatory to fill in all blank fields (_____) in the final collective agreement?",
+        "faq_a1_text": "Yes. Before the final signing of the collective agreement, all blank fields (dates, deadlines, percentages, amounts based on BCA) must be fully completed and clarified by the reconciliation commission and employer representatives. The agreement will not be registered with blank fields.",
+        "faq_q2_text": "How much is the trade union membership fee and how is it paid?",
+        "faq_a2_text": "According to the current rules, the union membership fee is set at 1% of the employee's monthly wage. These funds are automatically transferred monthly to the union's bank account from the wage through the accounting department based on the employee's consent form.",
+        "faq_q3_text": "Are holiday bonuses mandatory payments or are they at the employer's discretion?",
+        "faq_a3_text": "Holiday bonuses and payments specified in the collective agreement (e.g., March 8, Independence Day, etc.) become mandatory for the employer once signed and cannot be canceled unilaterally.",
+        "faq_q4_text": "How is the 3-year service obligation regulated when higher education tuition is paid?",
+        "faq_a4_text": "If tuition for the employee or their child at a higher education institution is paid, a separate written agreement is executed between the organization and the employee. It defines the obligation to work continuously for 3 years after graduation and the rights of both parties.",
+        "faq_q5_text": "Terms and queue criteria for internal tourism, vouchers, and financial aid are defined based on a separate internal Regulation and approved committee procedures to ensure fairness and transparency for all members.",
+        "faq_a5_text": "Terms and queue criteria for internal tourism, vouchers, and financial aid are defined based on a separate internal Regulation and approved committee procedures to ensure fairness and transparency for all members."
     }
 };
