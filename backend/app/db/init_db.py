@@ -26,8 +26,8 @@ def populate_db():
         if news_count == 0:
             demo_news = [
                 News(
-                    title="Uzeltexsanoat Kasaba Uyushmasi yangi jamoa shartnomasini imzoladi",
-                    content="Bugun Uzeltexsanoat uyushmasi va korxonalar ma'muriyati o'rtasida 2026-2029 yillarga mo'ljallangan yangi tarmoq kelishuvi imzolandi. Ushbu shartnoma xodimlarning mehnat sharoitlarini yaxshilash, ijtimoiy kafolatlarini kengaytirish hamda mehnat muhofazasini yuqori bosqichga ko'tarishga qaratilgan bir qator muhim bandlarni o'z ichiga oladi.",
+                    title="\"O'zeltexsanoat\" uyushmasi yangi jamoa shartnomasini imzoladi",
+                    content="Bugun \"O'zeltexsanoat\" uyushmasi va korxonalar ma'muriyati o'rtasida 2026-2029 yillarga mo'ljallangan yangi tarmoq kelishuvi imzolandi. Ushbu shartnoma xodimlarning mehnat sharoitlarini yaxshilash, ijtimoiy kafolatlarini kengaytirish hamda mehnat muhofazasini yuqori bosqichga ko'tarishga qaratilgan bir qator muhim bandlarni o'z ichiga oladi.",
                     image_url=""
                 ),
                 News(
