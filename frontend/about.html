@@ -215,33 +215,6 @@
         </div>
     </section>
 
-    <!-- Union Members/Staff Section -->
-    <section class="section section-secondary">
-        <div class="container">
-            <div class="section-header" style="margin-bottom: 32px;">
-                <span class="section-tag" data-i18n="committee_members_tag">Qo'mita A'zolari</span>
-                <h2 class="section-title" data-i18n="staff_title">Boshlang'ich qo'mita a'zolari</h2>
-                <p class="section-subtitle" data-i18n="staff_desc">Kasaba uyushmasi boshlang'ich qo'mitasiga a'zo bo'lgan "O'zeltexsanoat" uyushmasi xodimlari.</p>
-            </div>
-
-            <!-- Toggle Button -->
-            <div style="text-align: center; margin-bottom: 24px;">
-                <button id="toggleStaffBtn" class="btn btn-secondary" onclick="toggleStaffList()" style="min-width: 280px; font-weight: 600; padding: 12px 24px; font-size: 0.95rem;" data-i18n="staff_show_list">📋 Ro'yxatni ko'rish</button>
-            </div>
-            
-            <!-- Collapsible Container -->
-            <div id="staffCollapsibleContainer" style="display: none; transition: all 0.3s ease;">
-                <!-- Search Bar for Staff -->
-                <div style="max-width: 500px; margin: 0 auto 32px auto; display: flex; gap: 12px;">
-                    <input type="text" id="staffSearch" class="search-input" placeholder="Ism yoki lavozim bo'yicha qidirish..." data-i18n="search_placeholder" data-i18n-attr="placeholder">
-                </div>
-
-                <!-- Staff Grid -->
-                <div class="news-grid" id="staffGrid">
-                    <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Yuklanmoqda...</div>
-                </div>
-            </div>
-    </section>
 
     <!-- Methodological Guide Section -->
     <section class="section" style="background-color: var(--bg-primary); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
@@ -339,8 +312,6 @@
     <script src="translations.js"></script>
     <script src="app.js"></script>
     <script>
-        let allStaff = [];
-
         document.addEventListener('DOMContentLoaded', () => {
             // FAQ accordion toggle logic
             const faqItems = document.querySelectorAll('.faq-item');
@@ -354,92 +325,7 @@
                     }
                 });
             });
-
-            const searchInput = document.getElementById('staffSearch');
-            if (searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    const query = e.target.value.toLowerCase().trim();
-                    filterAndRenderStaff(query);
-                });
-            }
         });
-
-        let staffLoaded = false;
-
-        function toggleStaffList() {
-            const container = document.getElementById('staffCollapsibleContainer');
-            const btn = document.getElementById('toggleStaffBtn');
-            const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
-            if (container.style.display === 'none') {
-                container.style.display = 'block';
-                const hideText = (translations[currentLang] && translations[currentLang]["staff_hide_list"]) || "Ro'yxatni yopish";
-                btn.textContent = "❌ " + hideText;
-                btn.classList.add('btn-primary');
-                btn.classList.remove('btn-secondary');
-                if (!staffLoaded) {
-                    fetchStaff();
-                }
-            } else {
-                container.style.display = 'none';
-                const showText = (translations[currentLang] && translations[currentLang]["staff_show_list"]) || "Ro'yxatni ko'rish";
-                btn.textContent = "📋 " + showText;
-                btn.classList.add('btn-secondary');
-                btn.classList.remove('btn-primary');
-            }
-        }
-
-        async function fetchStaff() {
-            try {
-                const response = await fetch('/api/staff/');
-                if (response.ok) {
-                    allStaff = await response.json();
-                    renderStaff(allStaff);
-                    staffLoaded = true;
-                } else {
-                    document.getElementById('staffGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Xodimlarni yuklab bo\'mladi.</div>';
-                }
-            } catch (error) {
-                console.error(error);
-                document.getElementById('staffGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-danger);">Server bilan aloqa uzildi.</div>';
-            }
-        }
-
-        function renderStaff(list) {
-            const grid = document.getElementById('staffGrid');
-            if (!grid) return;
-
-            if (list.length === 0) {
-                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Qidiruvga mos keladigan xodimlar topilmadi.</div>';
-                return;
-            }
-
-            grid.innerHTML = list.map(member => {
-                const emailHtml = member.email ? `<div>📧 <a href="mailto:${member.email}" style="color: var(--color-primary); font-size: 0.85rem; font-weight: 500;">${escapeHTML(member.email)}</a></div>` : '';
-                const translatedPos = typeof translatePosition === 'function' ? translatePosition(member.position) : member.position;
-
-                return `
-                    <div style="background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px;">
-                        <h3 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: var(--color-primary);">${escapeHTML(member.full_name)}</h3>
-                        <p style="font-size: 0.75rem; font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">${escapeHTML(translatedPos)}</p>
-                        <div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--border-color); padding-top: 12px; margin-top: auto;">
-                            ${emailHtml}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function filterAndRenderStaff(query) {
-            if (!query) {
-                renderStaff(allStaff);
-                return;
-            }
-            const filtered = allStaff.filter(s => 
-                s.full_name.toLowerCase().includes(query) || 
-                s.position.toLowerCase().includes(query)
-            );
-            renderStaff(filtered);
-        }
 
         // Methodological Guide Data
         const guideItems = [
