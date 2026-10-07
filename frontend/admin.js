@@ -9,13 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAdmin();
 });
 
-function initAdmin() {
-    if (authToken) {
-        showDashboard();
-    } else {
-        showLoginCard();
-    }
-
+async function initAdmin() {
     // Set up Login form
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
@@ -34,13 +28,40 @@ function initAdmin() {
     });
 
     // Forms submission handlers
-    document.getElementById('newsForm').addEventListener('submit', submitNewsForm);
-    document.getElementById('eventForm').addEventListener('submit', submitEventForm);
-    document.getElementById('privilegeForm').addEventListener('submit', submitPrivilegeForm);
-    document.getElementById('legislationForm').addEventListener('submit', submitLegislationForm);
-    document.getElementById('staffForm').addEventListener('submit', submitStaffForm);
+    const newsForm = document.getElementById('newsForm');
+    if (newsForm) newsForm.addEventListener('submit', submitNewsForm);
+    const eventForm = document.getElementById('eventForm');
+    if (eventForm) eventForm.addEventListener('submit', submitEventForm);
+    const privilegeForm = document.getElementById('privilegeForm');
+    if (privilegeForm) privilegeForm.addEventListener('submit', submitPrivilegeForm);
+    const legislationForm = document.getElementById('legislationForm');
+    if (legislationForm) legislationForm.addEventListener('submit', submitLegislationForm);
+    const staffForm = document.getElementById('staffForm');
+    if (staffForm) staffForm.addEventListener('submit', submitStaffForm);
     const galleryForm = document.getElementById('galleryForm');
     if (galleryForm) galleryForm.addEventListener('submit', submitGalleryForm);
+
+    if (authToken) {
+        try {
+            const resp = await fetch('/api/auth/me', {
+                headers: { 'Authorization': `Bearer ${authToken}` }
+            });
+            if (resp.ok) {
+                const userData = await resp.json();
+                if (userData && userData.username) {
+                    localStorage.setItem('admin_username', userData.username);
+                }
+                showDashboard();
+            } else {
+                handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
+            }
+        } catch (err) {
+            console.warn("Auth check network error:", err);
+            showDashboard();
+        }
+    } else {
+        showLoginCard();
+    }
 }
 
 function showLoginCard() {
@@ -106,11 +127,11 @@ async function handleLogin(e) {
 }
 
 // Logout
-function handleLogout() {
+function handleLogout(msg = "Tizimdan chiqdingiz.") {
     authToken = '';
     localStorage.removeItem('admin_token');
     localStorage.removeItem('admin_username');
-    showToast("Tizimdan chiqdingiz.", "info");
+    showToast(msg, msg.includes("tugagan") ? "error" : "info");
     showLoginCard();
 }
 
@@ -235,6 +256,9 @@ async function handleMultiImageUpload() {
             if (response.ok) {
                 const data = await response.json();
                 currentNewsImages.push(data.url);
+            } else if (response.status === 401) {
+                handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
+                return;
             } else {
                 showToast(`${file.name} yuklashda xatolik yuz berdi.`, "error");
             }
@@ -312,6 +336,8 @@ async function submitNewsForm(e) {
             showToast("Yangilik muvaffaqiyatli saqlandi!", "success");
             closeNewsFormModal();
             loadNewsList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
             showToast("Saqlashda xatolik yuz berdi.", "error");
         }
@@ -370,6 +396,8 @@ async function deleteNews(id) {
         if (response.ok) {
             showToast("Muvaffaqiyatli o'chirildi.", "success");
             loadNewsList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
             showToast("O'chirishda xatolik.", "error");
         }
@@ -459,6 +487,8 @@ async function submitPrivilegeForm(e) {
             showToast("Imtiyoz muvaffaqiyatli saqlandi!", "success");
             closePrivilegeFormModal();
             loadPrivilegesList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
             showToast("Saqlashda xatolik yuz berdi.", "error");
         }
@@ -503,6 +533,8 @@ async function deletePrivilege(id) {
         if (response.ok) {
             showToast("Muvaffaqiyatli o'chirildi.", "success");
             loadPrivilegesList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
             showToast("O'chirishda xatolik.", "error");
         }
@@ -588,6 +620,8 @@ async function submitLegislationForm(e) {
             showToast("Hujjat muvaffaqiyatli saqlandi!", "success");
             closeLegislationFormModal();
             loadLegislationList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
             showToast("Saqlashda xatolik yuz berdi.", "error");
         }
@@ -630,6 +664,8 @@ async function deleteLegislation(id) {
         if (response.ok) {
             showToast("Muvaffaqiyatli o'chirildi.", "success");
             loadLegislationList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
             showToast("O'chirishda xatolik.", "error");
         }
@@ -758,8 +794,10 @@ async function handleFileUpload(fileInputId, targetInputId) {
             const data = await response.json();
             targetInput.value = data.url;
             showToast("Fayl muvaffaqiyatli yuklandi!", "success");
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
-            const err = await response.json();
+            const err = await response.json().catch(() => ({}));
             showToast(err.detail || "Fayl yuklashda xatolik yuz berdi.", "error");
         }
     } catch (error) {
@@ -863,8 +901,10 @@ async function submitStaffForm(e) {
             showToast("Xodim ma'lumotlari muvaffaqiyatli saqlandi!", "success");
             closeStaffFormModal();
             loadStaffList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
-            const err = await response.json();
+            const err = await response.json().catch(() => ({}));
             showToast(err.detail || "Saqlashda xatolik yuz berdi.", "error");
         }
     } catch (error) {
@@ -885,6 +925,8 @@ async function editStaff(id) {
         if (response.ok) {
             const member = await response.json();
             openStaffFormModal(member);
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
             showToast("Xodim ma'lumotlarini yuklashda xatolik.", "error");
         }
@@ -908,6 +950,8 @@ async function deleteStaff(id) {
         if (response.ok) {
             showToast("Xodim ro'yxatdan o'chirildi.", "success");
             loadStaffList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
             showToast("O'chirishda xatolik yuz berdi.", "error");
         }
@@ -1066,8 +1110,10 @@ async function submitEventForm(e) {
             showToast(isEdit ? "Tadbir muvaffaqiyatli yangilandi!" : "Yangi tadbir muvaffaqiyatli qo'shildi!", "success");
             closeEventFormModal();
             loadEventsList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
-            const err = await response.json();
+            const err = await response.json().catch(() => ({}));
             showToast(err.detail || "Xatolik yuz berdi.", "error");
         }
     } catch (error) {
@@ -1108,6 +1154,8 @@ async function deleteEvent(id) {
         if (response.ok) {
             showToast("Tadbir o'chirildi.", "success");
             loadEventsList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
             showToast("O'chirishda xatolik yuz berdi.", "error");
         }
@@ -1212,8 +1260,10 @@ async function handleGalleryImageUpload() {
             document.getElementById('galleryPreviewImg').src = data.url;
             document.getElementById('galleryImagePreview').style.display = 'block';
             showToast("Rasm muvaffaqiyatli yuklandi!", "success");
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
-            const err = await response.json();
+            const err = await response.json().catch(() => ({}));
             showToast(err.detail || "Rasm yuklashda xatolik!", "error");
         }
     } catch (e) {
@@ -1258,8 +1308,10 @@ async function submitGalleryForm(e) {
             showToast("Rasm galereyaga muvaffaqiyatli qo'shildi!", "success");
             closeGalleryFormModal();
             loadGalleryList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
-            const err = await response.json();
+            const err = await response.json().catch(() => ({}));
             showToast(err.detail || "Xatolik yuz berdi!", "error");
         }
     } catch (e) {
@@ -1285,6 +1337,8 @@ async function deleteGalleryItem(id) {
         if (response.ok) {
             showToast("Rasm muvaffaqiyatli o'chirildi!", "success");
             loadGalleryList();
+        } else if (response.status === 401) {
+            handleLogout("Sessiya muddati tugagan. Iltimos, qaytadan tizimga kiring.");
         } else {
             showToast("O'chirishda xatolik yuz berdi.", "error");
         }

@@ -14,7 +14,7 @@ services:
       - DATABASE_URL=sqlite:////data/uzeltexkasaba.db
       - SECRET_KEY=UzElTexKasaba2026!VeryStrongSecretKey
       - ALGORITHM=HS256
-      - ACCESS_TOKEN_EXPIRE_MINUTES=60
+      - ACCESS_TOKEN_EXPIRE_MINUTES=43200
     expose:
       - "8000"
 

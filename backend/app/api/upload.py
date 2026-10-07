@@ -10,7 +10,7 @@ router = APIRouter(
 )
 
 UPLOAD_DIR = os.path.join("static", "uploads")
-ALLOWED_EXTENSIONS = {".pdf", ".doc", ".docx", ".png", ".jpg", ".jpeg", ".webp"}
+ALLOWED_EXTENSIONS = {".pdf", ".doc", ".docx", ".png", ".jpg", ".jpeg", ".webp", ".jfif", ".svg", ".bmp", ".heic", ".heif"}
 
 
 @router.post("/")
