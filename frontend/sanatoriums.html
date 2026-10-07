@@ -385,8 +385,11 @@
                 <div class="discount-banner-text">
                     <h3 data-i18n="sanatoriums_banner_heading">Kasaba uyushmasi a'zolariga 55% chegirma kafolati</h3>
                     <p data-i18n="sanatoriums_banner_p">
-                        Kasaba uyushmasi a'zosi va ularning oila a'zolari O'zbekiston Kasaba uyushmalari Federatsiyasi tasarrufidagi sanatoriylarga yo'llanma olganda xarajatlarning <strong>55 foizi kasaba uyushmasi mablag'lari hisobidan to'lanadi</strong>. Xodim faqat 45% summani to'laydi.
+                        Kasaba uyushmasi a'zosi O'zbekiston Kasaba uyushmalari Federatsiyasi tasarrufidagi sanatoriylarga yo'llanma olganda xarajatlarning <strong>55 foizi kasaba uyushmasi mablag'lari hisobidan to'lanadi</strong>. Xodim faqat 45% summani to'laydi.
                     </p>
+                    <div style="margin-top: 10px; font-size: 0.88rem; background: rgba(245, 158, 11, 0.25); border-left: 4px solid #f59e0b; padding: 8px 14px; border-radius: 4px; color: #fff; font-weight: 500;" data-i18n="sanatoriums_member_only_note">
+                        ⚠️ <strong>Muhim shart:</strong> 55% lik imtiyozli chegirma faqat kasaba uyushmasi a'zosining <u>o'zi uchun</u> taqdim etiladi (oila a'zolariga tatbiq etilmaydi).
+                    </div>
                     <div style="margin-top: 8px; font-size: 0.82rem; opacity: 0.85;" data-i18n="sanatoriums_src_note">
                         🌐 Ma'lumotlar va narxlar <a href="https://www.sihatgoh.uz" target="_blank" style="color: #fde047; text-decoration: underline;">sihatgoh.uz</a> rasmiy portali asosida taqdim etilmoqda.
                     </div>
@@ -481,7 +484,7 @@
                 <div style="font-size: 1.8rem;">🏥</div>
                 <div>
                     <h3 style="font-family: var(--font-heading); margin: 0; font-weight: 700; color: var(--color-primary);" data-i18n="modal_apply_title">Sanatoriy yo'llanmasiga ariza</h3>
-                    <div style="font-size: 0.8rem; color: #16a34a; font-weight: 600;" data-i18n="modal_apply_sub">55% lik imtiyozli chegirma bilan</div>
+                    <div style="font-size: 0.8rem; color: #16a34a; font-weight: 600;" data-i18n="modal_apply_sub">55% lik imtiyozli chegirma bilan (faqat a'zoning o'zi uchun)</div>
                 </div>
             </div>
             <form id="sanatoriumApplyForm" onsubmit="submitSanatoriumApplication(event)">
@@ -502,8 +505,8 @@
                     <input type="text" id="applyOrg" class="form-control" required placeholder="Korxona yoki zavod nomi">
                 </div>
                 <div class="form-group" style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.85rem;" data-i18n="modal_apply_notes">Qo'shimcha izoh yoki rejalashtirilgan oy (ixtiyoriy)</label>
-                    <textarea id="applyNotes" class="form-control" rows="2" placeholder="Masalan: Yoz oylarida, oilaviy yo'llanma..."></textarea>
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.85rem;" data-i18n="modal_apply_notes">Qo'shimcha izoh yoki rejalashtirilgan davr (ixtiyoriy)</label>
+                    <textarea id="applyNotes" class="form-control" rows="2" placeholder="Masalan: Rejalashtirilgan davr, sanatoriy xonasi turi..."></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-weight: 600;" data-i18n="modal_reg_btn">Arizani yuborish</button>
             </form>
@@ -694,7 +697,7 @@
             const portalBtnText = (translations[lang] && translations[lang]['sanatoriums_portal_btn']) || "sihatgoh.uz";
             const stdLabel = (translations[lang] && translations[lang]['sanatoriums_std_price']) || "Standart narx:";
             const unionLabel = (translations[lang] && translations[lang]['sanatoriums_union_price']) || "55% chegirma bilan:";
-            const saveNote = (translations[lang] && translations[lang]['sanatoriums_save_note']) || "Xodim 45% to'laydi, 55% kasaba uyushmasi qoplaydi";
+            const saveNote = (translations[lang] && translations[lang]['sanatoriums_save_note']) || "Xodim 45% to'laydi, 55% kasaba uyushmasi qoplaydi (faqat a'zoning o'zi uchun)";
 
             const filtered = SANATORIUMS_DATA.filter(item => {
                 const matchRegion = currentRegionFilter === 'all' || item.region === currentRegionFilter;
