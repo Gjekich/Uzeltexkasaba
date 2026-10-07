@@ -192,19 +192,26 @@
     <script src="translations.js"></script>
     <script src="app.js"></script>
     <script>
-        const galleryItemsData = [
-            { id: 1, image: 'images/union_hero_bg.jpg', category: 'tadbirlar', tagKey: 'gallery_filter_events', captionKey: 'gallery_cap_1' },
-            { id: 2, image: 'images/union_hero_bg.jpg', category: 'sanatoriy', tagKey: 'gallery_filter_resorts', captionKey: 'gallery_cap_2' },
-            { id: 3, image: 'images/union_hero_bg.jpg', category: 'sport', tagKey: 'gallery_filter_sports', captionKey: 'gallery_cap_3' },
-            { id: 4, image: 'images/union_hero_bg.jpg', category: 'tadbirlar', tagKey: 'gallery_filter_events', captionKey: 'gallery_cap_4' },
-            { id: 5, image: 'images/union_hero_bg.jpg', category: 'sanatoriy', tagKey: 'gallery_filter_resorts', captionKey: 'gallery_cap_5' },
-            { id: 6, image: 'images/union_hero_bg.jpg', category: 'sport', tagKey: 'gallery_filter_sports', captionKey: 'gallery_cap_6' }
-        ];
-
+        let galleryItemsData = [];
         let activeFilter = 'all';
 
-        document.addEventListener('DOMContentLoaded', () => {
+        async function fetchGalleryItems() {
+            try {
+                const res = await fetch('/api/gallery/');
+                if (res.ok) {
+                    galleryItemsData = await res.json();
+                } else {
+                    galleryItemsData = [];
+                }
+            } catch (e) {
+                console.error("Gallery fetch failed:", e);
+                galleryItemsData = [];
+            }
             renderGallery();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchGalleryItems();
 
             // Gallery filter logic
             const filterBtns = document.querySelectorAll('.gallery-filter .filter-btn');
@@ -214,7 +221,7 @@
                     btn.classList.add('active');
 
                     activeFilter = btn.getAttribute('data-filter');
-                    applyFilter();
+                    renderGallery();
                 });
             });
         });
@@ -225,13 +232,52 @@
 
             const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
 
-            grid.innerHTML = galleryItemsData.map(item => {
-                const tag = (translations[currentLang] && translations[currentLang][item.tagKey]) || item.category;
-                const caption = (translations[currentLang] && translations[currentLang][item.captionKey]) || '';
+            // Empty state if no images in gallery at all
+            if (!galleryItemsData || galleryItemsData.length === 0) {
+                const emptyTitle = (translations[currentLang] && translations[currentLang]["gallery_under_construction_title"]) || "Galereya bo'limi to'ldirilmoqda";
+                const emptyDesc = (translations[currentLang] && translations[currentLang]["gallery_under_construction_desc"]) || "Hozirda foto va video materiallar tayyorlanmoqda. Tez orada kasaba uyushmasi tadbirlari, faoliyati va dam olish maskanlaridan fotolavhalar joylashtiriladi.";
+
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 70px 24px; background: var(--bg-secondary); border-radius: var(--radius-lg); border: 2px dashed var(--border-color); max-width: 680px; margin: 20px auto; box-shadow: var(--shadow-sm);">
+                        <div style="font-size: 3.5rem; margin-bottom: 16px;">📸</div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.55rem; color: var(--color-primary); margin-bottom: 12px;">${escapeHTML(emptyTitle)}</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.98rem; line-height: 1.6; margin: 0 auto;">${escapeHTML(emptyDesc)}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Filter items
+            const filtered = galleryItemsData.filter(item => {
+                return activeFilter === 'all' || item.category === activeFilter;
+            });
+
+            if (filtered.length === 0) {
+                const emptyCat = (translations[currentLang] && translations[currentLang]["gallery_empty_category"]) || "Ushbu toifada hozircha fotosuratlar mavjud emas.";
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-secondary);">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">🔍</div>
+                        <p style="font-size: 1rem; margin: 0;">${escapeHTML(emptyCat)}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => {
+                let tag = item.category;
+                if (item.category === 'tadbirlar') {
+                    tag = (translations[currentLang] && translations[currentLang]['gallery_filter_events']) || 'Tadbirlar & Loyihalar';
+                } else if (item.category === 'sanatoriy') {
+                    tag = (translations[currentLang] && translations[currentLang]['gallery_filter_resorts']) || 'Sanatoriylar';
+                } else if (item.category === 'sport') {
+                    tag = (translations[currentLang] && translations[currentLang]['gallery_filter_sports']) || 'Sport O\'yinlari';
+                }
+
+                const caption = (typeof getLocalizedField === 'function' ? getLocalizedField(item, 'title') : '') || item.title || '';
 
                 return `
-                    <div class="gallery-item" data-category="${item.category}" onclick="openLightbox('${item.image}', '${escapeHTML(caption)}')">
-                        <img src="${item.image}" alt="${escapeHTML(caption)}">
+                    <div class="gallery-item" data-category="${item.category}" onclick="openLightbox('${item.image_url}', '${escapeHTML(caption).replace(/'/g, "\\'")}')">
+                        <img src="${item.image_url}" alt="${escapeHTML(caption)}" loading="lazy">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">${escapeHTML(tag)}</span>
                             <span class="gallery-caption">${escapeHTML(caption)}</span>
@@ -239,19 +285,6 @@
                     </div>
                 `;
             }).join('');
-
-            applyFilter();
-        }
-
-        function applyFilter() {
-            const items = document.querySelectorAll('.gallery-item');
-            items.forEach(item => {
-                if (activeFilter === 'all' || item.getAttribute('data-category') === activeFilter) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
         }
 
         // Lightbox Functions

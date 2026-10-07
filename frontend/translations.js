@@ -191,6 +191,9 @@ const translations = {
         "gallery_filter_events": "Tadbirlar & Loyihalar",
         "gallery_filter_resorts": "Sanatoriylar",
         "gallery_filter_sports": "Sport O'yinlari",
+        "gallery_under_construction_title": "Galereya bo'limi to'ldirilmoqda",
+        "gallery_under_construction_desc": "Hozirda foto va video materiallar tayyorlanmoqda. Tez orada kasaba uyushmasi tadbirlari, faoliyati va dam olish maskanlaridan fotolavhalar joylashtiriladi.",
+        "gallery_empty_category": "Ushbu toifada hozircha fotosuratlar mavjud emas.",
         
         "gallery_cap_1": "Tarmoq kelishuvining imzolanish jarayoni",
         "gallery_cap_2": "Chinobod sanatoriysidagi dam oluvchilar guruhi",
@@ -871,6 +874,9 @@ const translations = {
         "gallery_filter_events": "Events & Projects",
         "gallery_filter_resorts": "Sanatoriums",
         "gallery_filter_sports": "Sports Games",
+        "gallery_under_construction_title": "Gallery section is being updated",
+        "gallery_under_construction_desc": "Photo and video materials are currently being prepared. Photo reports from trade union events, activities, and resorts will be posted soon.",
+        "gallery_empty_category": "There are currently no photos in this category.",
         
         "gallery_cap_1": "Signing process of the industry agreement",
         "gallery_cap_2": "Group of vacationers in the Chinabad sanatorium",

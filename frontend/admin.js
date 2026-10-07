@@ -39,6 +39,8 @@ function initAdmin() {
     document.getElementById('privilegeForm').addEventListener('submit', submitPrivilegeForm);
     document.getElementById('legislationForm').addEventListener('submit', submitLegislationForm);
     document.getElementById('staffForm').addEventListener('submit', submitStaffForm);
+    const galleryForm = document.getElementById('galleryForm');
+    if (galleryForm) galleryForm.addEventListener('submit', submitGalleryForm);
 }
 
 function showLoginCard() {
@@ -126,6 +128,7 @@ function switchTab(tabName) {
 function loadTabData(tab) {
     if (tab === 'news') loadNewsList();
     if (tab === 'events') loadEventsList();
+    if (tab === 'gallery') loadGalleryList();
     if (tab === 'privileges') loadPrivilegesList();
     if (tab === 'legislation') loadLegislationList();
     if (tab === 'applications') loadApplicationsList();
@@ -1113,4 +1116,182 @@ async function deleteEvent(id) {
         showToast("Server bilan aloqa uzildi.", "error");
     }
 }
+
+/* ==========================================================================
+   Gallery CRUD
+   ========================================================================== */
+async function loadGalleryList() {
+    const tbody = document.getElementById('galleryTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Yuklanmoqda...</td></tr>';
+
+    try {
+        const response = await fetch('/api/gallery/');
+        if (response.ok) {
+            const galleryList = await response.json();
+            if (galleryList.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Rasmlar mavjud emas. Yuqoridagi "+ Yangi rasm qo\'shish" tugmasi orqali rasm yuklashingiz mumkin.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = galleryList.map(item => {
+                const imgHtml = item.image_url ? `<img src="${item.image_url}" style="width: 50px; height: 40px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">` : '—';
+                
+                let catLabel = item.category;
+                if (item.category === 'tadbirlar') catLabel = 'Tadbirlar & Loyihalar';
+                else if (item.category === 'sanatoriy') catLabel = 'Sanatoriylar';
+                else if (item.category === 'sport') catLabel = 'Sport O\'yinlari';
+
+                let dateStr = '—';
+                if (item.created_at) {
+                    try {
+                        const d = new Date(item.created_at);
+                        if (!isNaN(d.getTime())) {
+                            dateStr = d.toLocaleDateString();
+                        }
+                    } catch(e) {}
+                }
+
+                return `
+                    <tr>
+                        <td>${imgHtml}</td>
+                        <td style="font-weight: 600;">${escapeHTML(item.title)}</td>
+                        <td><span style="display: inline-block; padding: 2px 8px; font-size: 0.75rem; font-weight: 600; background: rgba(15,41,99,0.08); color: var(--color-primary); border-radius: 4px;">${escapeHTML(catLabel)}</span></td>
+                        <td style="color: var(--text-secondary); font-size: 0.85rem;">${dateStr}</td>
+                        <td style="text-align: right;">
+                            <button onclick="deleteGalleryItem(${item.id})" class="btn-action delete" title="O'chirish">🗑️</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        } else {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--color-danger);">Yuklashda xatolik yuz berdi.</td></tr>';
+        }
+    } catch (e) {
+        console.error(e);
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--color-danger);">Server bilan aloqa uzildi.</td></tr>';
+    }
+}
+
+function openGalleryFormModal() {
+    document.getElementById('galleryForm').reset();
+    document.getElementById('editGalleryId').value = '';
+    document.getElementById('galleryImageUrlInput').value = '';
+    document.getElementById('galleryImagePreview').style.display = 'none';
+    document.getElementById('galleryPreviewImg').src = '';
+    document.getElementById('galleryFormTitle').textContent = "Yangi rasm qo'shish";
+    document.getElementById('galleryFormModal').classList.add('open');
+}
+
+function closeGalleryFormModal() {
+    document.getElementById('galleryFormModal').classList.remove('open');
+}
+
+async function handleGalleryImageUpload() {
+    const fileInput = document.getElementById('galleryFileInput');
+    if (!fileInput.files || fileInput.files.length === 0) return;
+
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    showToast("Rasm yuklanmoqda...", "info");
+
+    try {
+        const response = await fetch('/api/upload/', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: formData
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById('galleryImageUrlInput').value = data.url;
+            document.getElementById('galleryPreviewImg').src = data.url;
+            document.getElementById('galleryImagePreview').style.display = 'block';
+            showToast("Rasm muvaffaqiyatli yuklandi!", "success");
+        } else {
+            const err = await response.json();
+            showToast(err.detail || "Rasm yuklashda xatolik!", "error");
+        }
+    } catch (e) {
+        console.error(e);
+        showToast("Server bilan aloqa uzildi.", "error");
+    } finally {
+        fileInput.value = '';
+    }
+}
+
+async function submitGalleryForm(e) {
+    e.preventDefault();
+    const imageUrl = document.getElementById('galleryImageUrlInput').value.trim();
+    if (!imageUrl) {
+        showToast("Iltimos, rasm faylini tanlang va yuklang!", "error");
+        return;
+    }
+
+    const payload = {
+        title: document.getElementById('galleryTitleInput').value.trim(),
+        title_ru: document.getElementById('galleryTitleRuInput').value.trim() || null,
+        title_en: document.getElementById('galleryTitleEnInput').value.trim() || null,
+        image_url: imageUrl,
+        category: document.getElementById('galleryCategoryInput').value
+    };
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Saqlanmoqda...';
+
+    try {
+        const response = await fetch('/api/gallery/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            showToast("Rasm galereyaga muvaffaqiyatli qo'shildi!", "success");
+            closeGalleryFormModal();
+            loadGalleryList();
+        } else {
+            const err = await response.json();
+            showToast(err.detail || "Xatolik yuz berdi!", "error");
+        }
+    } catch (e) {
+        console.error(e);
+        showToast("Server bilan aloqa uzildi.", "error");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Saqlash';
+    }
+}
+
+async function deleteGalleryItem(id) {
+    if (!confirm("Ushbu rasmni galereyadan o'chirishni tasdiqlaysizmi?")) return;
+
+    try {
+        const response = await fetch(`/api/gallery/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        });
+
+        if (response.ok) {
+            showToast("Rasm muvaffaqiyatli o'chirildi!", "success");
+            loadGalleryList();
+        } else {
+            showToast("O'chirishda xatolik yuz berdi.", "error");
+        }
+    } catch (e) {
+        console.error(e);
+        showToast("Server bilan aloqa uzildi.", "error");
+    }
+}
+
 

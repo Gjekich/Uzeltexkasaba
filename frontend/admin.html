@@ -58,6 +58,7 @@
                 <ul class="admin-menu">
                     <li class="admin-menu-item active" data-tab="news">📰 Yangiliklar</li>
                     <li class="admin-menu-item" data-tab="events">📅 Tadbirlar</li>
+                    <li class="admin-menu-item" data-tab="gallery">🖼️ Galereya</li>
                     <li class="admin-menu-item" data-tab="privileges">🎁 Imtiyozlar</li>
                     <li class="admin-menu-item" data-tab="legislation">⚖️ Qonunchilik</li>
                     <li class="admin-menu-item" data-tab="applications">✉️ Murojaatlar</li>
@@ -108,6 +109,28 @@
                             </tr>
                         </thead>
                         <tbody id="eventsTableBody">
+                            <!-- Dynamic Content -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- GALLERY TAB -->
+                <section id="tab-gallery" class="tab-section" style="display: none;">
+                    <div class="admin-section-header">
+                        <h2 style="font-family: var(--font-heading);">Foto Galereya</h2>
+                        <button onclick="openGalleryFormModal()" class="btn btn-primary">➕ Yangi rasm qo'shish</button>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">Rasm</th>
+                                <th>Sarlavha / Izoh</th>
+                                <th style="width: 140px;">Kategoriya</th>
+                                <th style="width: 120px;">Qo'shilgan sana</th>
+                                <th style="width: 100px; text-align: right;">Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="galleryTableBody">
                             <!-- Dynamic Content -->
                         </tbody>
                     </table>
@@ -464,6 +487,49 @@
                     </div>
                 </div>
 
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- GALLERY FORM MODAL -->
+    <div class="modal" id="galleryFormModal">
+        <div class="modal-content" style="max-width: 550px;">
+            <span class="modal-close" onclick="closeGalleryFormModal()">&times;</span>
+            <h3 id="galleryFormTitle" style="font-family: var(--font-heading); margin-bottom: 24px;">Yangi rasm qo'shish</h3>
+            <form id="galleryForm">
+                <input type="hidden" id="editGalleryId">
+                <div class="form-group">
+                    <label class="form-label">Rasm yuklash</label>
+                    <input type="hidden" id="galleryImageUrlInput" required>
+                    <div id="galleryImagePreview" style="margin-bottom: 12px; display: none;">
+                        <img id="galleryPreviewImg" src="" style="width: 100%; max-height: 220px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                    </div>
+                    <button type="button" onclick="triggerFileInput('galleryFileInput')" class="btn btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        📁 Rasm faylini tanlash
+                    </button>
+                    <input type="file" id="galleryFileInput" style="display: none;" accept="image/*" onchange="handleGalleryImageUpload()">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Kategoriya</label>
+                    <select id="galleryCategoryInput" class="form-control" required>
+                        <option value="tadbirlar">Tadbirlar & Loyihalar</option>
+                        <option value="sanatoriy">Sanatoriylar</option>
+                        <option value="sport">Sport O'yinlari</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sarlavha / Izoh (O'zbekcha)</label>
+                    <input type="text" id="galleryTitleInput" class="form-control" placeholder="Rasm haqida qisqacha izoh..." required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sarlavha / Izoh (Русский - ixtiyoriy)</label>
+                    <input type="text" id="galleryTitleRuInput" class="form-control" placeholder="Описание на русском">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sarlavha / Izoh (English - ixtiyoriy)</label>
+                    <input type="text" id="galleryTitleEnInput" class="form-control" placeholder="Caption in English">
+                </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Saqlash</button>
             </form>
         </div>
