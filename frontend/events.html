@@ -162,66 +162,8 @@
     <!-- Events List Section -->
     <section class="section">
         <div class="container">
-            <div class="events-list">
-                <!-- Event 1 -->
-                <div class="event-card">
-                    <div class="event-date-box">
-                        <span class="event-date-day">24</span>
-                        <span class="event-date-month" data-i18n="month_august">Avgust</span>
-                    </div>
-                    <div class="event-info">
-                        <span class="event-cat" data-i18n="cat_seminar">Seminar</span>
-                        <h3 class="event-title" data-i18n="event1_title">Mehnat muhofazasi bo'yicha jamoatchi vakillarni o'qitish seminari</h3>
-                        <p class="event-desc" data-i18n="event1_desc">Sanoat korxonalarida texnika xavfsizligi qoidalariga rioya etilishi va jarohatlanishlarning oldini olishga qaratilgan amaliy o'quv kursi.</p>
-                        <div class="event-meta-info">
-                            <span data-i18n="event1_loc">📍 Joy: Uyushma Bosh binosi, 3-qavat</span>
-                            <span data-i18n="event1_time">⏰ Vaqt: 10:00 - 16:00</span>
-                        </div>
-                    </div>
-                    <div class="event-action">
-                        <button onclick="openRegisterModal('event1_title')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
-                    </div>
-                </div>
-
-                <!-- Event 2 -->
-                <div class="event-card">
-                    <div class="event-date-box" style="background-color: var(--color-accent);">
-                        <span class="event-date-day">10</span>
-                        <span class="event-date-month" data-i18n="month_september">Sentabr</span>
-                    </div>
-                    <div class="event-info">
-                        <span class="event-cat" data-i18n="cat_sport">Sport</span>
-                        <h3 class="event-title" data-i18n="event2_title">Tarmoq korxonalari xodimlari o'rtasida Shaxmat turniri</h3>
-                        <p class="event-desc" data-i18n="event2_desc">An'anaviy har yili o'tkaziladigan elektrotexnika sohasi kasaba a'zolari o'rtasidagi respublika turniri boshlang'ich saralash bosqichi.</p>
-                        <div class="event-meta-info">
-                            <span data-i18n="event2_loc">📍 Joy: Sport saroyi, Toshkent</span>
-                            <span data-i18n="event2_time">⏰ Vaqt: 09:00 dan boshlab</span>
-                        </div>
-                    </div>
-                    <div class="event-action">
-                        <button onclick="openRegisterModal('event2_title')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
-                    </div>
-                </div>
-
-                <!-- Event 3 -->
-                <div class="event-card">
-                    <div class="event-date-box">
-                        <span class="event-date-day">18</span>
-                        <span class="event-date-month" data-i18n="month_september">Sentabr</span>
-                    </div>
-                    <div class="event-info">
-                        <span class="event-cat" data-i18n="cat_meeting">Yig'ilish</span>
-                        <h3 class="event-title" data-i18n="event3_title">Xodimlar huquqiy himoyasini kuchaytirish yuzasida tarmoq kengashi yig'ilishi</h3>
-                        <p class="event-desc" data-i18n="event3_desc">Kollektiv shartnomalar bajarilishi monitoringi va mehnat nizolarini oldindan hal qilish tizimlarini takomillashtirish masalalari tahlili.</p>
-                        <div class="event-meta-info">
-                            <span data-i18n="event3_loc">📍 Joy: Konferensiyalar zali</span>
-                            <span data-i18n="event3_time">⏰ Vaqt: 14:00 - 17:00</span>
-                        </div>
-                    </div>
-                    <div class="event-action">
-                        <button onclick="openRegisterModal('event3_title')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">Ro'yxatdan o'tish</button>
-                    </div>
-                </div>
+            <div class="events-list" id="eventsListContainer">
+                <!-- Dynamic Events Loaded from API -->
             </div>
         </div>
     </section>
@@ -269,6 +211,89 @@
     <script src="translations.js"></script>
     <script src="app.js"></script>
     <script>
+        let allEvents = [];
+
+        async function loadEvents() {
+            const container = document.getElementById('eventsListContainer');
+            if (!container) return;
+
+            container.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">Yuklanmoqda...</div>';
+
+            try {
+                const response = await fetch('/api/events/');
+                if (response.ok) {
+                    allEvents = await response.json();
+                    renderEvents(allEvents);
+                } else {
+                    renderEvents([]);
+                }
+            } catch (err) {
+                console.error("Failed to load events:", err);
+                renderEvents([]);
+            }
+        }
+
+        function renderEvents(events) {
+            const container = document.getElementById('eventsListContainer');
+            if (!container) return;
+
+            const lang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+
+            if (!events || events.length === 0) {
+                const emptyTitle = (translations[lang] && translations[lang]['events_empty_title']) || "Tadbirlar rejasi shakllantirilmoqda";
+                const emptyDesc = (translations[lang] && translations[lang]['events_empty_desc']) || "Hozirda yangi tadbirlar va seminarlar rejasi tasdiqlash jarayonida. Reja belgilanishi bilanoq ushbu sahifada e'lon qilinadi.";
+                const backHome = (translations[lang] && translations[lang]['back_to_home']) || "Bosh sahifaga qaytish";
+
+                container.innerHTML = `
+                    <div class="events-empty-state" style="text-align: center; padding: 60px 24px; background-color: var(--bg-secondary); border-radius: var(--radius-md); border: 1px dashed var(--border-color); box-shadow: var(--shadow-sm);">
+                        <div style="font-size: 3.5rem; margin-bottom: 16px;">📅</div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--color-primary); margin-bottom: 8px;">${escapeHTML(emptyTitle)}</h3>
+                        <p style="color: var(--text-secondary); max-width: 520px; margin: 0 auto 24px; line-height: 1.6; font-size: 0.95rem;">${escapeHTML(emptyDesc)}</p>
+                        <a href="index.html" class="btn btn-secondary" style="font-size: 0.85rem;">${escapeHTML(backHome)}</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const regBtnText = (translations[lang] && translations[lang]['event_register']) || "Ro'yxatdan o'tish";
+            const locPrefix = (translations[lang] && translations[lang]['event_loc_prefix']) || "Joy: ";
+            const timePrefix = (translations[lang] && translations[lang]['event_time_prefix']) || "Vaqt: ";
+
+            container.innerHTML = events.map(item => {
+                const title = getLocalizedField(item, 'title');
+                const desc = getLocalizedField(item, 'description');
+                const cat = getLocalizedField(item, 'category');
+                const loc = getLocalizedField(item, 'location');
+                const month = getLocalizedField(item, 'date_month');
+                const isAccent = item.color_theme === 'accent';
+
+                return `
+                    <div class="event-card">
+                        <div class="event-date-box" ${isAccent ? 'style="background-color: var(--color-accent);"' : ''}>
+                            <span class="event-date-day">${escapeHTML(item.date_day)}</span>
+                            <span class="event-date-month">${escapeHTML(month)}</span>
+                        </div>
+                        <div class="event-info">
+                            <span class="event-cat">${escapeHTML(cat)}</span>
+                            <h3 class="event-title">${escapeHTML(title)}</h3>
+                            <p class="event-desc">${escapeHTML(desc)}</p>
+                            <div class="event-meta-info">
+                                ${loc ? `<span>📍 ${locPrefix}${escapeHTML(loc)}</span>` : ''}
+                                ${item.time ? `<span>⏰ ${timePrefix}${escapeHTML(item.time)}</span>` : ''}
+                            </div>
+                        </div>
+                        <div class="event-action">
+                            <button onclick="openRegisterModal('${escapeHTML(title).replace(/'/g, "\\'")}')" class="btn btn-secondary" style="width: 100%; font-size: 0.75rem;" data-i18n="event_register">${regBtnText}</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadEvents();
+        });
+
         function openRegisterModal(eventTitleKey) {
             const modal = document.getElementById('registerModal');
             const input = document.getElementById('regEventName');

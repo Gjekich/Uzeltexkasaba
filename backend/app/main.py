@@ -13,6 +13,7 @@ from app.models.privilege import Privilege
 from app.models.legislation import Legislation
 from app.models.application import Application
 from app.models.staff import Staff
+from app.models.event import Event
 
 # API Routers
 from app.api.auth import router as auth_router
@@ -22,6 +23,7 @@ from app.api.privilege import router as privilege_router
 from app.api.legislation import router as legislation_router
 from app.api.application import router as application_router
 from app.api.upload import router as upload_router
+from app.api.event import router as event_router
 
 # Create DB tables and populate demo data
 Base.metadata.create_all(bind=engine)
@@ -50,6 +52,7 @@ app.include_router(legislation_router, prefix="/api")
 app.include_router(application_router, prefix="/api")
 app.include_router(upload_router, prefix="/api")
 app.include_router(staff_router, prefix="/api")
+app.include_router(event_router, prefix="/api")
 
 # Static files for uploads (images, PDFs)
 os.makedirs("static/uploads", exist_ok=True)

@@ -57,6 +57,7 @@
             <aside class="admin-sidebar">
                 <ul class="admin-menu">
                     <li class="admin-menu-item active" data-tab="news">📰 Yangiliklar</li>
+                    <li class="admin-menu-item" data-tab="events">📅 Tadbirlar</li>
                     <li class="admin-menu-item" data-tab="privileges">🎁 Imtiyozlar</li>
                     <li class="admin-menu-item" data-tab="legislation">⚖️ Qonunchilik</li>
                     <li class="admin-menu-item" data-tab="applications">✉️ Murojaatlar</li>
@@ -85,6 +86,28 @@
                             </tr>
                         </thead>
                         <tbody id="newsTableBody">
+                            <!-- Dynamic Content -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- EVENTS TAB -->
+                <section id="tab-events" class="tab-section" style="display: none;">
+                    <div class="admin-section-header">
+                        <h2 style="font-family: var(--font-heading);">Tadbirlar va Seminarlar Rejasi</h2>
+                        <button onclick="openEventFormModal()" class="btn btn-primary">➕ Yangi qo'shish</button>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 100px;">Sana</th>
+                                <th style="width: 120px;">Kategoriya</th>
+                                <th>Tadbir nomi</th>
+                                <th>O'tkazilish joyi va vaqti</th>
+                                <th style="width: 100px; text-align: right;">Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="eventsTableBody">
                             <!-- Dynamic Content -->
                         </tbody>
                     </table>
@@ -357,6 +380,91 @@
                     <input type="email" id="staffEmailInput" class="form-control" placeholder="example@domain.com">
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- EVENT FORM MODAL -->
+    <div class="modal" id="eventFormModal">
+        <div class="modal-content" style="max-width: 650px;">
+            <span class="modal-close" onclick="closeEventFormModal()">&times;</span>
+            <h3 id="eventFormTitle" style="font-family: var(--font-heading); margin-bottom: 24px;">Yangi tadbir qo'shish</h3>
+            <form id="eventForm">
+                <input type="hidden" id="editEventId">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label">Sana tanlash (Taqvim)</label>
+                        <input type="date" id="eventDatePicker" class="form-control" onchange="handleEventDatePick(this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Kategoriya</label>
+                        <select id="eventCategoryInput" class="form-control" required>
+                            <option value="Seminar">Seminar</option>
+                            <option value="Sport">Sport</option>
+                            <option value="Yig'ilish">Yig'ilish</option>
+                            <option value="Trening">Trening</option>
+                            <option value="Konferensiya">Konferensiya</option>
+                            <option value="Bayram">Bayram</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label">Kun (masalan: 24)</label>
+                        <input type="text" id="eventDateDayInput" class="form-control" placeholder="24" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Oy (masalan: Avgust)</label>
+                        <input type="text" id="eventDateMonthInput" class="form-control" placeholder="Avgust" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Rang mavzusi</label>
+                        <select id="eventColorThemeInput" class="form-control">
+                            <option value="primary">Ko'k (Standart)</option>
+                            <option value="accent">To'q sariq (Aksent)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Tadbir nomi (O'zbekcha)</label>
+                    <input type="text" id="eventTitleInput" class="form-control" placeholder="Masalan: Mehnat muhofazasi bo'yicha seminar" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tadbir nomi (Русский - ixtiyoriy)</label>
+                    <input type="text" id="eventTitleRuInput" class="form-control" placeholder="Название на русском">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tadbir nomi (English - ixtiyoriy)</label>
+                    <input type="text" id="eventTitleEnInput" class="form-control" placeholder="Title in English">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Qisqacha tavsifi (O'zbekcha)</label>
+                    <textarea id="eventDescInput" class="form-control" rows="3" placeholder="Tadbir maqsadi va qisqacha mazmuni..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Qisqacha tavsifi (Русский - ixtiyoriy)</label>
+                    <textarea id="eventDescRuInput" class="form-control" rows="2" placeholder="Описание на русском..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Qisqacha tavsifi (English - ixtiyoriy)</label>
+                    <textarea id="eventDescEnInput" class="form-control" rows="2" placeholder="Description in English..."></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label">O'tkazilish joyi</label>
+                        <input type="text" id="eventLocationInput" class="form-control" placeholder="Masalan: Uyushma Bosh binosi, 3-qavat">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">O'tkazilish vaqti</label>
+                        <input type="text" id="eventTimeInput" class="form-control" placeholder="Masalan: 10:00 - 16:00">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Saqlash</button>
             </form>
         </div>
     </div>

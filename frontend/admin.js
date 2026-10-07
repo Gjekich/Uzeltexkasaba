@@ -35,6 +35,7 @@ function initAdmin() {
 
     // Forms submission handlers
     document.getElementById('newsForm').addEventListener('submit', submitNewsForm);
+    document.getElementById('eventForm').addEventListener('submit', submitEventForm);
     document.getElementById('privilegeForm').addEventListener('submit', submitPrivilegeForm);
     document.getElementById('legislationForm').addEventListener('submit', submitLegislationForm);
     document.getElementById('staffForm').addEventListener('submit', submitStaffForm);
@@ -124,6 +125,7 @@ function switchTab(tabName) {
 // Load current tab data
 function loadTabData(tab) {
     if (tab === 'news') loadNewsList();
+    if (tab === 'events') loadEventsList();
     if (tab === 'privileges') loadPrivilegesList();
     if (tab === 'legislation') loadLegislationList();
     if (tab === 'applications') loadApplicationsList();
@@ -911,3 +913,204 @@ async function deleteStaff(id) {
         showToast("Server bilan aloqa uzildi.", "error");
     }
 }
+
+/* ==========================================================================
+   Events CRUD
+   ========================================================================== */
+const MONTH_NAMES = {
+    uz: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr'],
+    ru: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+    en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+};
+
+function handleEventDatePick(val) {
+    if (!val) return;
+    const parts = val.split('-');
+    if (parts.length === 3) {
+        const day = parseInt(parts[2], 10);
+        const monthIdx = parseInt(parts[1], 10) - 1;
+        document.getElementById('eventDateDayInput').value = day;
+        document.getElementById('eventDateMonthInput').value = MONTH_NAMES.uz[monthIdx] || '';
+    }
+}
+
+async function loadEventsList() {
+    const tbody = document.getElementById('eventsTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Yuklanmoqda...</td></tr>';
+
+    try {
+        const response = await fetch('/api/events/');
+        if (response.ok) {
+            const list = await response.json();
+            if (list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Rejalashtirilgan tadbirlar hozircha mavjud emas.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = list.map(item => {
+                const badgeColor = item.color_theme === 'accent' ? '#ea580c' : '#1e3a8a';
+                return `
+                    <tr>
+                        <td>
+                            <span style="display: inline-block; padding: 4px 8px; background-color: ${badgeColor}; color: #fff; border-radius: 4px; font-weight: 700; font-size: 0.85rem; text-align: center;">
+                                ${escapeHTML(item.date_day)} ${escapeHTML(item.date_month)}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="event-cat" style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(217, 119, 6, 0.1); color: var(--color-accent);">
+                                ${escapeHTML(item.category || 'Seminar')}
+                            </span>
+                        </td>
+                        <td>
+                            <strong>${escapeHTML(item.title)}</strong>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                ${escapeHTML(item.description)}
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: 0.85rem;">📍 ${escapeHTML(item.location || '—')}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">⏰ ${escapeHTML(item.time || '—')}</div>
+                        </td>
+                        <td style="text-align: right;">
+                            <button onclick="editEvent(${item.id})" class="admin-action-btn btn-edit" title="Tahrirlash">✏️</button>
+                            <button onclick="deleteEvent(${item.id})" class="admin-action-btn btn-delete" title="O'chirish">🗑️</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        } else {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--color-danger);">Yuklashda xatolik.</td></tr>';
+        }
+    } catch (e) {
+        console.error("loadEventsList error:", e);
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--color-danger);">Yuklashda xatolik.</td></tr>';
+    }
+}
+
+function openEventFormModal(data = null) {
+    const form = document.getElementById('eventForm');
+    form.reset();
+    document.getElementById('editEventId').value = '';
+
+    if (data) {
+        document.getElementById('eventFormTitle').textContent = "Tadbirni tahrirlash";
+        document.getElementById('editEventId').value = data.id;
+        document.getElementById('eventTitleInput').value = data.title || '';
+        document.getElementById('eventTitleRuInput').value = data.title_ru || '';
+        document.getElementById('eventTitleEnInput').value = data.title_en || '';
+        document.getElementById('eventDescInput').value = data.description || '';
+        document.getElementById('eventDescRuInput').value = data.description_ru || '';
+        document.getElementById('eventDescEnInput').value = data.description_en || '';
+        document.getElementById('eventCategoryInput').value = data.category || 'Seminar';
+        document.getElementById('eventDateDayInput').value = data.date_day || '';
+        document.getElementById('eventDateMonthInput').value = data.date_month || '';
+        document.getElementById('eventLocationInput').value = data.location || '';
+        document.getElementById('eventTimeInput').value = data.time || '';
+        document.getElementById('eventColorThemeInput').value = data.color_theme || 'primary';
+    } else {
+        document.getElementById('eventFormTitle').textContent = "Yangi tadbir qo'shish";
+    }
+
+    document.getElementById('eventFormModal').classList.add('open');
+}
+
+function closeEventFormModal() {
+    document.getElementById('eventFormModal').classList.remove('open');
+    document.getElementById('eventForm').reset();
+    document.getElementById('editEventId').value = '';
+}
+
+async function submitEventForm(e) {
+    e.preventDefault();
+    const id = document.getElementById('editEventId').value;
+    const isEdit = !!id;
+
+    const body = {
+        title: document.getElementById('eventTitleInput').value.trim(),
+        title_ru: document.getElementById('eventTitleRuInput').value.trim() || null,
+        title_en: document.getElementById('eventTitleEnInput').value.trim() || null,
+        description: document.getElementById('eventDescInput').value.trim(),
+        description_ru: document.getElementById('eventDescRuInput').value.trim() || null,
+        description_en: document.getElementById('eventDescEnInput').value.trim() || null,
+        category: document.getElementById('eventCategoryInput').value,
+        date_day: document.getElementById('eventDateDayInput').value.trim(),
+        date_month: document.getElementById('eventDateMonthInput').value.trim(),
+        location: document.getElementById('eventLocationInput').value.trim() || null,
+        time: document.getElementById('eventTimeInput').value.trim() || null,
+        color_theme: document.getElementById('eventColorThemeInput').value
+    };
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const origText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Saqlanmoqda...';
+
+    const url = isEdit ? `/api/events/${id}` : '/api/events/';
+    const method = isEdit ? 'PUT' : 'POST';
+
+    try {
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (response.ok) {
+            showToast(isEdit ? "Tadbir muvaffaqiyatli yangilandi!" : "Yangi tadbir muvaffaqiyatli qo'shildi!", "success");
+            closeEventFormModal();
+            loadEventsList();
+        } else {
+            const err = await response.json();
+            showToast(err.detail || "Xatolik yuz berdi.", "error");
+        }
+    } catch (error) {
+        console.error(error);
+        showToast("Server bilan aloqa uzildi.", "error");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = origText;
+    }
+}
+
+async function editEvent(id) {
+    try {
+        const response = await fetch(`/api/events/${id}`);
+        if (response.ok) {
+            const eventData = await response.json();
+            openEventFormModal(eventData);
+        } else {
+            showToast("Tadbir ma'lumotlarini yuklashda xatolik.", "error");
+        }
+    } catch (error) {
+        console.error(error);
+        showToast("Server bilan aloqa uzildi.", "error");
+    }
+}
+
+async function deleteEvent(id) {
+    if (!confirm("Haqiqatan ham ushbu tadbirni o'chirmoqchimisiz?")) return;
+
+    try {
+        const response = await fetch(`/api/events/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        });
+
+        if (response.ok) {
+            showToast("Tadbir o'chirildi.", "success");
+            loadEventsList();
+        } else {
+            showToast("O'chirishda xatolik yuz berdi.", "error");
+        }
+    } catch (error) {
+        console.error(error);
+        showToast("Server bilan aloqa uzildi.", "error");
+    }
+}
+
