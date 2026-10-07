@@ -220,13 +220,41 @@
             margin: 0;
         }
 
-        /* Price Box */
+        /* Price Box Redesigned for 10-day packages */
         .price-box {
             background-color: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
             padding: 14px 16px;
             margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .pkg-badge-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .pkg-badge {
+            background: linear-gradient(135deg, rgba(15, 41, 99, 0.1), rgba(30, 58, 138, 0.15));
+            color: var(--color-primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .pkg-room {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
         }
         .price-row-std {
             display: flex;
@@ -234,46 +262,81 @@
             align-items: center;
             font-size: 0.82rem;
             color: var(--text-muted);
-            margin-bottom: 6px;
-            padding-bottom: 6px;
-            border-bottom: 1px dashed var(--border-color);
         }
         .price-row-std .val {
             text-decoration: line-through;
             font-weight: 600;
+            color: #94a3b8;
         }
         .price-row-union {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(22, 163, 74, 0.08);
+            border: 1px dashed rgba(22, 163, 74, 0.35);
+            border-radius: var(--radius-sm);
+            padding: 8px 10px;
         }
         .price-label-union {
-            font-size: 0.82rem;
-            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+        }
+        .price-label-union .discount-tag {
+            font-size: 0.68rem;
+            background: #16a34a;
+            color: white;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 10px;
+            display: inline-block;
+            width: fit-content;
+            margin-bottom: 2px;
+        }
+        .price-label-union .sub-label {
+            font-size: 0.78rem;
             color: #15803d;
+            font-weight: 700;
+        }
+        .price-val-union {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #15803d;
+            text-align: right;
+            line-height: 1.1;
+        }
+        .price-val-union small {
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: block;
+        }
+        .saving-box {
+            font-size: 0.76rem;
+            color: #15803d;
+            font-weight: 600;
+            background: rgba(22, 163, 74, 0.06);
+            padding: 4px 8px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             gap: 4px;
         }
-        .price-val-union {
-            font-family: var(--font-heading);
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: #15803d;
+        .lux-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            padding-top: 6px;
+            border-top: 1px dashed var(--border-color);
         }
-        .price-note-mini {
+        .pkg-include-text {
             font-size: 0.72rem;
-            color: #16a34a;
-            margin-top: 4px;
-            text-align: right;
-            font-weight: 600;
+            color: var(--text-muted);
+            line-height: 1.35;
         }
-
         .card-actions {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 10px;
-            margin-top: 14px;
+            margin-top: 12px;
         }
 
         /* Workflow Steps */
@@ -529,7 +592,7 @@
     <script src="translations.js"></script>
     <script src="app.js"></script>
     <script>
-        // Official Federation Sanatoriums Dataset based on sihatgoh.uz
+        // Official Federation Sanatoriums Dataset based on sihatgoh.uz (10 kunlik to'liq davolanish paketlari)
         const SANATORIUMS_DATA = [
             {
                 id: 1,
@@ -537,10 +600,13 @@
                 region: "jizzakh",
                 location: "Jizzax viloyati, Zomin tumani, Zomin milliy bog'i",
                 specialties: ["Nafas yo'llari", "Asab tizimi", "Iqlimiy davolash"],
-                desc: "Dengiz sathidan 2000 metr balandlikdagi musaffo tog' havosi va ignabargli o'rmon iqlimi. Bronxial astma, surunkali bronxit va asab kasalliklarini davolaydi.",
-                std_min: 420000,
-                std_max: 950000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                desc: "Dengiz sathidan 2000 m balandlikdagi musaffo tog' havosi va ignabargli o'rmon iqlimi. Bronxial astma, surunkali bronxit va asab kasalliklarini davolaydi.",
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 6462400,
+                room_lux: "Lyuks xona (1 o'rin)",
+                price_lux: 9693600
             },
             {
                 id: 2,
@@ -549,20 +615,26 @@
                 location: "Toshkent shahri, Yunusobod tumani, Chinobod ko'chasi",
                 specialties: ["Oshqozon-ichak", "Jigar va o't yo'llari", "Qandli diabet", "Ginekologiya"],
                 desc: "Tabiiy termal xlorid-gidrokarbonatli mineral suv va balneologik loylar bilan oshqozon-ichak hamda endokrin kasalliklarini davolashga ixtisoslashgan.",
-                std_min: 450000,
-                std_max: 1100000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 8239560,
+                room_lux: "Yarim lyuks xona (1 o'rin)",
+                price_lux: 12117000
             },
             {
                 id: 3,
                 name: "\"Chinobod Plaza\" sanatoriysi",
                 region: "tashkent",
                 location: "Toshkent shahri, Yunusobod tumani",
-                specialties: ["Oshqozon-ichak", "Moddalar almashinuvi", "Premium reabilitatsiya"],
-                desc: "Zamonaviy tashxis-davolash uskunalari bilan jihozlangan premium sog'lomlashtirish maskani. Individual parhez va fizioterapiya dasturlari.",
-                std_min: 750000,
-                std_max: 1600000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                specialties: ["Oshqozon-ichak", "Kardiologiya", "Endokrinologiya", "Premium reabilitatsiya"],
+                desc: "Zamonaviy tashxis-davolash uskunalari bilan jihozlangan 4-yulduzli premium sog'lomlashtirish maskani. Individual fizioterapiya va parhez dasturlari.",
+                package_days: 10,
+                package_name: "10 kunlik premium davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 13640280,
+                room_lux: "Yarim lyuks xona (1 o'rin)",
+                price_lux: 15232800
             },
             {
                 id: 4,
@@ -571,108 +643,152 @@
                 location: "Toshkent viloyati, Qibray tumani, Bo'zsuv bo'yi",
                 specialties: ["Yurak-qon tomir", "Nevrologiya", "Ginekologiya", "Tayanch-harakat"],
                 desc: "Bo'zsuv daryosi bo'yidagi kardiologik va nevrologik ixtisoslashgan tinch maskan. Zamonaviy fizioterapiya va psixoterapiya muolajalari.",
-                std_min: 400000,
-                std_max: 900000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 6647040,
+                room_lux: "Lyuks xona (1 o'rin)",
+                price_lux: 9970560
             },
             {
                 id: 5,
-                name: "\"Oqtosh\" sanatoriysi",
-                region: "tashkent",
-                location: "Toshkent viloyati, Bo'stonliq tumani, Oqtosh qishlog'i",
-                specialties: ["Nafas a'zolari", "Tog' iqlimi", "Sog'lomlashtirish"],
-                desc: "Archazor tog' yonbag'rida joylashgan. Sof tog' havosi va tabiiy buloqlari bilan nafas organlari surunkali kasalliklarini samarali davolaydi.",
-                std_min: 390000,
-                std_max: 850000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
-            },
-            {
-                id: 6,
                 name: "\"Turon\" sanatoriysi",
                 region: "tashkent",
                 location: "Toshkent shahri, Mirzo Ulug'bek tumani",
-                specialties: ["Yurak-qon tomir", "Qon aylanish tizimi", "Insultdan keyingi tiklanish"],
-                desc: "Yurak-qon tomir va asab tizimi kasalliklari, shuningdek insult o'tkazgan xodimlarni reabilitatsiya qilish bo'yicha yetakchi balneologik markaz.",
-                std_min: 410000,
-                std_max: 880000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                specialties: ["Yurak-qon tomir", "Qon aylanish tizimi", "Asab tizimi"],
+                desc: "Yurak-qon tomir va asab tizimi kasalliklari, qon bosimi va insultdan keyingi sog'lomlashtirish bo'yicha yetakchi balneologik markaz.",
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 7200960,
+                room_lux: "Yarim lyuks xona (1 o'rin)",
+                price_lux: 8378040
+            },
+            {
+                id: 6,
+                name: "\"Oqtosh\" sanatoriysi",
+                region: "tashkent",
+                location: "Toshkent viloyati, Bo'stonliq tumani, Oqtosh qishlog'i",
+                specialties: ["Nafas a'zolari", "Tog' iqlimi", "Bronxial astma"],
+                desc: "Archazor tog' yonbag'rida joylashgan. Sof tog' havosi va tabiiy buloqlari bilan nafas organlari surunkali kasalliklarini samarali davolaydi.",
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 5539200,
+                room_lux: "Yarim lyuks xona (1 o'rin)",
+                price_lux: 5770000
             },
             {
                 id: 7,
+                name: "\"Botanika\" sanatoriysi",
+                region: "tashkent",
+                location: "Toshkent viloyati, Qibray tumani",
+                specialties: ["Oshqozon-ichak", "Asab tizimi", "Yurak-qon tomir"],
+                desc: "Toshkent yaqinidagi ko'kalamzor maskan. Tabiiy xlorid-natriyli termal mineral suv va loy bilan ovqat hazm qilish va asab kasalliklarini davolaydi.",
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 6508560,
+                room_lux: "Yarim lyuks xona (1 o'rin)",
+                price_lux: 7893360
+            },
+            {
+                id: 8,
                 name: "\"Chortoq\" sanatoriysi",
                 region: "fergana",
                 location: "Namangan viloyati, Chortoq tumani",
                 specialties: ["Tayanch-harakat (bo'g'im)", "Oshqozon-ichak", "Teri kasalliklari"],
                 desc: "Noyob yod-bromli mineral suvlari va artesian buloqlari bilan bo'g'im, umurtqa pog'onasi, jigar va teri kasalliklarini davolaydi.",
-                std_min: 380000,
-                std_max: 850000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 5234544,
+                room_lux: "Yarim lyuks xona (1 o'rin)",
+                price_lux: 5760768
             },
             {
-                id: 8,
+                id: 9,
                 name: "\"Chimyon\" sanatoriysi",
                 region: "fergana",
                 location: "Farg'ona viloyati, Farg'ona tumani, Chimyon qishlog'i",
                 specialties: ["Tayanch-harakat", "Asab tizimi", "Yurak-qon tomir", "Balchiq bilan davolash"],
-                desc: "Vodorod sulfidli (matsesta tipidagi) mineral suvlari va shifobaxsh balchiq vannalari bilan periferik asab va bo'g'im xastaliklarini davolaydi.",
-                std_min: 360000,
-                std_max: 800000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                desc: "Vodorod sulfidli mineral suvlari va shifobaxsh balchiq vannalari bilan periferik asab va bo'g'im xastaliklarini davolaydi.",
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 5746920,
+                room_lux: "Yarim lyuks xona (1 o'rin)",
+                price_lux: 5954640
             },
             {
-                id: 9,
+                id: 10,
                 name: "\"Sitorai Mohi Xosa\" sanatoriysi",
                 region: "south",
                 location: "Buxoro viloyati, Buxoro tumani",
                 specialties: ["Buyrak va siydik yo'llari", "Tayanch-harakat", "Quruq iqlim"],
                 desc: "Buxoro amiri saroyi yaqinidagi balneoterapiya maskani. Quruq cho'l iqlimi va termal mineral vannalar yordamida buyrak kasalliklarini davolaydi.",
-                std_min: 370000,
-                std_max: 820000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 4985280,
+                room_lux: "Yarim lyuks xona (1 o'rin)",
+                price_lux: 5262240
             },
             {
-                id: 10,
+                id: 11,
                 name: "\"Xonobod\" sanatoriysi",
                 region: "fergana",
                 location: "Andijon viloyati, Xonobod shahri",
                 specialties: ["Nafas yo'llari", "Yurak-qon tomir", "Tog' havosi"],
                 desc: "Farg'ona vodiysining eng so'lim tog' etagida joylashgan. Kislorodga boy musaffo havo bilan yurak va nafas a'zolarini sog'lomlashtiradi.",
-                std_min: 400000,
-                std_max: 890000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 5654600,
+                room_lux: "Yarim lyuks xona (1 o'rin)",
+                price_lux: 6808600
             },
             {
-                id: 11,
+                id: 12,
                 name: "\"Omonxona\" sanatoriysi",
                 region: "south",
                 location: "Surxondaryo viloyati, Boysun tumani",
                 specialties: ["Jigar va o't yo'llari", "Oshqozon-ichak", "Shifobaxsh buloq"],
                 desc: "Boysun tog'laridagi mashhur shifobaxsh mineral buloq suvi bilan jigar, surunkali gepatit va o't pufagi kasalliklarini tabiiy davolaydi.",
-                std_min: 390000,
-                std_max: 860000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 4962200,
+                room_lux: "Yarim lyuks xona (1 o'rin)",
+                price_lux: 5850780
             },
             {
-                id: 12,
+                id: 13,
                 name: "\"Kosonsoy\" sanatoriysi",
                 region: "fergana",
                 location: "Namangan viloyati, Kosonsoy tumani",
                 specialties: ["Tayanch-harakat", "Asab tizimi", "Yurak-qon tomir"],
                 desc: "Tog'oldi toza havosi va balneologik fizioterapiya muolajalari bilan asab, bo'g'im va yurak kasalliklarini davolashga xizmat qiladi.",
-                std_min: 350000,
-                std_max: 780000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 5255316,
+                room_lux: "Lyuks xona (1 o'rin)",
+                price_lux: 7007088
             },
             {
-                id: 13,
-                name: "\"Humson\" sanatoriysi",
+                id: 14,
+                name: "\"Humson\" (\"Buston Resort\")",
                 region: "tashkent",
                 location: "Toshkent viloyati, Bo'stonliq tumani, Humson",
                 specialties: ["Nafas organlari", "Yurak-qon tomir", "Dam olish"],
                 desc: "Ugom daryosi bo'yidagi go'zal tog'li oromgoh. Ekologik toza tabiat, o'rmon havosi va zamonaviy sog'lomlashtirish xizmatlari.",
-                std_min: 520000,
-                std_max: 1200000,
-                sihatgoh_url: "https://www.sihatgoh.uz/"
+                package_days: 10,
+                package_name: "10 kunlik to'liq davolanish paketi",
+                room_standard: "Standart (2 kishilik, 1 o'rin)",
+                price_standard: 6800000,
+                room_lux: "Lyuks xona (1 o'rin)",
+                price_lux: 9500000
             }
         ];
 
@@ -693,11 +809,7 @@
             if (!grid) return;
 
             const lang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
-            const applyBtnText = (translations[lang] && translations[lang]['sanatoriums_apply_btn']) || "Ariza topshirish";
-            const portalBtnText = (translations[lang] && translations[lang]['sanatoriums_portal_btn']) || "sihatgoh.uz";
-            const stdLabel = (translations[lang] && translations[lang]['sanatoriums_std_price']) || "Standart narx:";
-            const unionLabel = (translations[lang] && translations[lang]['sanatoriums_union_price']) || "55% chegirma bilan:";
-            const saveNote = (translations[lang] && translations[lang]['sanatoriums_save_note']) || "Xodim 45% to'laydi, 55% kasaba uyushmasi qoplaydi (faqat a'zoning o'zi uchun)";
+            const applyBtnText = (translations[lang] && translations[lang]['sanatoriums_apply_btn']) || "Yo'llanmaga ariza topshirish";
 
             const filtered = SANATORIUMS_DATA.filter(item => {
                 const matchRegion = currentRegionFilter === 'all' || item.region === currentRegionFilter;
@@ -725,14 +837,27 @@
             }
 
             grid.innerHTML = filtered.map(item => {
-                const unionMin = calcUnionPrice(item.std_min);
-                const unionMax = calcUnionPrice(item.std_max);
+                const stdPrice = item.price_standard;
+                const unionStd = calcUnionPrice(stdPrice);
+                const savedStd = stdPrice - unionStd;
+
+                const unionLux = item.price_lux ? calcUnionPrice(item.price_lux) : null;
 
                 const specialtiesHtml = item.specialties.map(s => 
                     `<span class="specialty-tag">${escapeHTML(s)}</span>`
                 ).join('');
 
                 const bgImg = 'images/sanatorium_privilege.jpg';
+
+                const luxHtml = item.price_lux ? `
+                    <div class="lux-row">
+                        <span>✨ ${escapeHTML(item.room_lux || "Lyuks xona")}:</span>
+                        <span>
+                            <span style="text-decoration: line-through; color: #94a3b8; margin-right: 6px;">${formatSum(item.price_lux)}</span> ➔ 
+                            <strong style="color: #15803d; font-weight: 800;">${formatSum(unionLux)} so'm</strong>
+                        </span>
+                    </div>
+                ` : '';
 
                 return `
                     <div class="sanatorium-card">
@@ -753,28 +878,41 @@
                             <p class="card-desc">${escapeHTML(item.desc)}</p>
 
                             <div class="price-box">
+                                <div class="pkg-badge-row">
+                                    <span class="pkg-badge">📦 ${escapeHTML(item.package_name || "10 kunlik paket")}</span>
+                                    <span class="pkg-room">${escapeHTML(item.room_standard || "Standart xona")}</span>
+                                </div>
+
                                 <div class="price-row-std">
-                                    <span>${escapeHTML(stdLabel)}</span>
-                                    <span class="val">${formatSum(item.std_min)} — ${formatSum(item.std_max)} so'm</span>
+                                    <span>Paketning to'liq narxi:</span>
+                                    <span class="val">${formatSum(stdPrice)} so'm</span>
                                 </div>
+
                                 <div class="price-row-union">
-                                    <span class="price-label-union">
-                                        <span style="font-size: 1.1rem;">🏷️</span> ${escapeHTML(unionLabel)}
-                                    </span>
-                                    <span class="price-val-union">${formatSum(unionMin)} — ${formatSum(unionMax)} <small style="font-size: 0.75rem;">so'm/kun</small></span>
+                                    <div class="price-label-union">
+                                        <span class="discount-tag">55% CHEGIRMA BILAN</span>
+                                        <span class="sub-label">Xodim to'laydi (45%):</span>
+                                    </div>
+                                    <div class="price-val-union">
+                                        ${formatSum(unionStd)} <small>so'm / 10 kun</small>
+                                    </div>
                                 </div>
-                                <div class="price-note-mini">
-                                    ✓ ${escapeHTML(saveNote)}
+
+                                <div class="saving-box">
+                                    💰 Kasaba uyushmasi <strong>${formatSum(savedStd)} so'm</strong> (55%) qoplab beradi
+                                </div>
+
+                                ${luxHtml}
+
+                                <div class="pkg-include-text">
+                                    ✓ 10 kun yashash, 3 mahal parhez taom va barcha tibbiy muolajalar kiritilgan.
                                 </div>
                             </div>
 
                             <div class="card-actions">
-                                <button onclick="openApplyModal('${escapeHTML(item.name).replace(/'/g, "\\'")}')" class="btn btn-primary" style="font-size: 0.85rem; font-weight: 600; padding: 10px 14px;">
+                                <button onclick="openApplyById(${item.id})" class="btn btn-primary" style="width: 100%; font-size: 0.95rem; font-weight: 700; padding: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
                                     📝 ${escapeHTML(applyBtnText)}
                                 </button>
-                                <a href="${item.sihatgoh_url}" target="_blank" class="btn btn-secondary" style="font-size: 0.85rem; padding: 10px 14px; text-decoration: none;" title="sihatgoh.uz da to'liq ko'rish">
-                                    🌐 ${escapeHTML(portalBtnText)}
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -804,9 +942,16 @@
             renderSanatoriums();
         }
 
-        function openApplyModal(sanatoriumName) {
+        function openApplyById(id) {
+            const item = SANATORIUMS_DATA.find(s => s.id === id);
+            if (!item) return;
+            const unionStd = calcUnionPrice(item.price_standard);
+            openApplyModal(item.name, `${formatSum(unionStd)} so'm (Standart xona)`);
+        }
+
+        function openApplyModal(sanatoriumName, pkgInfo) {
             const modal = document.getElementById('applyModal');
-            document.getElementById('applySanatoriumName').value = sanatoriumName;
+            document.getElementById('applySanatoriumName').value = pkgInfo ? `${sanatoriumName} — ${pkgInfo}` : (sanatoriumName || '');
             modal.classList.add('open');
         }
 
