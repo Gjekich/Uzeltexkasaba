@@ -292,7 +292,7 @@ input, textarea, select {
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
 }
 
@@ -1044,7 +1044,7 @@ textarea.form-control {
         grid-template-columns: repeat(2, 1fr);
     }
     .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
     .nav-links {
         display: none;
@@ -1062,6 +1062,18 @@ textarea.form-control {
     }
     .hero-buttons {
         justify-content: center;
+    }
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .stat-card {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 12px 0;
+    }
+    .stat-card:last-child {
+        border-bottom: none;
     }
     .privilege-grid, .news-grid {
         grid-template-columns: 1fr;
