@@ -8,6 +8,7 @@ const translations = {
         "nav_privileges": "Imtiyozlar",
         "nav_legislation": "Qonunchilik",
         "nav_gallery": "Galereya",
+        "nav_agreement": "Jamoa shartnomasi",
 
         // Hero Section
         "hero_tag": "Xodimlarning Ishonchli Qalqoni",
@@ -296,7 +297,41 @@ const translations = {
         "faq_q4_text": "Oliy ta'lim kontrakti to'lab berilganda 3 yil ishlab berish sharti qanday tartibga solinadi?",
         "faq_a4_text": "Xodimning yoki uning farzandining oliy ta'lim muassasasidagi o'qishi uchun to'lov qilingan taqdirda, tashkilot va xodim o'rtasida alohida yozma shartnoma (kelishuv) rasmiylashtiriladi. Unda o'qish yakunlangach 3 yil davomida uzluksiz ishlab berish majburiyati va tomonlarning huquqlari batafsil belgilab qo'yiladi.",
         "faq_q5_text": "Ichki turizm va boshqa imtiyozlardan foydalanish mezonlari qanday o'rnatiladi?",
-        "faq_a5_text": "Ichki turizm, yo'llanmalar va moddiy yordamlardan foydalanish shartlari va navbat mezonlari har bir a'zo uchun adolatli va ochiq-oydin bo'lishini ta'minlash maqsadida alohida ichki Nizom va qo'mitaning tasdiqlangan tartibi asosida belgilab olinadi."
+        "faq_a5_text": "Ichki turizm, yo'llanmalar va moddiy yordamlardan foydalanish shartlari va navbat mezonlari har bir a'zo uchun adolatli va ochiq-oydin bo'lishini ta'minlash maqsadida alohida ichki Nizom va qo'mitaning tasdiqlangan tartibi asosida belgilab olinadi.",
+
+        // Jamoa shartnomasi section
+        "agreement_page_tag": "Ijtimoiy sheriklik va kafolatlar",
+        "agreement_page_title": "Jamoa Shartnomasi",
+        "agreement_page_subtitle": "\"O'zeltexsanoat\" uyushmasi va Kasaba uyushmasi boshlang'ich tashkiloti o'rtasida 2026–2028 yillar uchun tuzilgan jamoa shartnomasi va uning ilovalari to'plami.",
+        "agreement_featured_badge": "Bosh Hujjat (2026–2028)",
+        "agreement_featured_title": "1. Jamoa Shartnomasi (2026–2028 yillar)",
+        "agreement_featured_desc": "Ish beruvchi va xodimlar o'rtasidagi ijtimoiy-mehnat munosabatlarini, mehnat muhofazasi, kafolatlar va imtiyozlarni tartibga soluvchi asosiy normativ hujjat.",
+        "agreement_btn_view": "Ko'rish ↗",
+        "agreement_btn_download": "Yuklab olish 📥",
+        "agreement_annexes_tag": "Tarkibiy Qismlar",
+        "agreement_annexes_title": "Ilovalar va Ichki Nizomlar",
+        "agreement_annexes_subtitle": "Jamoa shartnomasining ajralmas qismi hisoblangan va korxona faoliyatini tartibga soluvchi me'yoriy hujjatlar.",
+        "agreement_search_placeholder": "Shartnoma yoki nizom nomini qidiring...",
+        "agreement_doc2_title": "2. Ichki mehnat tartib qoidalari",
+        "agreement_doc2_desc": "Ish vaqti, dam olish vaqtlari, xodim va ish beruvchining huquq va majburiyatlari, mehnat intizomi hamda rag'batlantirish qoidalari.",
+        "agreement_doc3_title": "3. Ishga qabul qilish tartibi to'g'risida Nizom",
+        "agreement_doc3_desc": "Xodimlarni saralab olish, sinov muddati, mehnat shartnomasini tuzish, lavozimga tayinlash va rasmiylashtirish tartibi.",
+        "agreement_doc4_title": "4. Xizmat safarlari to'g'risidagi Nizom",
+        "agreement_doc4_desc": "O'zbekiston hududi va xorijga xizmat safarlariga yuborish, kunlik xarajatlar, mehmonxona va transport to'lovlarini qoplash tartibi.",
+        "agreement_doc5_title": "5. Mehnatga haq to'lash to'g'risida Nizom",
+        "agreement_doc5_desc": "Ish haqi shakllari, tarif stavkalari, mansab maoshlari, ustamalar, qo'shimcha to'lovlar hamda kafolatlangan to'lovlar tizimi.",
+        "agreement_doc6_title": "6. Samaradorlik ko'rsatkichlari (KPI) to'g'risida Nizom",
+        "agreement_doc6_desc": "Xodimlar va bo'limlar faoliyati samaradorligini baholash (KPI) mezonlari hamda natijadorlik asosida moddiy rag'batlantirish qoidalari.",
+        "agreement_doc7_title": "7. Mehnat nizolari komissiyasi to'g'risida Nizom",
+        "agreement_doc7_desc": "Xodim va ish beruvchi o'rtasidagi yakka tartibdagi mehnat nizolarini suddan oldin ko'rib chiqish va adolatli hal etish mexanizmi.",
+        "agreement_help_title": "Savol yoki murojaatingiz bormi?",
+        "agreement_help_desc": "Jamoa shartnomasi bandlari, bandlik kafolatlari yoki imtiyozlar bo'yicha savollaringiz bo'lsa, kasaba uyushmasi qo'mitasiga murojaat qilishingiz mumkin.",
+        "agreement_help_btn": "Murojaat yuborish",
+        "home_agreement_tag": "Ijtimoiy Kafolat",
+        "home_agreement_title": "Jamoa Shartnomasi (2026–2028)",
+        "home_agreement_desc": "Xodimlarning mehnat huquqlari, imtiyozlari, moddiy ko'mak va munosib ish sharoitlarini kafolatlovchi bosh hujjat hamda uning barcha ilovalari bilan tanishing.",
+        "home_agreement_btn": "Barcha hujjatlarni ko'rish",
+        "home_agreement_download": "Shartnomani yuklab olish"
     },
 
     ru: {
@@ -308,6 +343,7 @@ const translations = {
         "nav_privileges": "Льготы",
         "nav_legislation": "Законодательство",
         "nav_gallery": "Галерея",
+        "nav_agreement": "Коллективный договор",
 
         // Hero Section
         "hero_tag": "Надежный щит работников",
@@ -596,7 +632,41 @@ const translations = {
         "faq_q4_text": "Как регулируется условие отработки в течение 3 лет при оплате контракта на высшее образование?",
         "faq_a4_text": "В случае оплаты обучения работника или его ребенка в высшем учебном заведении между организацией и работником оформляется отдельное письменное соглашение (договор). В нем подробно прописываются обязательство непрерывной работы в течение 3 лет после окончания учебы и права сторон.",
         "faq_q5_text": "Как устанавливаются критерии пользования внутренним туризмом и другими льготами?",
-        "faq_a5_text": "Условия и критерии очереди пользования внутренним туризмом, путевками и материальной помощью устанавливаются на основе отдельного внутреннего Положения и утвержденного порядка комитета для обеспечения справедливости и прозрачности для каждого члена."
+        "faq_a5_text": "Условия и критерии очереди пользования внутренним туризмом, путевками и материальной помощью устанавливаются на основе отдельного внутреннего Положения и утвержденного порядка комитета для обеспечения справедливости и прозрачности для каждого члена.",
+
+        // Jamoa shartnomasi section
+        "agreement_page_tag": "Социальное партнерство и гарантии",
+        "agreement_page_title": "Коллективный Договор",
+        "agreement_page_subtitle": "Сборник коллективного договора и приложений на 2026–2028 годы между ассоциацией «Узэлтехсаноат» и первичной профсоюзной организацией.",
+        "agreement_featured_badge": "Основной Документ (2026–2028)",
+        "agreement_featured_title": "1. Коллективный Договор (2026–2028 гг.)",
+        "agreement_featured_desc": "Главный нормативный документ, регулирующий социально-трудовые отношения, охрану труда, гарантии и льготы между работодателем и работниками.",
+        "agreement_btn_view": "Открыть ↗",
+        "agreement_btn_download": "Скачать 📥",
+        "agreement_annexes_tag": "Составные Части",
+        "agreement_annexes_title": "Приложения и Внутренние Положения",
+        "agreement_annexes_subtitle": "Нормативные документы, являющиеся неотъемлемой частью коллективного договора и регулирующие деятельность предприятия.",
+        "agreement_search_placeholder": "Поиск договора или положения...",
+        "agreement_doc2_title": "2. Правила внутреннего трудового распорядка",
+        "agreement_doc2_desc": "Рабочее время, время отдыха, права и обязанности работников и работодателя, трудовая дисциплина и поощрения.",
+        "agreement_doc3_title": "3. Положение о порядке приема на работу",
+        "agreement_doc3_desc": "Порядок отбора кандидатов, испытательного срока, заключения трудового договора, назначения и оформления.",
+        "agreement_doc4_title": "4. Положение о служебных командировках",
+        "agreement_doc4_desc": "Порядок командирования по Узбекистану и за рубеж, возмещение суточных, транспортных и гостиничных расходов.",
+        "agreement_doc5_title": "5. Положение об оплате труда",
+        "agreement_doc5_desc": "Формы оплаты труда, тарифные сетки, должностные оклады, надбавки, доплаты и система гарантированных выплат.",
+        "agreement_doc6_title": "6. Положение о ключевых показателях эффективности (KPI)",
+        "agreement_doc6_desc": "Критерии оценки эффективности сотрудников и отделов (KPI), правила премирования по результатам работы.",
+        "agreement_doc7_title": "7. Положение о комиссии по трудовым спорам",
+        "agreement_doc7_desc": "Досудебное урегулирование индивидуальных трудовых споров между работником и работодателем, порядок рассмотрения.",
+        "agreement_help_title": "Есть вопросы или обращения?",
+        "agreement_help_desc": "Если у вас есть вопросы по пунктам коллективного договора, гарантиям занятости или льготам, вы можете обратиться в профсоюзный комитет.",
+        "agreement_help_btn": "Отправить обращение",
+        "home_agreement_tag": "Социальная гарантия",
+        "home_agreement_title": "Коллективный Договор (2026–2028)",
+        "home_agreement_desc": "Ознакомьтесь с основным договором и приложениями, гарантирующими трудовые права, льготы, материальную помощь и достойные условия труда работников предприятия.",
+        "home_agreement_btn": "Посмотреть все документы",
+        "home_agreement_download": "Скачать договор"
     },
 
     en: {
@@ -608,6 +678,7 @@ const translations = {
         "nav_privileges": "Benefits",
         "nav_legislation": "Legislation",
         "nav_gallery": "Gallery",
+        "nav_agreement": "Collective Agreement",
 
         // Hero Section
         "hero_tag": "Employees' Reliable Shield",
@@ -896,6 +967,40 @@ const translations = {
         "faq_q4_text": "How is the 3-year service obligation regulated when higher education tuition is paid?",
         "faq_a4_text": "If tuition for the employee or their child at a higher education institution is paid, a separate written agreement is executed between the organization and the employee. It defines the obligation to work continuously for 3 years after graduation and the rights of both parties.",
         "faq_q5_text": "Terms and queue criteria for internal tourism, vouchers, and financial aid are defined based on a separate internal Regulation and approved committee procedures to ensure fairness and transparency for all members.",
-        "faq_a5_text": "Terms and queue criteria for internal tourism, vouchers, and financial aid are defined based on a separate internal Regulation and approved committee procedures to ensure fairness and transparency for all members."
+        "faq_a5_text": "Terms and queue criteria for internal tourism, vouchers, and financial aid are defined based on a separate internal Regulation and approved committee procedures to ensure fairness and transparency for all members.",
+
+        // Jamoa shartnomasi section
+        "agreement_page_tag": "Social Partnership & Guarantees",
+        "agreement_page_title": "Collective Agreement",
+        "agreement_page_subtitle": "Collection of the collective agreement and its annexes for 2026–2028 between \"Uzeltexsanoat\" association and the primary trade union organization.",
+        "agreement_featured_badge": "Primary Document (2026–2028)",
+        "agreement_featured_title": "1. Collective Agreement (2026–2028)",
+        "agreement_featured_desc": "The primary regulatory document governing socio-labor relations, labor protection, guarantees, and benefits between employer and employees.",
+        "agreement_btn_view": "View ↗",
+        "agreement_btn_download": "Download 📥",
+        "agreement_annexes_tag": "Components",
+        "agreement_annexes_title": "Annexes & Internal Regulations",
+        "agreement_annexes_subtitle": "Regulatory documents that form an integral part of the collective agreement and regulate enterprise operations.",
+        "agreement_search_placeholder": "Search agreement or regulation...",
+        "agreement_doc2_title": "2. Internal Labor Regulations",
+        "agreement_doc2_desc": "Working hours, rest periods, rights and obligations of employees and employers, labor discipline, and incentives.",
+        "agreement_doc3_title": "3. Regulation on Recruitment and Employment Procedure",
+        "agreement_doc3_desc": "Procedure for candidate selection, probation period, concluding employment contracts, and appointments.",
+        "agreement_doc4_title": "4. Regulation on Business Travel and Missions",
+        "agreement_doc4_desc": "Rules for domestic and international business trips, per diem rates, transport and accommodation reimbursement.",
+        "agreement_doc5_title": "5. Regulation on Labor Remuneration",
+        "agreement_doc5_desc": "Wage structure, tariff rates, salaries, allowances, supplements, and guaranteed payments system.",
+        "agreement_doc6_title": "6. Regulation on Key Performance Indicators (KPI)",
+        "agreement_doc6_desc": "Performance evaluation criteria for employees and departments (KPI) and performance-based reward regulations.",
+        "agreement_doc7_title": "7. Regulation on the Labor Disputes Commission",
+        "agreement_doc7_desc": "Pre-trial resolution of individual labor disputes between employee and employer, application and hearing procedure.",
+        "agreement_help_title": "Have questions or inquiries?",
+        "agreement_help_desc": "If you have questions regarding clauses of the collective agreement, employment guarantees, or benefits, you can contact the trade union committee.",
+        "agreement_help_btn": "Submit Inquiry",
+        "home_agreement_tag": "Social Guarantee",
+        "home_agreement_title": "Collective Agreement (2026–2028)",
+        "home_agreement_desc": "Familiarize yourself with the main agreement and all its annexes guaranteeing workers' labor rights, benefits, financial aid, and decent working conditions.",
+        "home_agreement_btn": "View all documents",
+        "home_agreement_download": "Download agreement"
     }
 };

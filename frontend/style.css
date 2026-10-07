@@ -118,17 +118,17 @@ input, textarea, select {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 13px;
     list-style: none;
     flex-shrink: 1;
 }
 
 .nav-link {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.2px;
     padding: 6px 0;
     border-bottom: 2px solid transparent;
     white-space: nowrap;
