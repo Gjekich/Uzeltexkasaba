@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Federatsiya Sanatoriylari va Sihatgohlari - UzeltexKasaba</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="style.css?v=1.3">
+    <style>
+        .sanatorium-hero {
+            background: linear-gradient(135deg, #0f2963 0%, #1e3a8a 100%);
+            color: #ffffff;
+            padding: 50px 0 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .sanatorium-discount-banner {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        .discount-badge-circle {
+            min-width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+        .discount-badge-circle .num {
+            font-size: 2rem;
+            line-height: 1;
+        }
+        .discount-badge-circle .sub {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .discount-banner-text h3 {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+        .discount-banner-text p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Filter Controls */
+        .filter-section {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+            position: sticky;
+            top: 70px;
+            z-index: 10;
+        }
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .search-box-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 260px;
+            max-width: 420px;
+        }
+        .search-box-wrap input {
+            width: 100%;
+            padding: 10px 16px 10px 38px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-box-wrap input:focus {
+            border-color: var(--color-primary);
+        }
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+        .region-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .pill-btn {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .pill-btn:hover, .pill-btn.active {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        /* Sanatorium Grid */
+        .sanatoriums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 28px;
+            margin: 36px 0;
+        }
+        .sanatorium-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: all var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+        }
+        .sanatorium-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-color-light);
+        }
+        .card-header-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 16px;
+        }
+        .card-header-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(15, 41, 99, 0.1) 0%, rgba(15, 41, 99, 0.85) 100%);
+        }
+        .card-badge-region {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--color-primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .card-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin: 0;
+        }
+        .card-loc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .card-specialties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .specialty-tag {
+            background-color: rgba(15, 41, 99, 0.06);
+            color: var(--color-primary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+        }
+        .card-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Price Box */
+        .price-box {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            margin-top: auto;
+        }
+        .price-row-std {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .price-row-std .val {
+            text-decoration: line-through;
+            font-weight: 600;
+        }
+        .price-row-union {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .price-label-union {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #15803d;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .price-val-union {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #15803d;
+        }
+        .price-note-mini {
+            font-size: 0.72rem;
+            color: #16a34a;
+            margin-top: 4px;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        /* Workflow Steps */
+        .workflow-box {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 36px 28px;
+            border: 1px solid var(--border-color);
+            margin: 40px 0 20px;
+        }
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+        .step-item {
+            background: var(--bg-primary);
+            padding: 20px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        .step-num {
+            width: 32px;
+            height: 32px;
+            background: var(--color-primary);
+            color: white;
+            font-weight: 800;
+            font-size: 0.95rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .sanatorium-discount-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box-wrap {
+                max-width: 100%;
+            }
+            .sanatoriums-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="UzeltexKasaba Logo" style="height: 42px; width: 42px; object-fit: contain; border-radius: 50%;">
+                <span>UzeltexKasaba</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="about.html" class="nav-link" data-i18n="nav_about">Haqimizda</a></li>
+                <li><a href="agreement.html" class="nav-link" data-i18n="nav_agreement">Jamoa shartnomasi</a></li>
+                <li><a href="privileges.html" class="nav-link active" data-i18n="nav_privileges">Imtiyozlar</a></li>
+                <li><a href="legislation.html" class="nav-link" data-i18n="nav_legislation">Qonunchilik</a></li>
+                <li><a href="news.html" class="nav-link" data-i18n="nav_news">Yangiliklar</a></li>
+                <li><a href="events.html" class="nav-link" data-i18n="nav_events">Tadbirlar</a></li>
+                <li><a href="gallery.html" class="nav-link" data-i18n="nav_gallery">Galereya</a></li>
+            </ul>
+            <div class="lang-switcher" style="margin-left: 12px; display: flex; align-items: center;">
+                <select class="lang-select" style="background-color: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 4px 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; outline: none; transition: border-color 0.2s;">
+                    <option value="uz">🇺🇿 UZ</option>
+                    <option value="ru">🇷🇺 RU</option>
+                    <option value="en">🇬🇧 EN</option>
+                </select>
+            </div>
+            <a href="https://t.me/uzeltexkasaba" target="_blank" class="nav-telegram-btn" title="Telegram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: white;"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="sanatorium-hero">
+        <div class="container">
+            <div style="max-width: 820px;">
+                <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 12px;">
+                    <span>🏥</span>
+                    <span data-i18n="sanatoriums_tag">Federatsiya Tasarrufidagi Sihatgohlar</span>
+                </div>
+                <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 12px;" data-i18n="sanatoriums_page_title">
+                    Federatsiya Sanatoriylari va Sihatgohlari
+                </h1>
+                <p style="font-size: 1.05rem; opacity: 0.9; line-height: 1.6;" data-i18n="sanatoriums_page_subtitle">
+                    Kasaba uyushmasi a'zolari uchun 55% imtiyozli chegirma asosida dam olish va davolanish maskanlari ro'yxati hamda narxlar jadvali.
+                </p>
+            </div>
+
+            <!-- Discount Banner -->
+            <div class="sanatorium-discount-banner">
+                <div class="discount-badge-circle">
+                    <span class="num">55%</span>
+                    <span class="sub" data-i18n="sanatoriums_discount_word">Imtiyoz</span>
+                </div>
+                <div class="discount-banner-text">
+                    <h3 data-i18n="sanatoriums_banner_heading">Kasaba uyushmasi a'zolariga 55% chegirma kafolati</h3>
+                    <p data-i18n="sanatoriums_banner_p">
+                        Kasaba uyushmasi a'zosi va ularning oila a'zolari O'zbekiston Kasaba uyushmalari Federatsiyasi tasarrufidagi sanatoriylarga yo'llanma olganda xarajatlarning <strong>55 foizi kasaba uyushmasi mablag'lari hisobidan to'lanadi</strong>. Xodim faqat 45% summani to'laydi.
+                    </p>
+                    <div style="margin-top: 8px; font-size: 0.82rem; opacity: 0.85;" data-i18n="sanatoriums_src_note">
+                        🌐 Ma'lumotlar va narxlar <a href="https://www.sihatgoh.uz" target="_blank" style="color: #fde047; text-decoration: underline;">sihatgoh.uz</a> rasmiy portali asosida taqdim etilmoqda.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter & Search Sticky Bar -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-bar">
+                <div class="search-box-wrap">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="sanatoriumSearchInput" placeholder="Sanatoriy nomi, hudud yoki ixtisoslashuvi bo'yicha qidirish..." oninput="handleSanatoriumSearch(this.value)" data-i18n-attr="placeholder" data-i18n="sanatoriums_search_placeholder">
+                </div>
+                <div class="region-pills">
+                    <button class="pill-btn active" data-region="all" onclick="filterByRegion('all', this)" data-i18n="sanatoriums_filter_all">Barchasi</button>
+                    <button class="pill-btn" data-region="tashkent" onclick="filterByRegion('tashkent', this)" data-i18n="sanatoriums_filter_tashkent">Toshkent & viloyati</button>
+                    <button class="pill-btn" data-region="jizzakh" onclick="filterByRegion('jizzakh', this)" data-i18n="sanatoriums_filter_jizzakh">Jizzax (Zomin)</button>
+                    <button class="pill-btn" data-region="fergana" onclick="filterByRegion('fergana', this)" data-i18n="sanatoriums_filter_valley">Farg'ona vodiysi</button>
+                    <button class="pill-btn" data-region="south" onclick="filterByRegion('south', this)" data-i18n="sanatoriums_filter_south">Janubiy & G'arbiy viloyatlar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="section" style="padding-top: 10px;">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div style="font-size: 0.95rem; color: var(--text-secondary);">
+                    <span data-i18n="sanatoriums_count_label">Mavjud sanatoriylar soni:</span> <strong id="sanatoriumsCount" style="color: var(--color-primary);">13 ta</strong>
+                </div>
+                <a href="privileges.html" class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 14px;">
+                    ← <span data-i18n="back_to_privileges">Barcha imtiyozlarga qaytish</span>
+                </a>
+            </div>
+
+            <!-- Sanatoriums Cards Grid -->
+            <div class="sanatoriums-grid" id="sanatoriumsGrid">
+                <!-- Dynamically Rendered by JS -->
+            </div>
+
+            <!-- Workflow Guide Infographic -->
+            <div class="workflow-box">
+                <div style="text-align: center; max-width: 650px; margin: 0 auto;">
+                    <span style="font-size: 0.85rem; font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 1px;" data-i18n="sanatoriums_guide_tag">Yo'riqnoma</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--color-primary); margin: 6px 0 10px;" data-i18n="sanatoriums_guide_title">Imtiyozli yo'llanma olish tartibi</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;" data-i18n="sanatoriums_guide_sub">Kasaba uyushmasi a'zolari uchun 55% chegirmali yo'llanma olish 3 ta oson bosqichda amalga oshiriladi.</p>
+                </div>
+
+                <div class="workflow-steps">
+                    <div class="step-item">
+                        <div class="step-num">1</div>
+                        <h4 style="font-weight: 700; margin-bottom: 6px; font-size: 1.05rem;" data-i18n="sanatoriums_step1_title">Ariza topshirish</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin: 0;" data-i18n="sanatoriums_step1_desc">Korxonangiz boshlang'ich kasaba uyushmasi tashkiloti raisi nomiga imtiyozli yo'llanma ajratish bo'yicha ariza yozasiz.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-num">2</div>
+                        <h4 style="font-weight: 700; margin-bottom: 6px; font-size: 1.05rem;" data-i18n="sanatoriums_step2_title">Tibbiy ma'lumotnoma</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin: 0;" data-i18n="sanatoriums_step2_desc">Davolovchi shifokordan 070-U shaklidagi sanatoriy-kurort tavsiyanomasini (ma'lumotnomasini) olasiz.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-num">3</div>
+                        <h4 style="font-weight: 700; margin-bottom: 6px; font-size: 1.05rem;" data-i18n="sanatoriums_step3_title">55% Chegirma bilan yo'llanma</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin: 0;" data-i18n="sanatoriums_step3_desc">Kasaba uyushmasi mablag'lari hisobidan 55% chegirma qoplanib, sizga rasmiy yo'llanma taqdim etiladi.</p>
+                    </div>
+                </div>
+
+                <!-- Contacts -->
+                <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
+                    <div>
+                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--color-primary);">O'zbekiston Kasaba uyushmalari Federatsiyasi Bosh sanatoriy-kurort boshqarmasi</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 2px;">📍 Toshkent sh., Buxoro ko'chasi, 24-uy | 📞 +998 (71) 256-73-56, +998 (71) 256-83-73</div>
+                    </div>
+                    <a href="https://www.sihatgoh.uz" target="_blank" class="btn btn-primary" style="font-size: 0.85rem;">
+                        🌐 sihatgoh.uz portaliga o'tish ➔
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Application Modal -->
+    <div class="modal" id="applyModal" onclick="closeApplyModal()">
+        <div class="modal-content" style="max-width: 520px;" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeApplyModal()">&times;</span>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <div style="font-size: 1.8rem;">🏥</div>
+                <div>
+                    <h3 style="font-family: var(--font-heading); margin: 0; font-weight: 700; color: var(--color-primary);" data-i18n="modal_apply_title">Sanatoriy yo'llanmasiga ariza</h3>
+                    <div style="font-size: 0.8rem; color: #16a34a; font-weight: 600;" data-i18n="modal_apply_sub">55% lik imtiyozli chegirma bilan</div>
+                </div>
+            </div>
+            <form id="sanatoriumApplyForm" onsubmit="submitSanatoriumApplication(event)">
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.85rem;" data-i18n="modal_sanatorium_name">Tanlangan sanatoriy</label>
+                    <input type="text" id="applySanatoriumName" class="form-control" style="background-color: var(--bg-secondary); font-weight: 600; color: var(--color-primary);" readonly>
+                </div>
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.85rem;" data-i18n="modal_reg_fullname">F.I.Sh. (To'liq ismingiz)</label>
+                    <input type="text" id="applyFullName" class="form-control" required placeholder="Familiya Ism Sharifingiz">
+                </div>
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.85rem;" data-i18n="modal_reg_phone">Telefon raqamingiz</label>
+                    <input type="tel" id="applyPhone" class="form-control" required placeholder="+998 90 123 45 67">
+                </div>
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.85rem;" data-i18n="modal_reg_org">Ish joyingiz (Korxona / tashkilot nomi)</label>
+                    <input type="text" id="applyOrg" class="form-control" required placeholder="Korxona yoki zavod nomi">
+                </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.85rem;" data-i18n="modal_apply_notes">Qo'shimcha izoh yoki rejalashtirilgan oy (ixtiyoriy)</label>
+                    <textarea id="applyNotes" class="form-control" rows="2" placeholder="Masalan: Yoz oylarida, oilaviy yo'llanma..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-weight: 600;" data-i18n="modal_reg_btn">Arizani yuborish</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <p>&copy; 2026 UzeltexKasaba. <span data-i18n="footer_rights">Barcha huquqlar himoyalangan.</span></p>
+                <a href="https://t.me/uzeltexkasaba" target="_blank" style="display: flex; align-items: center; gap: 8px; color: var(--color-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                    <span data-i18n="footer_telegram">Telegram kanalimiz</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Official Federation Sanatoriums Dataset based on sihatgoh.uz
+        const SANATORIUMS_DATA = [
+            {
+                id: 1,
+                name: "\"Zomin\" sanatoriysi",
+                region: "jizzakh",
+                location: "Jizzax viloyati, Zomin tumani, Zomin milliy bog'i",
+                specialties: ["Nafas yo'llari", "Asab tizimi", "Iqlimiy davolash"],
+                desc: "Dengiz sathidan 2000 metr balandlikdagi musaffo tog' havosi va ignabargli o'rmon iqlimi. Bronxial astma, surunkali bronxit va asab kasalliklarini davolaydi.",
+                std_min: 420000,
+                std_max: 950000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 2,
+                name: "\"Chinobod\" sanatoriysi",
+                region: "tashkent",
+                location: "Toshkent shahri, Yunusobod tumani, Chinobod ko'chasi",
+                specialties: ["Oshqozon-ichak", "Jigar va o't yo'llari", "Qandli diabet", "Ginekologiya"],
+                desc: "Tabiiy termal xlorid-gidrokarbonatli mineral suv va balneologik loylar bilan oshqozon-ichak hamda endokrin kasalliklarini davolashga ixtisoslashgan.",
+                std_min: 450000,
+                std_max: 1100000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 3,
+                name: "\"Chinobod Plaza\" sanatoriysi",
+                region: "tashkent",
+                location: "Toshkent shahri, Yunusobod tumani",
+                specialties: ["Oshqozon-ichak", "Moddalar almashinuvi", "Premium reabilitatsiya"],
+                desc: "Zamonaviy tashxis-davolash uskunalari bilan jihozlangan premium sog'lomlashtirish maskani. Individual parhez va fizioterapiya dasturlari.",
+                std_min: 750000,
+                std_max: 1600000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 4,
+                name: "\"Bo'ston\" sanatoriysi",
+                region: "tashkent",
+                location: "Toshkent viloyati, Qibray tumani, Bo'zsuv bo'yi",
+                specialties: ["Yurak-qon tomir", "Nevrologiya", "Ginekologiya", "Tayanch-harakat"],
+                desc: "Bo'zsuv daryosi bo'yidagi kardiologik va nevrologik ixtisoslashgan tinch maskan. Zamonaviy fizioterapiya va psixoterapiya muolajalari.",
+                std_min: 400000,
+                std_max: 900000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 5,
+                name: "\"Oqtosh\" sanatoriysi",
+                region: "tashkent",
+                location: "Toshkent viloyati, Bo'stonliq tumani, Oqtosh qishlog'i",
+                specialties: ["Nafas a'zolari", "Tog' iqlimi", "Sog'lomlashtirish"],
+                desc: "Archazor tog' yonbag'rida joylashgan. Sof tog' havosi va tabiiy buloqlari bilan nafas organlari surunkali kasalliklarini samarali davolaydi.",
+                std_min: 390000,
+                std_max: 850000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 6,
+                name: "\"Turon\" sanatoriysi",
+                region: "tashkent",
+                location: "Toshkent shahri, Mirzo Ulug'bek tumani",
+                specialties: ["Yurak-qon tomir", "Qon aylanish tizimi", "Insultdan keyingi tiklanish"],
+                desc: "Yurak-qon tomir va asab tizimi kasalliklari, shuningdek insult o'tkazgan xodimlarni reabilitatsiya qilish bo'yicha yetakchi balneologik markaz.",
+                std_min: 410000,
+                std_max: 880000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 7,
+                name: "\"Chortoq\" sanatoriysi",
+                region: "fergana",
+                location: "Namangan viloyati, Chortoq tumani",
+                specialties: ["Tayanch-harakat (bo'g'im)", "Oshqozon-ichak", "Teri kasalliklari"],
+                desc: "Noyob yod-bromli mineral suvlari va artesian buloqlari bilan bo'g'im, umurtqa pog'onasi, jigar va teri kasalliklarini davolaydi.",
+                std_min: 380000,
+                std_max: 850000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 8,
+                name: "\"Chimyon\" sanatoriysi",
+                region: "fergana",
+                location: "Farg'ona viloyati, Farg'ona tumani, Chimyon qishlog'i",
+                specialties: ["Tayanch-harakat", "Asab tizimi", "Yurak-qon tomir", "Balchiq bilan davolash"],
+                desc: "Vodorod sulfidli (matsesta tipidagi) mineral suvlari va shifobaxsh balchiq vannalari bilan periferik asab va bo'g'im xastaliklarini davolaydi.",
+                std_min: 360000,
+                std_max: 800000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 9,
+                name: "\"Sitorai Mohi Xosa\" sanatoriysi",
+                region: "south",
+                location: "Buxoro viloyati, Buxoro tumani",
+                specialties: ["Buyrak va siydik yo'llari", "Tayanch-harakat", "Quruq iqlim"],
+                desc: "Buxoro amiri saroyi yaqinidagi balneoterapiya maskani. Quruq cho'l iqlimi va termal mineral vannalar yordamida buyrak kasalliklarini davolaydi.",
+                std_min: 370000,
+                std_max: 820000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 10,
+                name: "\"Xonobod\" sanatoriysi",
+                region: "fergana",
+                location: "Andijon viloyati, Xonobod shahri",
+                specialties: ["Nafas yo'llari", "Yurak-qon tomir", "Tog' havosi"],
+                desc: "Farg'ona vodiysining eng so'lim tog' etagida joylashgan. Kislorodga boy musaffo havo bilan yurak va nafas a'zolarini sog'lomlashtiradi.",
+                std_min: 400000,
+                std_max: 890000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 11,
+                name: "\"Omonxona\" sanatoriysi",
+                region: "south",
+                location: "Surxondaryo viloyati, Boysun tumani",
+                specialties: ["Jigar va o't yo'llari", "Oshqozon-ichak", "Shifobaxsh buloq"],
+                desc: "Boysun tog'laridagi mashhur shifobaxsh mineral buloq suvi bilan jigar, surunkali gepatit va o't pufagi kasalliklarini tabiiy davolaydi.",
+                std_min: 390000,
+                std_max: 860000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 12,
+                name: "\"Kosonsoy\" sanatoriysi",
+                region: "fergana",
+                location: "Namangan viloyati, Kosonsoy tumani",
+                specialties: ["Tayanch-harakat", "Asab tizimi", "Yurak-qon tomir"],
+                desc: "Tog'oldi toza havosi va balneologik fizioterapiya muolajalari bilan asab, bo'g'im va yurak kasalliklarini davolashga xizmat qiladi.",
+                std_min: 350000,
+                std_max: 780000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            },
+            {
+                id: 13,
+                name: "\"Humson\" sanatoriysi",
+                region: "tashkent",
+                location: "Toshkent viloyati, Bo'stonliq tumani, Humson",
+                specialties: ["Nafas organlari", "Yurak-qon tomir", "Dam olish"],
+                desc: "Ugom daryosi bo'yidagi go'zal tog'li oromgoh. Ekologik toza tabiat, o'rmon havosi va zamonaviy sog'lomlashtirish xizmatlari.",
+                std_min: 520000,
+                std_max: 1200000,
+                sihatgoh_url: "https://www.sihatgoh.uz/"
+            }
+        ];
+
+        let currentRegionFilter = 'all';
+        let currentSearchQuery = '';
+
+        function formatSum(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+
+        // Calculate 55% discount: Member pays 45% (0.45 * std_price)
+        function calcUnionPrice(stdPrice) {
+            return Math.round(stdPrice * 0.45);
+        }
+
+        function renderSanatoriums() {
+            const grid = document.getElementById('sanatoriumsGrid');
+            if (!grid) return;
+
+            const lang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'uz';
+            const applyBtnText = (translations[lang] && translations[lang]['sanatoriums_apply_btn']) || "Ariza topshirish";
+            const portalBtnText = (translations[lang] && translations[lang]['sanatoriums_portal_btn']) || "sihatgoh.uz";
+            const stdLabel = (translations[lang] && translations[lang]['sanatoriums_std_price']) || "Standart narx:";
+            const unionLabel = (translations[lang] && translations[lang]['sanatoriums_union_price']) || "55% chegirma bilan:";
+            const saveNote = (translations[lang] && translations[lang]['sanatoriums_save_note']) || "Xodim 45% to'laydi, 55% kasaba uyushmasi qoplaydi";
+
+            const filtered = SANATORIUMS_DATA.filter(item => {
+                const matchRegion = currentRegionFilter === 'all' || item.region === currentRegionFilter;
+                const q = currentSearchQuery.toLowerCase().trim();
+                const matchSearch = !q || 
+                    item.name.toLowerCase().includes(q) || 
+                    item.location.toLowerCase().includes(q) || 
+                    item.desc.toLowerCase().includes(q) || 
+                    item.specialties.some(s => s.toLowerCase().includes(q));
+                return matchRegion && matchSearch;
+            });
+
+            document.getElementById('sanatoriumsCount').textContent = `${filtered.length} ta`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; background: var(--bg-secondary); border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
+                        <div style="font-size: 3rem; margin-bottom: 12px;">🔍</div>
+                        <h3 style="font-family: var(--font-heading); color: var(--color-primary); margin-bottom: 8px;">Qidiruv bo'yicha sanatoriy topilmadi</h3>
+                        <p style="color: var(--text-secondary); max-width: 450px; margin: 0 auto 16px;">Iltimos boshqa kalit so'z yoki hudud bo'yicha qidirib ko'ring.</p>
+                        <button onclick="resetFilters()" class="btn btn-secondary">Filtrlarni tozalash</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => {
+                const unionMin = calcUnionPrice(item.std_min);
+                const unionMax = calcUnionPrice(item.std_max);
+
+                const specialtiesHtml = item.specialties.map(s => 
+                    `<span class="specialty-tag">${escapeHTML(s)}</span>`
+                ).join('');
+
+                const bgImg = 'images/sanatorium_privilege.jpg';
+
+                return `
+                    <div class="sanatorium-card">
+                        <div class="card-header-img" style="background-image: url('${bgImg}');">
+                            <div class="card-header-overlay"></div>
+                            <span class="card-badge-region">📍 ${escapeHTML(item.location.split(',')[0])}</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">${escapeHTML(item.name)}</h3>
+                            <div class="card-loc">
+                                <span>📍 ${escapeHTML(item.location)}</span>
+                            </div>
+                            
+                            <div class="card-specialties">
+                                ${specialtiesHtml}
+                            </div>
+
+                            <p class="card-desc">${escapeHTML(item.desc)}</p>
+
+                            <div class="price-box">
+                                <div class="price-row-std">
+                                    <span>${escapeHTML(stdLabel)}</span>
+                                    <span class="val">${formatSum(item.std_min)} — ${formatSum(item.std_max)} so'm</span>
+                                </div>
+                                <div class="price-row-union">
+                                    <span class="price-label-union">
+                                        <span style="font-size: 1.1rem;">🏷️</span> ${escapeHTML(unionLabel)}
+                                    </span>
+                                    <span class="price-val-union">${formatSum(unionMin)} — ${formatSum(unionMax)} <small style="font-size: 0.75rem;">so'm/kun</small></span>
+                                </div>
+                                <div class="price-note-mini">
+                                    ✓ ${escapeHTML(saveNote)}
+                                </div>
+                            </div>
+
+                            <div class="card-actions">
+                                <button onclick="openApplyModal('${escapeHTML(item.name).replace(/'/g, "\\'")}')" class="btn btn-primary" style="font-size: 0.85rem; font-weight: 600; padding: 10px 14px;">
+                                    📝 ${escapeHTML(applyBtnText)}
+                                </button>
+                                <a href="${item.sihatgoh_url}" target="_blank" class="btn btn-secondary" style="font-size: 0.85rem; padding: 10px 14px; text-decoration: none;" title="sihatgoh.uz da to'liq ko'rish">
+                                    🌐 ${escapeHTML(portalBtnText)}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterByRegion(region, btn) {
+            currentRegionFilter = region;
+            document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderSanatoriums();
+        }
+
+        function handleSanatoriumSearch(val) {
+            currentSearchQuery = val;
+            renderSanatoriums();
+        }
+
+        function resetFilters() {
+            currentSearchQuery = '';
+            currentRegionFilter = 'all';
+            document.getElementById('sanatoriumSearchInput').value = '';
+            document.querySelectorAll('.pill-btn').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-region') === 'all');
+            });
+            renderSanatoriums();
+        }
+
+        function openApplyModal(sanatoriumName) {
+            const modal = document.getElementById('applyModal');
+            document.getElementById('applySanatoriumName').value = sanatoriumName;
+            modal.classList.add('open');
+        }
+
+        function closeApplyModal() {
+            document.getElementById('applyModal').classList.remove('open');
+            document.getElementById('sanatoriumApplyForm').reset();
+        }
+
+        async function submitSanatoriumApplication(e) {
+            e.preventDefault();
+            const sanatorium = document.getElementById('applySanatoriumName').value;
+            const fullName = document.getElementById('applyFullName').value.trim();
+            const phone = document.getElementById('applyPhone').value.trim();
+            const org = document.getElementById('applyOrg').value.trim();
+            const notes = document.getElementById('applyNotes').value.trim();
+
+            const message = `Sanatoriy yo'llanmasi (55% chegirma) uchun ariza:\n- Sanatoriy: ${sanatorium}\n- Tashkilot: ${org}\n- Izoh/Rejalashtirilgan davr: ${notes || 'Mavjud emas'}`;
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const origText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Yuborilmoqda...';
+
+            try {
+                const response = await fetch('/api/applications/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        full_name: fullName,
+                        phone: phone,
+                        message: message
+                    })
+                });
+
+                if (response.ok) {
+                    alert("Arizangiz muvaffaqiyatli qabul qilindi! Boshlang'ich kasaba uyushmasi tashkiloti va mas'ul xodimlar 55% imtiyozli yo'llanma bo'yicha tez orada siz bilan bog'lanishadi.");
+                    closeApplyModal();
+                } else {
+                    alert("Xatolik yuz berdi. Iltimos qaytadan urinib ko'ring yoki ishonch telefoniga qo'ng'iroq qiling.");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Server bilan bog'lanishda xatolik yuz berdi.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = origText;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSanatoriums();
+        });
+    </script>
+</body>
+</html>

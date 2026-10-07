@@ -142,23 +142,23 @@
 
             if (list.length === 0) {
                 grid.innerHTML = `
-                    <div class="privilege-card" onclick="openDemoPrivilege('sanatorium')">
+                    <div class="privilege-card" onclick="window.location.href='sanatoriums.html'" style="cursor: pointer;">
                         <div class="privilege-icon">🏥</div>
                         <h3 class="privilege-title">Sanatoriyga imtiyozli yo'llanmalar</h3>
-                        <p class="privilege-desc">Kasaba a'zolari va ularning oila a'zolari uchun 50% gacha imtiyozli dam olish maskanlari yo'llanmalari.</p>
-                        <button class="btn btn-secondary" style="margin-top: auto; width: 100%;">Batafsil ma'lumot</button>
+                        <p class="privilege-desc">Kasaba uyushmasi a'zolariga sanatoriyalarda dam olish va davolanish uchun 55% lik chegirma beriladi.</p>
+                        <button class="btn btn-secondary" style="margin-top: auto; width: 100%;">${escapeHTML(detailBtnText)}</button>
                     </div>
-                    <div class="privilege-card" onclick="openDemoPrivilege('financial')">
+                    <div class="privilege-card" onclick="openDemoPrivilege('financial')" style="cursor: pointer;">
                         <div class="privilege-icon">💰</div>
                         <h3 class="privilege-title">Bir martalik moddiy yordam</h3>
                         <p class="privilege-desc">Bemorlik, to'y marosimi yoki og'ir ijtimoiy sharoitlar yuzaga kelganda moddiy yordam ajratish tizimi.</p>
-                        <button class="btn btn-secondary" style="margin-top: auto; width: 100%;">Batafsil ma'lumot</button>
+                        <button class="btn btn-secondary" style="margin-top: auto; width: 100%;">${escapeHTML(detailBtnText)}</button>
                     </div>
-                    <div class="privilege-card" onclick="openDemoPrivilege('kids')">
+                    <div class="privilege-card" onclick="openDemoPrivilege('kids')" style="cursor: pointer;">
                         <div class="privilege-icon">🧸</div>
                         <h3 class="privilege-title">Bolalar oromgohlari</h3>
                         <p class="privilege-desc">Yozgi mavsumda xodimlarning farzandlarini oromgohlarga yuborish xarajatlarini qisman qoplash.</p>
-                        <button class="btn btn-secondary" style="margin-top: auto; width: 100%;">Batafsil ma'lumot</button>
+                        <button class="btn btn-secondary" style="margin-top: auto; width: 100%;">${escapeHTML(detailBtnText)}</button>
                     </div>
                     ${promoCardHtml}
                 `;
@@ -172,9 +172,11 @@
                 
                 const title = getLocalizedField(priv, 'title');
                 const description = getLocalizedField(priv, 'description');
+                const isSanatorium = priv.id === 1 || (title && title.toLowerCase().includes('sanatoriy'));
+                const clickHandler = isSanatorium ? "window.location.href='sanatoriums.html'" : `openPrivilegeDetails(${priv.id})`;
 
                 return `
-                    <div class="privilege-card" onclick="openPrivilegeDetails(${priv.id})" style="display: flex; flex-direction: column;">
+                    <div class="privilege-card" onclick="${clickHandler}" style="display: flex; flex-direction: column; cursor: pointer;">
                         <div class="privilege-icon" style="padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">${iconHtml}</div>
                         <h3 class="privilege-title">${escapeHTML(title)}</h3>
                         <p class="privilege-desc">${escapeHTML(description)}</p>
@@ -208,6 +210,15 @@
                     const content = getLocalizedField(priv, 'content');
                     const defaultContent = (translations[currentLang] && translations[currentLang]["priv_default_content"]) || "Ushbu imtiyoz bo'yicha batafsil shartlar va a'zo bo'lish/hujjat topshirish tartibi ko'rsatilmagan. Ma'lumot olish uchun kasaba uyushmasi ishonch telefoniga qo'ng'iroq qilishingiz mumkin.";
 
+                    const isSanatorium = priv.id === 1 || (title && title.toLowerCase().includes('sanatoriy'));
+                    const sanatoriumBtnHtml = isSanatorium ? `
+                        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center;">
+                            <a href="sanatoriums.html" class="btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; padding: 12px 24px; font-size: 0.95rem; text-decoration: none; width: 100%; box-sizing: border-box;">
+                                <span>🏨</span> <span>Sanatoriyalar ro'yxati va narxlarini ko'rish (55% chegirma) ➔</span>
+                            </a>
+                        </div>
+                    ` : '';
+
                     contentDiv.innerHTML = `
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
                             <div class="privilege-icon" style="margin-bottom: 0; width: 50px; height: 50px; padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">${iconHtml}</div>
@@ -219,6 +230,7 @@
                         <div style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem; white-space: pre-wrap;">
                             ${escapeHTML(content || defaultContent)}
                         </div>
+                        ${sanatoriumBtnHtml}
                     `;
                 } else {
                     const errMsg = (translations[currentLang] && translations[currentLang]["priv_not_found"]) || "Imtiyoz topilmadi.";
@@ -232,6 +244,10 @@
         }
 
         function openDemoPrivilege(type) {
+            if (type === 'sanatorium') {
+                window.location.href = 'sanatoriums.html';
+                return;
+            }
             const modal = document.getElementById('privilegeModal');
             const contentDiv = document.getElementById('modalContent');
             modal.classList.add('open');
