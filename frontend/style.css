@@ -118,17 +118,17 @@ input, textarea, select {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 13px;
+    gap: 18px;
     list-style: none;
     flex-shrink: 1;
 }
 
 .nav-link {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.3px;
     padding: 6px 0;
     border-bottom: 2px solid transparent;
     white-space: nowrap;
@@ -137,6 +137,32 @@ input, textarea, select {
 .nav-link:hover, .nav-link.active {
     color: var(--color-primary);
     border-bottom-color: var(--color-primary);
+}
+
+.lang-switcher {
+    flex-shrink: 0;
+}
+
+.nav-telegram-btn {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.2s;
+    margin-left: 12px;
+}
+
+.nav-telegram-btn:hover {
+    background-color: #0088cc !important;
+    transform: scale(1.05);
 }
 
 .nav-btn {
